@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Bidaia {
+
+	// Atributuak
 	private String izena;
 	private String laburdura;
 	private String bidaiaMota;
@@ -20,12 +22,21 @@ public class Bidaia {
 	 * this.deskripzioa = deskripzioa; }
 	 */
 
+	// Getters and setters
 	public String getIzena() {
 		return izena;
 	}
 
 	public void setIzena(String izena) {
 		this.izena = izena;
+	}
+
+	public String getMota() {
+		return mota;
+	}
+
+	public void setMota(String mota) {
+		this.mota = mota;
 	}
 
 	public String getLaburdura() {

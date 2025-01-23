@@ -2,7 +2,8 @@ package modelo;
 
 
 public class Agentzia {
-
+	
+	//Atributuak
 	private String izena;
 	private String markaKolorea;
 	private int langileKopurua;
@@ -10,6 +11,14 @@ public class Agentzia {
 	private String pasahitza;
 	private String mota;
 	
+	//Getters and setters
+	public String getMota() {
+		return mota;
+	}
+
+	public void setMota(String mota) {
+		this.mota = mota;
+	}
 
 	public String getIzena() {
 		return izena;
@@ -51,9 +60,6 @@ public class Agentzia {
 		this.pasahitza = pasahitza;
 	}
 
-	public static int[] getLangileAukerak() {
-		return LANGILE_AUKERAK;
-	}
 
 	@Override
 	public String toString() {
