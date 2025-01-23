@@ -1,5 +1,9 @@
 package modelo;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 public class Hegaldia {
     private String ibilbidea;
     private String jatorrizkoAireportua;
@@ -127,7 +131,35 @@ public class Hegaldia {
 
    
     public void bilatuBidaia() {
-        //  Skyscanner
+        try {
+            // Generar la URL de búsqueda de Skyscanner con los atributos del vuelo
+        	 String skyscannerUrl = "https://www.skyscanner.es/transporte/vuelos/" 
+                     + jatorrizkoAireportua + "/" 
+                     + helmugaAireportua + "/" 
+                     + joanekoData.toString().replace("-", "").substring(2)  + "/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false";
+                 
+            
+            // Redirigir al navegador a la URL de Skyscanner
+            URI uri = new URI(skyscannerUrl);
+            java.awt.Desktop.getDesktop().browse(uri);
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void bilatuBidaiaJoanEtorria() {
+        try {
+            // Generar la URL de búsqueda de Skyscanner con los atributos del vuelo
+            String skyscannerUrl = "https://www.skyscanner.es/transporte/vuelos/" 
+                + jatorrizkoAireportua + "/" 
+                + helmugaAireportua + "/" 
+                + joanekoData.toString().replace("-", "").substring(2)  + "/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false";
+            
+            // Redirigir al navegador a la URL de Skyscanner
+            URI uri = new URI(skyscannerUrl);
+            java.awt.Desktop.getDesktop().browse(uri);
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 
