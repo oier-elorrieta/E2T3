@@ -2,6 +2,7 @@ package windowBuilder;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -34,23 +35,21 @@ public class Login extends JFrame {
 		getContentPane().add(lblLogIn);
 		
 		txtErabiltzailea = new JTextField();
-		txtErabiltzailea.setBounds(186, 95, 121, 20);
+		txtErabiltzailea.setBounds(197, 95, 121, 20);
 		getContentPane().add(txtErabiltzailea);
 		txtErabiltzailea.setColumns(10);
 		
-		lblErabiltzailea = new JLabel("Erabiltzailea");
-		lblErabiltzailea.setHorizontalAlignment(SwingConstants.CENTER);
-		lblErabiltzailea.setBounds(85, 98, 97, 14);
+		lblErabiltzailea = new JLabel("Agentziaren izena:");
+		lblErabiltzailea.setBounds(85, 98, 112, 14);
 		getContentPane().add(lblErabiltzailea);
 		
-		lblPasahitza = new JLabel("Pasahitza");
-		lblPasahitza.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPasahitza.setBounds(85, 134, 97, 14);
+		// Campo Password
+		lblPasahitza = new JLabel("Pasahitza:");
+		lblPasahitza.setBounds(126, 123, 64, 17);
 		getContentPane().add(lblPasahitza);
-		
-		txtPasahitza = new JTextField();
-		txtPasahitza.setColumns(10);
-		txtPasahitza.setBounds(186, 131, 121, 20);
+
+		txtPasahitza = new JPasswordField();
+		txtPasahitza.setBounds(197, 122, 121, 20);
 		getContentPane().add(txtPasahitza);
 		
 		btnSartu = new JButton("Sartu");
