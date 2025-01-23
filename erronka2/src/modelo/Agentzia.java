@@ -8,9 +8,8 @@ public class Agentzia {
 	private int langileKopurua;
 	private String logoaUrl;
 	private String pasahitza;
-
-	// Aukera onargarriak langile-kopururako
-	public static final int[] LANGILE_AUKERAK = { 2, 10, 100, 1000 };
+	private String mota;
+	
 
 	public String getIzena() {
 		return izena;
