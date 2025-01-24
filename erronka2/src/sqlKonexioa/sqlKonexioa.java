@@ -12,7 +12,7 @@ import java.util.Scanner;
 import java.util.Scanner;
 
 public class sqlKonexioa {
-	private static String url = "jdbc:mysql://localhost:3307/mendiak";
+	private static String url = "jdbc:mysql://localhost:3307/ponerbasededatos";
 	private static String sql = "";
 	private static Scanner sc = new Scanner(System.in);
 
