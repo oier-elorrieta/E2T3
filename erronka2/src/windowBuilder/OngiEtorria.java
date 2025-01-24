@@ -1,7 +1,8 @@
 package windowBuilder;
 
 import java.awt.EventQueue;
-
+import modelo.Memoria;
+import funtzioak.*;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -11,6 +12,10 @@ public class OngiEtorria {
 
 	private JFrame frame;
 	private JButton btnOngiEtorri;
+	
+	Memoria memoria = new Memoria();
+	private boolean arrayHasieratuak = false;
+	
 
 	/**
 	 * Launch the application.
@@ -27,7 +32,8 @@ public class OngiEtorria {
 			}
 		});
 	}
-
+	
+	
 	/**
 	 * Create the application.
 	 */
@@ -36,6 +42,8 @@ public class OngiEtorria {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		Metodoak.hasieratuArray(memoria, arrayHasieratuak);
 		
 		btnOngiEtorri = new JButton("Ongi Etorri");
 		btnOngiEtorri.addActionListener(new ActionListener() {
@@ -48,4 +56,5 @@ public class OngiEtorria {
 		btnOngiEtorri.setBounds(108, 64, 222, 130);
 		frame.getContentPane().add(btnOngiEtorri);
 	}
+	
 }
