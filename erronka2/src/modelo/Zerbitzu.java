@@ -4,41 +4,111 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class Zerbitzu {
-	//Zerbitzu Taula
-	private int zerbitzuKodea;
-	private int bidaiarenKodea;
+	//Zerbitzu taula
 	
-	//Ostatu Taula
-	private int ostatuKodea;
-	private float prezioa;
-	private Date sarreraEguna;
-	private Date irteraEguna;
+	private int zerbitzuKodea;
+	private String zerbitzuIzena;
+	private int bidaiMotaKodea;
+	
+	//Ostatu taula
+	
+	private float ostatuPrezioa;
+	private Date ostatuSarreraEguna;
+	private Date ostatuIrteraEguna;
 	private String hiria;
 	private String ostatuIzena;
 	private String logelaMKodea;
 	
-	//BESTE_BATZUK Taula
+	//Beste batzuk taula
 	
-	private int besteKod;
-	private String besteIzena;
 	private Date egun;
-	private String besteDeskribapena;
-	private float bestePrezioa;
-
+	private String besteBatzukDeskribapena;
+	private float besteBatzukPrezioa;
+	
 	//Hegaldia taula
 	
-	private int hegaldiKod;
-	private String jatorrizkoAireportua;
-	private String helmugakoAireportua;
 	private String hegaldiKodea;
-	private Time bidaiarenIraupena;
+	private Date hegaldiIrteraData;
+	private Time hegaldiIrteeraOrdutegia;
+	private Time hegaldiBidaiarenIraupena;
 	private float hegaldiPrezioa;
-	private Date ireteeraData;
-	private Time irteeraOrdutegia;
-	private String aireportua;
+	private String hegaldiJatorrizkoAireportua;
+	private String hegaldiHelmugakoAireportua;
+	private String airelinaKodea;
 	
+	//Joan eta etorri taula
 	
+	private String hegaldiKodeaEtorri;
+	private Time itzuleraOrdua;
+	private Date etorriaEguna;
+	private Time bueltakoIraupena;
+	private String joanJatorrizkoAireportua;
+	private String joanHelmugakoAireportua;
+	private String bueltakoAirelineaKodea;
 	
+	public Zerbitzu(int zerbitzuKodea, String zerbitzuIzena, int bidaiMotaKodea, float ostatuPrezioa,
+			Date ostatuSarreraEguna, Date ostatuIrteraEguna, String hiria, String ostatuIzena, String logelaMKodea) {
+		this.zerbitzuKodea = zerbitzuKodea;
+		this.zerbitzuIzena = zerbitzuIzena;
+		this.bidaiMotaKodea = bidaiMotaKodea;
+		this.ostatuPrezioa = ostatuPrezioa;
+		this.ostatuSarreraEguna = ostatuSarreraEguna;
+		this.ostatuIrteraEguna = ostatuIrteraEguna;
+		this.hiria = hiria;
+		this.ostatuIzena = ostatuIzena;
+		this.logelaMKodea = logelaMKodea;
+	}
+	
+	public Zerbitzu(int zerbitzuKodea, String zerbitzuIzena, int bidaiMotaKodea, String hegaldiKodea,
+			Date hegaldiIrteraData, Time hegaldiIrteeraOrdutegia, Time hegaldiBidaiarenIraupena, float hegaldiPrezioa,
+			String hegaldiJatorrizkoAireportua, String hegaldiHelmugakoAireportua, String airelinaKodea) {
+		this.zerbitzuKodea = zerbitzuKodea;
+		this.zerbitzuIzena = zerbitzuIzena;
+		this.bidaiMotaKodea = bidaiMotaKodea;
+		this.hegaldiKodea = hegaldiKodea;
+		this.hegaldiIrteraData = hegaldiIrteraData;
+		this.hegaldiIrteeraOrdutegia = hegaldiIrteeraOrdutegia;
+		this.hegaldiBidaiarenIraupena = hegaldiBidaiarenIraupena;
+		this.hegaldiPrezioa = hegaldiPrezioa;
+		this.hegaldiJatorrizkoAireportua = hegaldiJatorrizkoAireportua;
+		this.hegaldiHelmugakoAireportua = hegaldiHelmugakoAireportua;
+		this.airelinaKodea = airelinaKodea;
+	}
+	
+	public Zerbitzu(int zerbitzuKodea, String zerbitzuIzena, int bidaiMotaKodea, String hegaldiKodea,
+			Date hegaldiIrteraData, Time hegaldiIrteeraOrdutegia, Time hegaldiBidaiarenIraupena, float hegaldiPrezioa,
+			String hegaldiJatorrizkoAireportua, String hegaldiHelmugakoAireportua, String airelinaKodea,
+			String hegaldiKodeaEtorri, Time itzuleraOrdua, Date etorriaEguna, Time bueltakoIraupena,
+			String joanJatorrizkoAireportua, String joanHelmugakoAireportua, String bueltakoAirelineaKodea) {
+		this.zerbitzuKodea = zerbitzuKodea;
+		this.zerbitzuIzena = zerbitzuIzena;
+		this.bidaiMotaKodea = bidaiMotaKodea;
+		this.hegaldiKodea = hegaldiKodea;
+		this.hegaldiIrteraData = hegaldiIrteraData;
+		this.hegaldiIrteeraOrdutegia = hegaldiIrteeraOrdutegia;
+		this.hegaldiBidaiarenIraupena = hegaldiBidaiarenIraupena;
+		this.hegaldiPrezioa = hegaldiPrezioa;
+		this.hegaldiJatorrizkoAireportua = hegaldiJatorrizkoAireportua;
+		this.hegaldiHelmugakoAireportua = hegaldiHelmugakoAireportua;
+		this.airelinaKodea = airelinaKodea;
+		this.hegaldiKodeaEtorri = hegaldiKodeaEtorri;
+		this.itzuleraOrdua = itzuleraOrdua;
+		this.etorriaEguna = etorriaEguna;
+		this.bueltakoIraupena = bueltakoIraupena;
+		this.joanJatorrizkoAireportua = joanJatorrizkoAireportua;
+		this.joanHelmugakoAireportua = joanHelmugakoAireportua;
+		this.bueltakoAirelineaKodea = bueltakoAirelineaKodea;
+	}
+
+	public Zerbitzu(int zerbitzuKodea, String zerbitzuIzena, int bidaiMotaKodea, Date egun,
+			String besteBatzukDeskribapena, float besteBatzukPrezioa) {
+		this.zerbitzuKodea = zerbitzuKodea;
+		this.zerbitzuIzena = zerbitzuIzena;
+		this.bidaiMotaKodea = bidaiMotaKodea;
+		this.egun = egun;
+		this.besteBatzukDeskribapena = besteBatzukDeskribapena;
+		this.besteBatzukPrezioa = besteBatzukPrezioa;
+	}
 
 	public int getZerbitzuKodea() {
 		return zerbitzuKodea;
@@ -46,35 +116,35 @@ public class Zerbitzu {
 	public void setZerbitzuKodea(int zerbitzuKodea) {
 		this.zerbitzuKodea = zerbitzuKodea;
 	}
-	public int getBidaiarenKodea() {
-		return bidaiarenKodea;
+	public String getZerbitzuIzena() {
+		return zerbitzuIzena;
 	}
-	public void setBidaiarenKodea(int bidaiarenKodea) {
-		this.bidaiarenKodea = bidaiarenKodea;
+	public void setZerbitzuIzena(String zerbitzuIzena) {
+		this.zerbitzuIzena = zerbitzuIzena;
 	}
-	public int getOstatuKodea() {
-		return ostatuKodea;
+	public int getBidaiMotaKodea() {
+		return bidaiMotaKodea;
 	}
-	public void setOstatuKodea(int ostatuKodea) {
-		this.ostatuKodea = ostatuKodea;
+	public void setBidaiMotaKodea(int bidaiMotaKodea) {
+		this.bidaiMotaKodea = bidaiMotaKodea;
 	}
-	public float getPrezioa() {
-		return prezioa;
+	public float getOstatuPrezioa() {
+		return ostatuPrezioa;
 	}
-	public void setPrezioa(float prezioa) {
-		this.prezioa = prezioa;
+	public void setOstatuPrezioa(float ostatuPrezioa) {
+		this.ostatuPrezioa = ostatuPrezioa;
 	}
-	public Date getSarreraEguna() {
-		return sarreraEguna;
+	public Date getOstatuSarreraEguna() {
+		return ostatuSarreraEguna;
 	}
-	public void setSarreraEguna(Date sarreraEguna) {
-		this.sarreraEguna = sarreraEguna;
+	public void setOstatuSarreraEguna(Date ostatuSarreraEguna) {
+		this.ostatuSarreraEguna = ostatuSarreraEguna;
 	}
-	public Date getIrteraEguna() {
-		return irteraEguna;
+	public Date getOstatuIrteraEguna() {
+		return ostatuIrteraEguna;
 	}
-	public void setIrteraEguna(Date irteraEguna) {
-		this.irteraEguna = irteraEguna;
+	public void setOstatuIrteraEguna(Date ostatuIrteraEguna) {
+		this.ostatuIrteraEguna = ostatuIrteraEguna;
 	}
 	public String getHiria() {
 		return hiria;
@@ -94,53 +164,23 @@ public class Zerbitzu {
 	public void setLogelaMKodea(String logelaMKodea) {
 		this.logelaMKodea = logelaMKodea;
 	}
-	public int getBesteKod() {
-		return besteKod;
-	}
-	public void setBesteKod(int besteKod) {
-		this.besteKod = besteKod;
-	}
-	public String getBesteIzena() {
-		return besteIzena;
-	}
-	public void setBesteIzena(String besteIzena) {
-		this.besteIzena = besteIzena;
-	}
 	public Date getEgun() {
 		return egun;
 	}
 	public void setEgun(Date egun) {
 		this.egun = egun;
 	}
-	public String getBesteDeskribapena() {
-		return besteDeskribapena;
+	public String getBesteBatzukDeskribapena() {
+		return besteBatzukDeskribapena;
 	}
-	public void setBesteDeskribapena(String besteDeskribapena) {
-		this.besteDeskribapena = besteDeskribapena;
+	public void setBesteBatzukDeskribapena(String besteBatzukDeskribapena) {
+		this.besteBatzukDeskribapena = besteBatzukDeskribapena;
 	}
-	public float getBestePrezioa() {
-		return bestePrezioa;
+	public float getBesteBatzukPrezioa() {
+		return besteBatzukPrezioa;
 	}
-	public void setBestePrezioa(float bestePrezioa) {
-		this.bestePrezioa = bestePrezioa;
-	}
-	public int getHegaldiKod() {
-		return hegaldiKod;
-	}
-	public void setHegaldiKod(int hegaldiKod) {
-		this.hegaldiKod = hegaldiKod;
-	}
-	public String getJatorrizkoAireportua() {
-		return jatorrizkoAireportua;
-	}
-	public void setJatorrizkoAireportua(String jatorrizkoAireportua) {
-		this.jatorrizkoAireportua = jatorrizkoAireportua;
-	}
-	public String getHelmugakoAireportua() {
-		return helmugakoAireportua;
-	}
-	public void setHelmugakoAireportua(String helmugakoAireportua) {
-		this.helmugakoAireportua = helmugakoAireportua;
+	public void setBesteBatzukPrezioa(float besteBatzukPrezioa) {
+		this.besteBatzukPrezioa = besteBatzukPrezioa;
 	}
 	public String getHegaldiKodea() {
 		return hegaldiKodea;
@@ -148,11 +188,23 @@ public class Zerbitzu {
 	public void setHegaldiKodea(String hegaldiKodea) {
 		this.hegaldiKodea = hegaldiKodea;
 	}
-	public Time getBidaiarenIraupena() {
-		return bidaiarenIraupena;
+	public Date getHegaldiIrteraData() {
+		return hegaldiIrteraData;
 	}
-	public void setBidaiarenIraupena(Time bidaiarenIraupena) {
-		this.bidaiarenIraupena = bidaiarenIraupena;
+	public void setHegaldiIrteraData(Date hegaldiIrteraData) {
+		this.hegaldiIrteraData = hegaldiIrteraData;
+	}
+	public Time getHegaldiIrteeraOrdutegia() {
+		return hegaldiIrteeraOrdutegia;
+	}
+	public void setHegaldiIrteeraOrdutegia(Time hegaldiIrteeraOrdutegia) {
+		this.hegaldiIrteeraOrdutegia = hegaldiIrteeraOrdutegia;
+	}
+	public Time getHegaldiBidaiarenIraupena() {
+		return hegaldiBidaiarenIraupena;
+	}
+	public void setHegaldiBidaiarenIraupena(Time hegaldiBidaiarenIraupena) {
+		this.hegaldiBidaiarenIraupena = hegaldiBidaiarenIraupena;
 	}
 	public float getHegaldiPrezioa() {
 		return hegaldiPrezioa;
@@ -160,46 +212,68 @@ public class Zerbitzu {
 	public void setHegaldiPrezioa(float hegaldiPrezioa) {
 		this.hegaldiPrezioa = hegaldiPrezioa;
 	}
-	public Date getIreteeraData() {
-		return ireteeraData;
+	public String getHegaldiJatorrizkoAireportua() {
+		return hegaldiJatorrizkoAireportua;
 	}
-	public void setIreteeraData(Date ireteeraData) {
-		this.ireteeraData = ireteeraData;
+	public void setHegaldiJatorrizkoAireportua(String hegaldiJatorrizkoAireportua) {
+		this.hegaldiJatorrizkoAireportua = hegaldiJatorrizkoAireportua;
 	}
-	public Time getIrteeraOrdutegia() {
-		return irteeraOrdutegia;
+	public String getHegaldiHelmugakoAireportua() {
+		return hegaldiHelmugakoAireportua;
 	}
-	public void setIrteeraOrdutegia(Time irteeraOrdutegia) {
-		this.irteeraOrdutegia = irteeraOrdutegia;
+	public void setHegaldiHelmugakoAireportua(String hegaldiHelmugakoAireportua) {
+		this.hegaldiHelmugakoAireportua = hegaldiHelmugakoAireportua;
 	}
-	public String getAireportua() {
-		return aireportua;
+	public String getAirelinaKodea() {
+		return airelinaKodea;
 	}
-	public void setAireportua(String aireportua) {
-		this.aireportua = aireportua;
+	public void setAirelinaKodea(String airelinaKodea) {
+		this.airelinaKodea = airelinaKodea;
+	}
+	public String getHegaldiKodeaEtorri() {
+		return hegaldiKodeaEtorri;
+	}
+	public void setHegaldiKodeaEtorri(String hegaldiKodeaEtorri) {
+		this.hegaldiKodeaEtorri = hegaldiKodeaEtorri;
+	}
+	public Time getItzuleraOrdua() {
+		return itzuleraOrdua;
+	}
+	public void setItzuleraOrdua(Time itzuleraOrdua) {
+		this.itzuleraOrdua = itzuleraOrdua;
+	}
+	public Date getEtorriaEguna() {
+		return etorriaEguna;
+	}
+	public void setEtorriaEguna(Date etorriaEguna) {
+		this.etorriaEguna = etorriaEguna;
+	}
+	public Time getBueltakoIraupena() {
+		return bueltakoIraupena;
+	}
+	public void setBueltakoIraupena(Time bueltakoIraupena) {
+		this.bueltakoIraupena = bueltakoIraupena;
+	}
+	public String getJoanJatorrizkoAireportua() {
+		return joanJatorrizkoAireportua;
+	}
+	public void setJoanJatorrizkoAireportua(String joanJatorrizkoAireportua) {
+		this.joanJatorrizkoAireportua = joanJatorrizkoAireportua;
+	}
+	public String getJoanHelmugakoAireportua() {
+		return joanHelmugakoAireportua;
+	}
+	public void setJoanHelmugakoAireportua(String joanHelmugakoAireportua) {
+		this.joanHelmugakoAireportua = joanHelmugakoAireportua;
+	}
+	public String getBueltakoAirelineaKodea() {
+		return bueltakoAirelineaKodea;
+	}
+	public void setBueltakoAirelineaKodea(String bueltakoAirelineaKodea) {
+		this.bueltakoAirelineaKodea = bueltakoAirelineaKodea;
 	}
 	
 	
-	public String toStringZerbitzuak() {
-		return "Zerbitzu [zerbitzuKodea=" + zerbitzuKodea + ", bidaiarenKodea=" + bidaiarenKodea + "]";
-	}
 	
-	public String toStringOstatu() {
-		return "Zerbitzu [ostatuKodea=" + ostatuKodea + ", prezioa=" + prezioa + ", sarreraEguna=" + sarreraEguna
-				+ ", irteraEguna=" + irteraEguna + ", hiria=" + hiria + ", ostatuIzena=" + ostatuIzena
-				+ ", logelaMKodea=" + logelaMKodea + "]";
-	}
-	
-	public String toStringBesteBatzuk() {
-		return "Zerbitzu [besteKod=" + besteKod + ", besteIzena=" + besteIzena + ", egun=" + egun
-				+ ", besteDeskribapena=" + besteDeskribapena + ", bestePrezioa=" + bestePrezioa + "]";
-	}
-	
-	public String toStringHegaldia() {
-		return "Zerbitzu [hegaldiKod=" + hegaldiKod + ", jatorrizkoAireportua=" + jatorrizkoAireportua
-				+ ", helmugakoAireportua=" + helmugakoAireportua + ", hegaldiKodea=" + hegaldiKodea
-				+ ", bidaiarenIraupena=" + bidaiarenIraupena + ", hegaldiPrezioa=" + hegaldiPrezioa + ", ireteeraData="
-				+ ireteeraData + ", irteeraOrdutegia=" + irteeraOrdutegia + ", aireportua=" + aireportua + "]";
-	}
 	
 }

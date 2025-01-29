@@ -2,30 +2,25 @@ package modelo;
 
 public class Aeroportu {
 	
-	private String Aireportua;
+	private String aireportuKodea;
 	private String hiria;
 	
-	public Aeroportu(String aireportua, String hiria) {
-		super();
-		Aireportua = aireportua;
-		this.hiria = hiria;
+	public String getAireportuKodea() {
+		return aireportuKodea;
 	}
-
-	public String getAireportua() {
-		return Aireportua;
+	public void setAireportuKodea(String aireportuKodea) {
+		this.aireportuKodea = aireportuKodea;
 	}
-
-	public void setAireportua(String aireportua) {
-		Aireportua = aireportua;
-	}
-
 	public String getHiria() {
 		return hiria;
 	}
-
 	public void setHiria(String hiria) {
 		this.hiria = hiria;
 	}
 	
+	@Override
+	public String toString() {
+		return "Aeroportu [aireportuKodea=" + aireportuKodea + ", hiria=" + hiria + "]";
+	}
 	
 }

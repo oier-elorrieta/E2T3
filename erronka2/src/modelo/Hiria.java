@@ -1,29 +1,25 @@
 package modelo;
 
 public class Hiria {
-	private int kode;
+	private int hiriKode;
 	private String izena;
 	
-	public Hiria(int kode, String izena) {
-		super();
-		this.kode = kode;
-		this.izena = izena;
+	public int getHiriKode() {
+		return hiriKode;
 	}
-
-	public int getKode() {
-		return kode;
+	public void setHiriKode(int hiriKode) {
+		this.hiriKode = hiriKode;
 	}
-
-	public void setKode(int kode) {
-		this.kode = kode;
-	}
-
 	public String getIzena() {
 		return izena;
 	}
-
 	public void setIzena(String izena) {
 		this.izena = izena;
 	}
 	
+	@Override
+	public String toString() {
+		return "Hiria [hiriKode=" + hiriKode + ", izena=" + izena + "]";
+	}
+
 }
