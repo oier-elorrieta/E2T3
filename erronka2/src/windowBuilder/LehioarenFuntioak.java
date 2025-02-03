@@ -48,4 +48,30 @@ public class LehioarenFuntioak {
 		});
 	}
 	
+	public void irekiBidaiak() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Bidaiak frame = new Bidaiak();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public void irekiZerbitzuak() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Zerbitzuak frame = new Zerbitzuak();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 }

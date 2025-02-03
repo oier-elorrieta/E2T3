@@ -15,9 +15,8 @@ public class Bidaia {
 	private String bidaiaMKod;
 	private int agentziaKod;
 
-	public Bidaia(ArrayList<Zerbitzu> zerbitzuak, int bidaiKodea, String izena, String deskribapena, String ezBarne,
+	public Bidaia(int bidaiKodea, String izena, String deskribapena, String ezBarne,
 			Date bidaiHasiera, Date bidaiAmaiera, String herrialdeKod, String bidaiaMKod, int agentziaKod) {
-		this.zerbitzuak = zerbitzuak;
 		this.bidaiKodea = bidaiKodea;
 		this.izena = izena;
 		this.deskribapena = deskribapena;
@@ -28,6 +27,14 @@ public class Bidaia {
 		this.bidaiaMKod = bidaiaMKod;
 		this.agentziaKod = agentziaKod;
 	}
+	
+	
+
+	public Bidaia() {
+		
+	}
+
+
 
 	public ArrayList<Zerbitzu> getZerbitzuak() {
 		return zerbitzuak;
