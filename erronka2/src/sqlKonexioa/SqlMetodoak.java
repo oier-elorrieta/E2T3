@@ -48,6 +48,37 @@ public class SqlMetodoak {
 			konexioa.konexioaItxi(); // Asegúrate de cerrar la conexión después de usarla
 		}
 	}
+	
+	public void ezabatuBidaia(int bidaiKodea) {
+	    try {
+	        konexioa.konexioaIreki();  // Abre la conexión
+
+	        // Consulta DELETE con parámetro ? (seguro)
+	        String sql = "DELETE FROM bidaia WHERE kodea = ?";
+	        PreparedStatement preparedStatement = konexioa.konektatuta.prepareStatement(sql);
+	        
+	        // Asignamos el parámetro bidaiKodea a la consulta
+	        preparedStatement.setInt(1, bidaiKodea);
+
+	        // Ejecutamos el DELETE y verificamos cuántas filas se eliminaron
+	        int filasAfectadas = preparedStatement.executeUpdate();
+
+	        if (filasAfectadas > 0) {
+	            System.out.println("Ezabatuta.");
+	        } else {
+	            System.out.println("Ez da ezabatu.");
+	        }
+
+	        // Cierra el PreparedStatement después de su uso
+	        preparedStatement.close();
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();  // Muestra el error en consola
+	    } finally {
+	        konexioa.konexioaItxi(); // Cierra la conexión
+	    }
+	}
+
 
 	public void erregistroEgin(String agentziaIzena, String kolorea, String langile, String agentziaMota, String logoa, String pasahitza) {
 		Agentzia agentzia = new Agentzia();

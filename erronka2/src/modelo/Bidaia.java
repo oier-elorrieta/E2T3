@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class Bidaia {
-	private ArrayList<Zerbitzu> zerbitzuak;
 	private int bidaiKodea;
 	private String izena;
 	private String deskribapena;
@@ -32,16 +31,6 @@ public class Bidaia {
 
 	public Bidaia() {
 		
-	}
-
-
-
-	public ArrayList<Zerbitzu> getZerbitzuak() {
-		return zerbitzuak;
-	}
-
-	public void setZerbitzuak(ArrayList<Zerbitzu> zerbitzuak) {
-		this.zerbitzuak = zerbitzuak;
 	}
 
 	public int getBidaiKodea() {
@@ -118,7 +107,7 @@ public class Bidaia {
 
 	@Override
 	public String toString() {
-		return "Bidaia [zerbitzuak=" + zerbitzuak + ", bidaiKodea=" + bidaiKodea + ", izena=" + izena
+		return "Bidaia [bidaiKodea=" + bidaiKodea + ", izena=" + izena
 				+ ", deskribapena=" + deskribapena + ", EzBarne=" + EzBarne + ", bidaiHasiera=" + bidaiHasiera
 				+ ", bidaiAmaiera=" + bidaiAmaiera + ", herrialdeKod=" + herrialdeKod + ", bidaiaMKod=" + bidaiaMKod
 				+ ", agentziaKod=" + agentziaKod + "]";
