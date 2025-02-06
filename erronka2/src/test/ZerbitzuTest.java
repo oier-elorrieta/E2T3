@@ -56,8 +56,8 @@ public class ZerbitzuTest {
 
 	@Test
 	public void testGetSetBidaiMotaKodea() {
-		ostatuZerbitzu.setBidaiMotaKodea(4);
-		assertEquals(4, ostatuZerbitzu.getBidaiMotaKodea());
+		ostatuZerbitzu.setBidaiKodea(4);
+		assertEquals(4, ostatuZerbitzu.getBidaiKodea());
 	}
 
 	
@@ -156,90 +156,115 @@ public class ZerbitzuTest {
 
 	@Test
 	public void testGetSetHegaldiIrteeraOrdutegia() {
-		Time 
+		Time newHegaldiIrteeraOrdutegia = Time.valueOf("22:00:00");
+		hegaldiZerbitzu.setHegaldiIrteeraOrdutegia(newHegaldiIrteeraOrdutegia);
+		assertEquals(newHegaldiIrteeraOrdutegia,hegaldiZerbitzu.getHegaldiIrteeraOrdutegia());
 	}
 
 	
 
 	@Test
 	public void testGetSetHegaldiBidaiarenIraupena() {
-		fail("Not yet implemented");
+		Time newHegaldiBidaiarenIraupena = Time.valueOf("03:00:00");
+		hegaldiZerbitzu.setHegaldiBidaiarenIraupena(newHegaldiBidaiarenIraupena);
+		assertEquals(newHegaldiBidaiarenIraupena,hegaldiZerbitzu.getHegaldiBidaiarenIraupena());
+	
 	}
 
 	
 
 	@Test
 	public void testGetSetHegaldiPrezioa() {
-		fail("Not yet implemented");
+		hegaldiZerbitzu.setHegaldiPrezioa(22);
+		assertEquals(22,hegaldiZerbitzu.getHegaldiPrezioa(),0.01);
 	}
 
 	
 
 	@Test
 	public void testGetSetHegaldiJatorrizkoAireportua() {
-		fail("Not yet implemented");
+		hegaldiZerbitzu.setHegaldiJatorrizkoAireportua("Malaga");
+		assertEquals("Malaga",hegaldiZerbitzu.getHegaldiJatorrizkoAireportua());
 	}
 
 
 
 	@Test
 	public void testGetSetHegaldiHelmugakoAireportua() {
-		fail("Not yet implemented");
+		hegaldiZerbitzu.setHegaldiHelmugakoAireportua("Malaga");
+		assertEquals("Malaga",hegaldiZerbitzu.getHegaldiHelmugakoAireportua());
+
 	}
 
 	
 
 	@Test
 	public void testGetSetAirelinaKodea() {
-		fail("Not yet implemented");
+		hegaldiZerbitzu.setAirelinaKodea("A2");
+		assertEquals("A2",hegaldiZerbitzu.getAirelinaKodea());
 	}
 
 	
 
 	@Test
 	public void testGetSetHegaldiKodeaEtorri() {
-		fail("Not yet implemented");
+		hegaldiZerbitzu.setHegaldiKodeaEtorri("E2");
+		assertEquals("E2",hegaldiZerbitzu.getHegaldiKodeaEtorri());
+
 	}
 
 	
 
 	@Test
 	public void testGetSetItzuleraOrdua() {
-		fail("Not yet implemented");
+		Time newItzuleraOrdua = Time.valueOf("03:00:00");
+		hegaldiZerbitzu.setItzuleraOrdua(newItzuleraOrdua);
+		assertEquals(newItzuleraOrdua,hegaldiZerbitzu.getItzuleraOrdua());
+	
 	}
 
 	
 
 	@Test
 	public void testGetSetEtorriaEguna() {
-		fail("Not yet implemented");
+		Date newDate = Date.valueOf("2025-02-17");
+		hegaldiZerbitzu.setEtorriaEguna(newDate);
+		assertEquals(newDate, hegaldiZerbitzu.getEtorriaEguna());
+
 	}
 
 	
 
 	@Test
 	public void testGetSetBueltakoIraupena() {
-		fail("Not yet implemented");
+		Time newBueltakoIraupena = Time.valueOf("03:00:00");
+		hegaldiZerbitzu.setBueltakoIraupena(newBueltakoIraupena);
+		assertEquals(newBueltakoIraupena,hegaldiZerbitzu.getBueltakoIraupena());
+	
 	}
 
 	
 
 	@Test
 	public void testGetSetJoanJatorrizkoAireportua() {
-		fail("Not yet implemented");
+		hegaldiZerbitzu.setJoanJatorrizkoAireportua("Santander");
+		assertEquals("Santander",hegaldiZerbitzu.getJoanJatorrizkoAireportua());
 	}
 
 	
 
 	@Test
 	public void testGetSetJoanHelmugakoAireportua() {
-		fail("Not yet implemented");
+		hegaldiZerbitzu.setJoanHelmugakoAireportua("Santander");
+		assertEquals("Santander",hegaldiZerbitzu.getJoanHelmugakoAireportua());
+	
 	}
 
 	
 
 	@Test
 	public void testGetSetBueltakoAirelineaKodea() {
-		fail("Not yet implemented");
+		hegaldiZerbitzu.setBueltakoAirelineaKodea("B2");
+		assertEquals("B2",hegaldiZerbitzu.getBueltakoAirelineaKodea());
 	}
 }
