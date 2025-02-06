@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import modelo.*;
+import windowBuilder.Zerbitzuak;
 
 public class SqlMetodoak {
 
@@ -205,43 +206,87 @@ public class SqlMetodoak {
 	}
 	
 	public ArrayList<Bidaia> bidaiakEduki() {
-		ArrayList<Bidaia> bidaiak = new ArrayList<>();
-		
-		try {
-			konexioa.konexioaIreki();
+		System.out.println("mierda!");
+	    ArrayList<Bidaia> bidaiak = new ArrayList<>();
+	    
+	    try {
+	        konexioa.konexioaIreki();
+	        
+	        // Primera consulta: Obtener los viajes
+	        String sql1 = "SELECT * FROM bidaia WHERE agentzia_kodea = '" + cache.getAgentzia().getAgentziaKodea() + "'";
+            System.out.println(sql1);
+            
+	        PreparedStatement preparedStatement1 = konexioa.konektatuta.prepareStatement(sql1);
+	        
+	        ResultSet resultSet1 = preparedStatement1.executeQuery(sql1);
+	        
+	        while (resultSet1.next()) {
+	            int bidaiKodea = resultSet1.getInt(1);
+	            String bidaiIzena = resultSet1.getString(2);
+	            String bidaiDeskribapena = resultSet1.getString(3);
+	            String bidaiEzBarne = resultSet1.getString(4);
+	            Date bidaiHasiera = resultSet1.getDate(5);
+	            Date bidaiAmaiera = resultSet1.getDate(6);
+	            String bidaiHerrialdeKod = resultSet1.getString(7);
+	            String bidaiMotaKod = resultSet1.getString(8);
+	            int bidaiAgentziaKod = resultSet1.getInt(9);
 
-			sql = "SELECT * FROM bidaia";
-			PreparedStatement preparedStatement = konexioa.konektatuta.prepareStatement(sql);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			
-			while (resultSet.next()) {
-				
-				int bidaiKodea = resultSet.getInt(1);
-				String bidaiIzena = resultSet.getString(2);
-				String bidaiDeskribapena = resultSet.getString(3);
-				String bidaiEzBarne = resultSet.getString(4);
-				Date bidaiHasiera = resultSet.getDate(5);
-				Date bidaiAmaiera = resultSet.getDate(6);
-				String bidaiHerrialdeKod = resultSet.getString(7);
-				String bidaiMotaKod = resultSet.getString(8);
-				int bidaiAgentziaKod =resultSet.getInt(9);
-				
-				Bidaia bidai = new Bidaia(bidaiKodea, bidaiIzena, bidaiDeskribapena, bidaiEzBarne, bidaiHasiera, bidaiAmaiera, bidaiHerrialdeKod, bidaiMotaKod, bidaiAgentziaKod);
-				
-				
-				if(cache.getAgentzia().getAgentziaKodea() == bidai.getAgentziaKod()) {
-					bidaiak.add(bidai);
-				}
-			}
+	            // Crear el objeto Bidaia
+	            Bidaia bidai = new Bidaia(bidaiKodea, bidaiIzena, bidaiDeskribapena, bidaiEzBarne, bidaiHasiera, bidaiAmaiera, bidaiHerrialdeKod, bidaiMotaKod, bidaiAgentziaKod);
+	            bidaiak.add(bidai);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			konexioa.konexioaItxi(); // Asegúrate de cerrar la conexión después de usarla
-		}
-		
-		return bidaiak;
+	            // Segunda consulta: Obtener los servicios asociados a cada viaje
+	            String sql2 ="SELECT *, Hegaldia.Zerbitzu_kodea AS Hegaldia_ID, ostatua.Zerbitzu_kodea AS Ostatua_ID, beste_batzuk.Zerbitzu_kodea AS Beste_Kodea"
+					+ " FROM zerbitzuak" 
+					+ " LEFT JOIN hegaldia ON zerbitzuak.Kodea = hegaldia.Zerbitzu_kodea" 
+					+ " LEFT JOIN ostatua ON zerbitzuak.Kodea = ostatua.Zerbitzu_kodea" 
+					+ " LEFT JOIN beste_batzuk ON zerbitzuak.Kodea = beste_batzuk.Zerbitzu_kodea"
+	                + " WHERE Bidaiaren_kodea = '" + bidai.getBidaiKodea() + "'";
+	            
+	            //System.out.println(sql2);
+
+		        PreparedStatement preparedStatement2 = konexioa.konektatuta.prepareStatement(sql2);
+		        
+		        ResultSet resultSet2 = preparedStatement2.executeQuery(sql2);
+
+
+	            while (resultSet2.next()) {
+	                Zerbitzu zerbitzuak = new Zerbitzu();
+	                
+
+	                if (resultSet2.getInt(24) != 0) {
+	                    System.out.println("Servicio encontrado para el viaje " + resultSet2.getInt(24));
+	                }
+	                else if (resultSet2.getInt(25) != 0) {
+	                	System.out.println("Servicio encontrado para el hospedaje " + resultSet2.getInt(25));
+	                }
+	                
+	                else if (resultSet2.getInt(26) != 0) {
+	                	System.out.println("Servicio encontrado para el beste " + resultSet2.getInt(26));
+	                }
+
+	                // Aquí puedes agregar los objetos Zerbitzu a la lista dentro de Bidaia
+	 
+	            }
+
+	            // Cerrar el resultSet y PreparedStatement de la segunda consulta
+	            resultSet2.close();
+	            preparedStatement2.close();
+	        }
+
+	        // Cerrar el resultSet y PreparedStatement de la primera consulta
+	        resultSet1.close();
+	        preparedStatement1.close();
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        konexioa.konexioaItxi(); // Cerrar conexión siempre
+	    }
+	    
+	    return bidaiak;
 	}
+
 
 	public ArrayList<Lang_kopurua> langKopEduki() {
 		ArrayList<Lang_kopurua> langKop = new ArrayList<>();
@@ -269,6 +314,33 @@ public class SqlMetodoak {
 			konexioa.konexioaItxi(); // Asegúrate de cerrar la conexión después de usarla
 		}
 		return langKop;
+	}
+	
+	public ArrayList<Logela_motak> logelaMotaEduki(){
+		ArrayList<Logela_motak> logelaMotaList = new ArrayList<>();
+		
+		try {
+			konexioa.konexioaIreki();
+
+			sql = "SELECT * FROM logela_motak";
+			PreparedStatement preparedStatement = konexioa.konektatuta.prepareStatement(sql);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				
+				String logelaKodea = resultSet.getString(1);
+				String logelaDeskribapena = resultSet.getString(2);
+
+				Logela_motak logelaMota = new Logela_motak(logelaKodea, logelaDeskribapena);
+				logelaMotaList.add(logelaMota);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			konexioa.konexioaItxi(); // Asegúrate de cerrar la conexión después de usarla
+		}
+		return logelaMotaList;
 	}
 
 	public ArrayList<Agentzia_Motak> agentziaMotaEduki() {

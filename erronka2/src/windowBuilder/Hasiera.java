@@ -34,6 +34,7 @@ public class Hasiera extends JFrame {
 	private SqlMetodoak sm = new SqlMetodoak();
 	private JButton btnEzabatuZerbitzuak;
 	private int kontagailu = 0;
+	private ArrayList<Bidaia> bidaiaList;
 
 	public Hasiera() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,7 +79,8 @@ public class Hasiera extends JFrame {
 		getContentPane().add(scrollPaneBidaiak);
 
 		// Obtener los datos DESPUÉS de crear la tabla
-		ArrayList<Bidaia> bidaiaList = sm.bidaiakEduki(); // Llamada a la base de datos
+		
+		 bidaiaList = sm.bidaiakEduki(); // Llamada a la base de datos
 
 		// Llenar la tabla con los datos obtenidos
 		taulaBeteBidaia();
@@ -97,7 +99,7 @@ public class Hasiera extends JFrame {
 		scrollPaneZerbitzuak.setBounds(125, 350, 431, 95);
 		getContentPane().add(scrollPaneZerbitzuak);
 
-		ArrayList<Zerbitzu> zerbitzuak;
+		//ArrayList<Zerbitzu> zerbitzuak;
 
 		btnBidaiBerria = new JButton("Bidai berria");
 		btnBidaiBerria.addActionListener(new ActionListener() {
@@ -222,11 +224,11 @@ public class Hasiera extends JFrame {
 		});
 
 	}
+	
 
 	private void taulaBeteBidaia() {
 	    DefaultTableModel modelo = (DefaultTableModel) tablaBidaiak.getModel();
 	    modelo.setRowCount(0); // Limpiar la tabla antes de insertar nuevos datos
-	    ArrayList<Bidaia> bidaiaList = sm.bidaiakEduki();
 
 	    String herrialdeIzena, bidaiMota, egunak;
 	    kontagailu = 0; // Reiniciar contador antes de rellenar
@@ -242,11 +244,11 @@ public class Hasiera extends JFrame {
 	    }
 	    System.out.println("Kontagailu eguneratua: " + kontagailu);
 	}
-	
+/*
 	private void taulaBeteZerbitzuak() {
 		DefaultTableModel modelo = (DefaultTableModel) tablaBidaiak.getModel();
 		modelo.setRowCount(0); // Limpiar la tabla antes de insertar nuevos datos
-		ArrayList<Bidaia> bidaiaList = sm.bidaiakEduki();
+		//ArrayList<Bidaia> bidaiaList = sm.bidaiakEduki();
 
 		String herrialdeIzena = convertHerrialde();
 		String bidaiMota = convertBidaiMota();
@@ -256,10 +258,9 @@ public class Hasiera extends JFrame {
 			modelo.addRow(new Object[] { b.getIzena(), bidaiMota, egunak, b.getBidaiHasiera(), b.getBidaiAmaiera(),
 					herrialdeIzena });
 		}
-	}
+	}*/
 
 	private String convertHerrialde() {
-		ArrayList<Bidaia> bidaiaList = sm.bidaiakEduki();
 		ArrayList<Herrialde> herrialdeList = sm.herrialdeMotaEduki();
 
 		// Recorremos cada Bidaia en la lista bidaiaList
@@ -277,10 +278,10 @@ public class Hasiera extends JFrame {
 		}
 		return "Ez dago helmugarik";
 	}
+	
 
 	private String convertBidaiMota() {
-
-		ArrayList<Bidaia> bidaiaList = sm.bidaiakEduki();
+		
 		ArrayList<Bidai_Motak> bidaiMotaList = sm.bidaiMotaEduki();
 
 		for (int i = kontagailu; i < bidaiaList.size(); i++) {
@@ -299,7 +300,6 @@ public class Hasiera extends JFrame {
 	}
 
 	private String kalkulatuDiferentzia() {
-		ArrayList<Bidaia> bidaiaList = sm.bidaiakEduki();
 
 		for (int i = kontagailu; i < bidaiaList.size(); i++) {
 			Bidaia b = bidaiaList.get(i);

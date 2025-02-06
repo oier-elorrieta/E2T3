@@ -1,3 +1,4 @@
+
 package windowBuilder;
 
 import javax.swing.JFrame;
@@ -7,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 
 import modelo.*;
-
 
 import sqlKonexioa.SqlMetodoak;
 
@@ -45,8 +45,6 @@ public class Bidaiak extends JFrame {
 
 	public Bidaiak() {
 
-		 
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 573, 616);
 		getContentPane().setLayout(null);
@@ -55,12 +53,11 @@ public class Bidaiak extends JFrame {
 		txtizena.setBounds(137, 111, 150, 30);
 		getContentPane().add(txtizena);
 		txtizena.setColumns(10);
-		
+
 		ArrayList<Bidai_Motak> bidaiaList = sm.bidaiMotaEduki();
-		
+
 		ArrayList<String> bidaiMotaDeskribapena = new ArrayList<>();
 		ArrayList<String> bidaiMotaKodea = new ArrayList<>();
-
 
 		for (Bidai_Motak bidaia : bidaiaList) {
 			bidaiMotaDeskribapena.add(bidaia.getDeskribapena()); // Usar el getter para obtener deskribapena
@@ -72,34 +69,30 @@ public class Bidaiak extends JFrame {
 		getContentPane().add(comboBoxMotak);
 
 		ArrayList<Herrialde> herrialdeList = sm.herrialdeMotaEduki();
-		
+
 		ArrayList<String> herrialdeDeskribapena = new ArrayList<>();
 		ArrayList<String> herrialdeKodea = new ArrayList<>();
-
 
 		for (Herrialde herrialde : herrialdeList) {
 			herrialdeDeskribapena.add(herrialde.getHelmuga()); // Usar el getter para obtener deskribapena
 			herrialdeKodea.add(herrialde.getHerrialdeKodea());
 		}
-		
+
 		comboBoxHerrialdea = new JComboBox<>(herrialdeDeskribapena.toArray(new String[0]));
 		comboBoxHerrialdea.setBounds(137, 298, 150, 22);
 		getContentPane().add(comboBoxHerrialdea);
-		
 
 		dataAukeratuHasiera = new JDateChooser();
 		dataAukeratuHasiera.setBounds(137, 184, 150, 25);
 		getContentPane().add(dataAukeratuHasiera);
-		
+
 		dataAukeratuAmaiera = new JDateChooser();
 		dataAukeratuAmaiera.setBounds(137, 220, 150, 25);
 		getContentPane().add(dataAukeratuAmaiera);
-		
 
-		
 		dataAukeratuHasiera.addPropertyChangeListener("date", evt -> kalkulatuDiferentzia());
 		dataAukeratuAmaiera.addPropertyChangeListener("date", evt -> kalkulatuDiferentzia());
-		
+
 		txtFieldEgunak = new JTextField();
 		txtFieldEgunak.setEditable(false);
 		txtFieldEgunak.setColumns(10);
@@ -130,27 +123,28 @@ public class Bidaiak extends JFrame {
 		btnGorde = new JButton("Gorde");
 		btnGorde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				int herrialdeIndex = comboBoxHerrialdea.getSelectedIndex();
 				int bidaiMotaIndex = comboBoxMotak.getSelectedIndex();
-				
+
 				String izena = txtizena.getText();
 				String deskribapena = textAreaDeskribapena.getText();
 				String ezBarne = textAreaEzBarne.getText();
-		        Date hasieraData = dataAukeratuHasiera.getDate();
-		        String dataHasiera = dataFormatua.format(hasieraData);
-		        Date amaieraData = dataAukeratuAmaiera.getDate();
-		        String dataAmaiera = dataFormatua.format(amaieraData);
-		        String herriKodea = herrialdeKodea.get(herrialdeIndex);
-		        String bidaiMotaKod = bidaiMotaKodea.get(bidaiMotaIndex);
-		        int agentziaKodea = cache.getAgentzia().getAgentziaKodea();
-		       
-		        sm.bidaiaEgin(izena, deskribapena, ezBarne, dataHasiera, dataAmaiera, herriKodea, bidaiMotaKod, agentziaKodea);
-		        
+				Date hasieraData = dataAukeratuHasiera.getDate();
+				String dataHasiera = dataFormatua.format(hasieraData);
+				Date amaieraData = dataAukeratuAmaiera.getDate();
+				String dataAmaiera = dataFormatua.format(amaieraData);
+				String herriKodea = herrialdeKodea.get(herrialdeIndex);
+				String bidaiMotaKod = bidaiMotaKodea.get(bidaiMotaIndex);
+				int agentziaKodea = cache.getAgentzia().getAgentziaKodea();
+
+				sm.bidaiaEgin(izena, deskribapena, ezBarne, dataHasiera, dataAmaiera, herriKodea, bidaiMotaKod,
+						agentziaKodea);
+
 				LehioarenFuntioak fv = new LehioarenFuntioak();
 				fv.irekiHasiera();
 				dispose();
-		        
+
 			}
 		});
 		btnGorde.setBounds(118, 543, 89, 23);
@@ -246,21 +240,20 @@ public class Bidaiak extends JFrame {
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		
-	}
-	
-	//esto es para calcular los días de diferencia de la fecha inicio y fecha fin.
-    private void kalkulatuDiferentzia() {
-    	
-        Date hasieraData = dataAukeratuHasiera.getDate();
-        Date amaieraData = dataAukeratuAmaiera.getDate();
 
-        if (hasieraData != null && amaieraData != null) {
-            long diff = amaieraData.getTime() - hasieraData.getTime();
-            long egunDiferentzia = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-            txtFieldEgunak.setText(egunDiferentzia >= 0 ? String.valueOf(egunDiferentzia) : "Data baliogabea");
-        }
-    }
+	}
+
+	// esto es para calcular los días de diferencia de la fecha inicio y fecha fin.
+	private void kalkulatuDiferentzia() {
+
+		Date hasieraData = dataAukeratuHasiera.getDate();
+		Date amaieraData = dataAukeratuAmaiera.getDate();
+
+		if (hasieraData != null && amaieraData != null) {
+			long diff = amaieraData.getTime() - hasieraData.getTime();
+			long egunDiferentzia = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+			txtFieldEgunak.setText(egunDiferentzia >= 0 ? String.valueOf(egunDiferentzia) : "Data baliogabea");
+		}
+	}
 
 }

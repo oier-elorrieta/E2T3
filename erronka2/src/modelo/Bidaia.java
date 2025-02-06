@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class Bidaia {
+	private ArrayList <Zerbitzu> zerbitzuak;
 	private int bidaiKodea;
 	private String izena;
 	private String deskribapena;
@@ -27,10 +28,26 @@ public class Bidaia {
 		this.agentziaKod = agentziaKod;
 	}
 	
+	public Bidaia(ArrayList<Zerbitzu> zerbitzuak, int bidaiKodea, String izena, String deskribapena, String ezBarne,
+			Date bidaiHasiera, Date bidaiAmaiera, String herrialdeKod, String bidaiaMKod, int agentziaKod) {
+		this.zerbitzuak = zerbitzuak;
+		this.bidaiKodea = bidaiKodea;
+		this.izena = izena;
+		this.deskribapena = deskribapena;
+		EzBarne = ezBarne;
+		this.bidaiHasiera = bidaiHasiera;
+		this.bidaiAmaiera = bidaiAmaiera;
+		this.herrialdeKod = herrialdeKod;
+		this.bidaiaMKod = bidaiaMKod;
+		this.agentziaKod = agentziaKod;
+	}
 	
-
 	public Bidaia() {
 		
+	}
+
+	public void gehituZerbitzuak(Zerbitzu z) {
+		zerbitzuak.add(z);
 	}
 
 	public int getBidaiKodea() {
