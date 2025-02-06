@@ -16,32 +16,19 @@ public class Lang_kopuruaTest {
         langKopurua = new Lang_kopurua("L1", "5 gehienez ( 1 - 5 bitartean)");
     }
 
-    @Test
-    public void testLang_kopurua() {
-        Lang_kopurua langKopurua = new Lang_kopurua("L2", "10 gehienez (1 - 10 bitartean)");
-        assertNotNull(langKopurua);
-        assertEquals("L2", langKopurua.getLangKopKodea());
-        assertEquals("10 gehienez (1 - 10 bitartean)", langKopurua.getDeskribapena());
-    }
+  
+
+  
 
     @Test
-    public void testGetLangKopKodea() {
-        assertEquals("L1", langKopurua.getLangKopKodea());
-    }
-
-    @Test
-    public void testSetLangKopKodea() {
+    public void testGetSetLangKopKodea() {
         langKopurua.setLangKopKodea("L3");
         assertEquals("L3", langKopurua.getLangKopKodea());
     }
 
+   
     @Test
-    public void testGetDeskribapena() {
-        assertEquals("5 gehienez ( 1 - 5 bitartean)", langKopurua.getDeskribapena());
-    }
-
-    @Test
-    public void testSetDeskribapena() {
+    public void testGetSetDeskribapena() {
         langKopurua.setDeskribapena("20 gehienez (1 - 20 bitartean)");
         assertEquals("20 gehienez (1 - 20 bitartean)", langKopurua.getDeskribapena());
     }

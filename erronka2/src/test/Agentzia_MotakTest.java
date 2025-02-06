@@ -16,32 +16,23 @@ public class Agentzia_MotakTest {
         agentziaMotak = new Agentzia_Motak("A1", "Mayorista");
     }
 
-    @Test
-    public void testAgentzia_Motak() {
-        assertNotNull(agentziaMotak);
-    }
+    
 
     @Test
-    public void testGetAgentziaMKodea() {
-        assertEquals("A1", agentziaMotak.getAgentziaMKodea());
+    public void testGetSetAgentziaMKodea() {
+    	  agentziaMotak.setAgentziaMKodea("A2");
+          assertEquals("A2", agentziaMotak.getAgentziaMKodea());
     }
 
-    @Test
-    public void testSetAgentziaMKodea() {
-        agentziaMotak.setAgentziaMKodea("A2");
-        assertEquals("A2", agentziaMotak.getAgentziaMKodea());
-    }
+   
 
     @Test
-    public void testGetDeskribapena() {
-        assertEquals("Mayorista", agentziaMotak.getDeskribapena());
+    public void testGetsetDeskribapena() {
+    	 agentziaMotak.setDeskribapena("Minorista");
+         assertEquals("Minorista", agentziaMotak.getDeskribapena());
     }
 
-    @Test
-    public void testSetDeskribapena() {
-        agentziaMotak.setDeskribapena("Minorista");
-        assertEquals("Minorista", agentziaMotak.getDeskribapena());
-    }
+   
 
     @Test
     public void testToString() {

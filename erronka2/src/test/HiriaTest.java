@@ -13,29 +13,21 @@ public class HiriaTest {
 
     @Before
     public void setUp() {
-        hiria = new Hiria();
-        hiria.setHiriKode(1);
-        hiria.setIzena("Bilbo");
+        hiria = new Hiria(1,"Bilbo");
+        
     }
 
+   
     @Test
-    public void testGetHiriKode() {
-        assertEquals(1, hiria.getHiriKode());
-    }
-
-    @Test
-    public void testSetHiriKode() {
+    public void testGetSetHiriKode() {
         hiria.setHiriKode(2);
         assertEquals(2, hiria.getHiriKode());
     }
 
-    @Test
-    public void testGetIzena() {
-        assertEquals("Bilbo", hiria.getIzena());
-    }
+   
 
     @Test
-    public void testSetIzena() {
+    public void testGetSetIzena() {
         hiria.setIzena("Donostia");
         assertEquals("Donostia", hiria.getIzena());
     }

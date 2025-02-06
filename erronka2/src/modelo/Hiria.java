@@ -4,6 +4,10 @@ public class Hiria {
 	private int hiriKode;
 	private String izena;
 	
+	public Hiria(int hirikode, String izena) {
+		this.hiriKode = hirikode;
+		this.izena= izena;
+	}
 	public int getHiriKode() {
 		return hiriKode;
 	}

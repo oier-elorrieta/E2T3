@@ -35,7 +35,7 @@ public class Bidaia_MotakTest {
 
 	@Test
 	public void testToString() {
-		assertEquals("Herrialde [BidaiKodea=B1"   ", Deskribapena=" "]", null);
+		assertEquals("Herrialde [BidaiKodea=B1, Deskribapena=algo]", bidai_motak.toString());
 	}
 
 }

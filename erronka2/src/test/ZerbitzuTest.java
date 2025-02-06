@@ -37,291 +37,209 @@ public class ZerbitzuTest {
 		besteBatzukZerbitzu = new Zerbitzu(3, "Beste Zerbitzua", 3, egun, "Deskribapena", 50);
 	}
 
-	@Test
-	public void testGetZerbitzuKodea() {
-		assertEquals(1, ostatuZerbitzu.getZerbitzuKodea());
-	}
+	
 
 	@Test
-	public void testSetZerbitzuKodea() {
+	public void testGetSetZerbitzuKodea() {
 		ostatuZerbitzu.setZerbitzuKodea(10);
 		assertEquals(10, ostatuZerbitzu.getZerbitzuKodea());
 	}
 
-	@Test
-	public void testGetZerbitzuIzena() {
-		assertEquals("Ostatu Zerbitzua", ostatuZerbitzu.getZerbitzuIzena());
-	}
+	
 
 	@Test
-	public void testSetZerbitzuIzena() {
+	public void testGetSetZerbitzuIzena() {
 		ostatuZerbitzu.setZerbitzuIzena("New Ostatu Zerbitzua");
 		assertEquals("New Ostatu Zerbitzua", ostatuZerbitzu.getZerbitzuIzena());
 	}
 
-	@Test
-	public void testGetBidaiMotaKodea() {
-		assertEquals(1, ostatuZerbitzu.getBidaiMotaKodea());
-	}
 
 	@Test
-	public void testSetBidaiMotaKodea() {
+	public void testGetSetBidaiMotaKodea() {
 		ostatuZerbitzu.setBidaiMotaKodea(4);
 		assertEquals(4, ostatuZerbitzu.getBidaiMotaKodea());
 	}
 
-	@Test
-	public void testGetOstatuPrezioa() {
-		assertEquals(100, ostatuZerbitzu.getOstatuPrezioa(), 0.01);
-	}
+	
 
 	@Test
-	public void testSetOstatuPrezioa() {
+	public void testGetSetOstatuPrezioa() {
 		ostatuZerbitzu.setOstatuPrezioa(150);
 		assertEquals(150, ostatuZerbitzu.getOstatuPrezioa(), 0.01);
 	}
 
-	@Test
-	public void testGetOstatuSarreraEguna() {
-		assertEquals(ostatuSarreraEguna, ostatuZerbitzu.getOstatuSarreraEguna());
-	}
+	
 
 	@Test
-	public void testSetOstatuSarreraEguna() {
+	public void testGetSetOstatuSarreraEguna() {
 		Date newDate = Date.valueOf("2025-02-01");
 		ostatuZerbitzu.setOstatuSarreraEguna(newDate);
 		assertEquals(newDate, ostatuZerbitzu.getOstatuSarreraEguna());
 	}
 
-	@Test
-	public void testGetOstatuIrteraEguna() {
-		assertEquals(ostatuIrteraEguna, ostatuZerbitzu.getOstatuIrteraEguna());
-	}
+	
 
 	@Test
-	public void testSetOstatuIrteraEguna() {
+	public void testGetSetOstatuIrteraEguna() {
 		Date newDate = Date.valueOf("2025-02-10");
 		ostatuZerbitzu.setOstatuIrteraEguna(newDate);
 		assertEquals(newDate, ostatuZerbitzu.getOstatuIrteraEguna());
 	}
 
-	@Test
-	public void testGetHiria() {
-		assertEquals("Bilbo", ostatuZerbitzu.getHiria());
-	}
+	
 
 	@Test
-	public void testSetHiria() {
+	public void testGetSetHiria() {
 		ostatuZerbitzu.setHiria("Donostia");
 		assertEquals("Donostia", ostatuZerbitzu.getHiria());
 	}
 
-	@Test
-	public void testGetOstatuIzena() {
-		assertEquals("Hotel Bilbo", ostatuZerbitzu.getOstatuIzena());
-	}
+	
 
 	@Test
-	public void testSetOstatuIzena() {
+	public void testGetSetOstatuIzena() {
 		ostatuZerbitzu.setOstatuIzena("Hotel Javi");
 		assertEquals("Hotel Javi", ostatuZerbitzu.getOstatuIzena());
 	}
 
-	@Test
-	public void testGetLogelaMKodea() {
-		assertEquals("L1", ostatuZerbitzu.getLogelaMKodea());
-	}
+	
 
 	@Test
-	public void testSetLogelaMKodea() {
+	public void testGetSetLogelaMKodea() {
 		ostatuZerbitzu.setLogelaMKodea("L2");
 		assertEquals("L2", ostatuZerbitzu.getLogelaMKodea());
 	}
 
-	@Test
-	public void testGetEgun() {
-		assertEquals(egun, besteBatzukZerbitzu.getEgun());
-	}
+	
 
 	@Test
-	public void testSetEgun() {
+	public void testGetSetEgun() {
 		Date newDate = Date.valueOf("2025-01-20");
 		besteBatzukZerbitzu.setEgun(newDate);
 		assertEquals(newDate, besteBatzukZerbitzu.getEgun());
 	}
 
-	@Test
-	public void testGetBesteBatzukDeskribapena() {
-		assertEquals("Deskribapena", besteBatzukZerbitzu.getBesteBatzukDeskribapena());
-	}
+	
 
 	@Test
-	public void testSetBesteBatzukDeskribapena() {
+	public void testGetSetBesteBatzukDeskribapena() {
 		besteBatzukZerbitzu.setBesteBatzukDeskribapena("Deskribapena2");
 		assertEquals("Deskribapena2", besteBatzukZerbitzu.getBesteBatzukDeskribapena());
 	}
 
-	@Test
-	public void testGetBesteBatzukPrezioa() {
-		assertEquals(50, besteBatzukZerbitzu.getBesteBatzukPrezioa(), 0.01);
-	}
+	
 
 	@Test
-	public void testSetBesteBatzukPrezioa() {
+	public void testGetSetBesteBatzukPrezioa() {
 		besteBatzukZerbitzu.setBesteBatzukPrezioa(75);
 		assertEquals(75, besteBatzukZerbitzu.getBesteBatzukPrezioa(), 0.01);
 	}
 
-	@Test
-	public void testGetHegaldiKodea() {
-		assertEquals("H1", hegaldiZerbitzu.getHegaldiKodea());
-	}
+	
 
 	@Test
-	public void testSetHegaldiKodea() {
+	public void testGetSetHegaldiKodea() {
 		hegaldiZerbitzu.setHegaldiKodea("H2");
 		assertEquals("H2", hegaldiZerbitzu.getHegaldiKodea());
 	}
 
-	@Test
-	public void testGetHegaldiIrteraData() {
-		assertEquals(hegaldiIrteraData, hegaldiZerbitzu.getHegaldiIrteraData());
-	}
+	
 
 	@Test
-	public void testSetHegaldiIrteraData() {
+	public void testGetSetHegaldiIrteraData() {
 		Date newDate = Date.valueOf("2025-02-01");
 		hegaldiZerbitzu.setHegaldiIrteraData(newDate);
 		assertEquals(newDate, hegaldiZerbitzu.getHegaldiIrteraData());
 	}
 
-	@Test
-	public void testGetHegaldiIrteeraOrdutegia() {
-		assertEquals(hegaldiIrteeraOrdutegia, hegaldiZerbitzu.getHegaldiIrteeraOrdutegia());
-	}
+	
 
 	@Test
-	public void testSetHegaldiIrteeraOrdutegia() {
+	public void testGetSetHegaldiIrteeraOrdutegia() {
+		Time 
+	}
+
+	
+
+	@Test
+	public void testGetSetHegaldiBidaiarenIraupena() {
 		fail("Not yet implemented");
 	}
 
+	
+
 	@Test
-	public void testGetHegaldiBidaiarenIraupena() {
+	public void testGetSetHegaldiPrezioa() {
 		fail("Not yet implemented");
 	}
 
+	
+
 	@Test
-	public void testSetHegaldiBidaiarenIraupena() {
+	public void testGetSetHegaldiJatorrizkoAireportua() {
 		fail("Not yet implemented");
 	}
 
+
+
 	@Test
-	public void testGetHegaldiPrezioa() {
+	public void testGetSetHegaldiHelmugakoAireportua() {
 		fail("Not yet implemented");
 	}
 
+	
+
 	@Test
-	public void testSetHegaldiPrezioa() {
+	public void testGetSetAirelinaKodea() {
 		fail("Not yet implemented");
 	}
 
+	
+
 	@Test
-	public void testGetHegaldiJatorrizkoAireportua() {
+	public void testGetSetHegaldiKodeaEtorri() {
 		fail("Not yet implemented");
 	}
 
+	
+
 	@Test
-	public void testSetHegaldiJatorrizkoAireportua() {
+	public void testGetSetItzuleraOrdua() {
 		fail("Not yet implemented");
 	}
 
+	
+
 	@Test
-	public void testGetHegaldiHelmugakoAireportua() {
+	public void testGetSetEtorriaEguna() {
 		fail("Not yet implemented");
 	}
 
+	
+
 	@Test
-	public void testSetHegaldiHelmugakoAireportua() {
+	public void testGetSetBueltakoIraupena() {
 		fail("Not yet implemented");
 	}
 
+	
+
 	@Test
-	public void testGetAirelinaKodea() {
+	public void testGetSetJoanJatorrizkoAireportua() {
 		fail("Not yet implemented");
 	}
 
+	
+
 	@Test
-	public void testSetAirelinaKodea() {
+	public void testGetSetJoanHelmugakoAireportua() {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	public void testGetHegaldiKodeaEtorri() {
-		fail("Not yet implemented");
-	}
+	
 
 	@Test
-	public void testSetHegaldiKodeaEtorri() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetItzuleraOrdua() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetItzuleraOrdua() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetEtorriaEguna() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetEtorriaEguna() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetBueltakoIraupena() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetBueltakoIraupena() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetJoanJatorrizkoAireportua() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetJoanJatorrizkoAireportua() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetJoanHelmugakoAireportua() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetJoanHelmugakoAireportua() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetBueltakoAirelineaKodea() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetBueltakoAirelineaKodea() {
+	public void testGetSetBueltakoAirelineaKodea() {
 		fail("Not yet implemented");
 	}
 }

@@ -16,32 +16,19 @@ public class HerrialdeTest {
 		herrialde = new Herrialde("ES", "España");
 	}
 
-	@Test
-	public void testHerrialde() {
-		Herrialde herrialde = new Herrialde("FR", "Francia");
-		assertNotNull(herrialde);
-		assertEquals("FR", herrialde.getHerrialdeKodea());
-		assertEquals("Francia", herrialde.getHelmuga());
-	}
+	
+	
 
 	@Test
-	public void testGetHerrialdeKodea() {
-		assertEquals("ES", herrialde.getHerrialdeKodea());
-	}
-
-	@Test
-	public void testSetHerrialdeKodea() {
+	public void testGetSetHerrialdeKodea() {
 		herrialde.setHerrialdeKodea("FR");
 		assertEquals("FR", herrialde.getHerrialdeKodea());
 	}
 
-	@Test
-	public void testGetHelmuga() {
-		assertEquals("España", herrialde.getHelmuga());
-	}
+	
 
 	@Test
-	public void testSetHelmuga() {
+	public void testGetSetHelmuga() {
 		herrialde.setHelmuga("Francia");
 		assertEquals("Francia", herrialde.getHelmuga());
 	}

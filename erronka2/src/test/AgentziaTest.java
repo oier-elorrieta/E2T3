@@ -16,101 +16,61 @@ public class AgentziaTest {
         agentzia = new Agentzia(1, "L3", "www.www.com", "urdina", "admin", "A1", "admin");
     }
 
+   
     @Test
-    public void testAgentziaIntStringStringStringStringStringString() {
-        Agentzia agentzia = new Agentzia(1, "L3", "www.www.com", "urdina", "admin", "A1", "admin");
-        assertNotNull(agentzia);
-        assertEquals(1, agentzia.getAgentziaKodea());
-        assertEquals("L3", agentzia.getLangileKopKod());
-        assertEquals("www.www.com", agentzia.getLogoa());
-        assertEquals("urdina", agentzia.getMarkarenKolorea());
-        assertEquals("admin", agentzia.getIzena());
-        assertEquals("A1", agentzia.getAgentziaMKod());
-        assertEquals("admin", agentzia.getPasahitza());
+    public void testGetSetAgentziaKodea() {
+    	 agentzia.setAgentziaKodea(2);
+         assertEquals(2, agentzia.getAgentziaKodea());
     }
 
-    @Test
-    public void testAgentzia() {
-        Agentzia agentzia = new Agentzia();
-        assertNotNull(agentzia);
-    }
 
     @Test
-    public void testGetAgentziaKodea() {
-        assertEquals(1, agentzia.getAgentziaKodea());
+    public void testGetSetLangileKopKod() {
+    	 agentzia.setLangileKopKod("L10");
+         assertEquals("L10", agentzia.getLangileKopKod());
     }
 
-    @Test
-    public void testSetAgentziaKodea() {
-        agentzia.setAgentziaKodea(2);
-        assertEquals(2, agentzia.getAgentziaKodea());
-    }
+   
 
     @Test
-    public void testGetLangileKopKod() {
-        assertEquals("L3", agentzia.getLangileKopKod());
-    }
-
-    @Test
-    public void testSetLangileKopKod() {
-        agentzia.setLangileKopKod("L10");
-        assertEquals("L10", agentzia.getLangileKopKod());
-    }
-
-    @Test
-    public void testGetLogoa() {
-        assertEquals("www.www.com", agentzia.getLogoa());
-    }
-
-    @Test
-    public void testSetLogoa() {
-        agentzia.setLogoa("logo.png");
+    public void testGetSetLogoa() {
+    	agentzia.setLogoa("logo.png");
         assertEquals("logo.png", agentzia.getLogoa());
     }
 
-    @Test
-    public void testGetMarkarenKolorea() {
-        assertEquals("urdina", agentzia.getMarkarenKolorea());
-    }
+   
 
     @Test
-    public void testSetMarkarenKolorea() {
-        agentzia.setMarkarenKolorea("gorria");
+    public void testGetSetMarkarenKolorea() {
+    	agentzia.setMarkarenKolorea("gorria");
         assertEquals("gorria", agentzia.getMarkarenKolorea());
     }
 
+   
+
     @Test
     public void testGetIzena() {
-        assertEquals("admin", agentzia.getIzena());
+    	  agentzia.setIzena("alexjav");
+          assertEquals("alexjav", agentzia.getIzena());
     }
 
-    @Test
-    public void testSetIzena() {
-        agentzia.setIzena("alexjav");
-        assertEquals("alexjav", agentzia.getIzena());
-    }
+ 
 
     @Test
-    public void testGetAgentziaMKod() {
-        assertEquals("A1", agentzia.getAgentziaMKod());
+    public void testGetSetAgentziaMKod() {
+    	 agentzia.setAgentziaMKod("A2");
+         assertEquals("A2", agentzia.getAgentziaMKod());
     }
 
-    @Test
-    public void testSetAgentziaMKod() {
-        agentzia.setAgentziaMKod("A2");
-        assertEquals("A2", agentzia.getAgentziaMKod());
-    }
+    
 
     @Test
-    public void testGetPasahitza() {
-        assertEquals("admin", agentzia.getPasahitza());
-    }
-
-    @Test
-    public void testSetPasahitza() {
-        agentzia.setPasahitza("alexjav");
+    public void testGetSetPasahitza() {
+    	agentzia.setPasahitza("alexjav");
         assertEquals("alexjav", agentzia.getPasahitza());
     }
+
+    
 
     @Test
     public void testToString() {

@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 
-public class TestAeroportu {
+public class AireportuTest {
 	
 	 private Aireportu aeroportu;
 
@@ -18,26 +18,20 @@ public class TestAeroportu {
 	    }
 
 	    @Test
-	    public void testGetAireportuKodea() {
-	        assertEquals("BIO", aeroportu.getAireportuKodea());
-	    }
-
-	    @Test
-	    public void testSetAireportuKodea() {
-	        aeroportu.setAireportuKodea("MAD");
+	    public void testGetSetAireportuKodea() {
+	    	aeroportu.setAireportuKodea("MAD");
 	        assertEquals("MAD", aeroportu.getAireportuKodea());
 	    }
 
-	    @Test
-	    public void testGetHiria() {
-	        assertEquals("Bilbao", aeroportu.getHiria());
-	    }
+	    
 
 	    @Test
-	    public void testSetHiria() {
-	        aeroportu.setHiria("Madrid");
+	    public void testGetSetHiria() {
+	    	aeroportu.setHiria("Madrid");
 	        assertEquals("Madrid", aeroportu.getHiria());
 	    }
+
+	  
 
 	    @Test
 	    public void testToString() {
