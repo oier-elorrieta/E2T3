@@ -10,11 +10,11 @@ public class Cache {
 
 	}
 
-	public static Agentzia getAgentzia() {
+	public Agentzia getAgentzia() {
 		return agentzia;
 	}
 
-	public static void setAgentzia(Agentzia agentzia) {
+	public void setAgentzia(Agentzia agentzia) {
 		Cache.agentzia = agentzia;
 	}
 

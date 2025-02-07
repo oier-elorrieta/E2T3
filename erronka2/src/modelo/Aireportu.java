@@ -1,9 +1,16 @@
 package modelo;
 
-public class Aeroportu {
+public class Aireportu {
 	
 	private String aireportuKodea;
 	private String hiria;
+	
+	
+	
+	public Aireportu(String aireportuKodea, String hiria) {
+		this.aireportuKodea = aireportuKodea;
+		this.hiria = hiria;
+	}
 	
 	public String getAireportuKodea() {
 		return aireportuKodea;
