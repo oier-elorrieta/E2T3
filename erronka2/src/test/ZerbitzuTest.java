@@ -11,34 +11,47 @@ import modelo.Zerbitzu;
 
 public class ZerbitzuTest {
 
-	private Zerbitzu ostatuZerbitzu;
-	private Zerbitzu hegaldiZerbitzu;
-	private Zerbitzu besteBatzukZerbitzu;
-	private Date ostatuSarreraEguna;
-	private Date ostatuIrteraEguna;
-	private Date hegaldiIrteraData;
-	private Time hegaldiIrteeraOrdutegia;
-	private Time hegaldiBidaiarenIraupena;
-	private Date egun;
+	 private Zerbitzu ostatuZerbitzu;
+	    private Zerbitzu hegaldiZerbitzu;
+	    private Zerbitzu besteBatzukZerbitzu;
+	    private Zerbitzu joanEtorriZerbitzu;
+	    private Zerbitzu zerbitzu;
+	    private Date ostatuSarreraEguna;
+	    private Date ostatuIrteraEguna;
+	    private Date hegaldiIrteraData;
+	    private Time hegaldiIrteeraOrdutegia;
+	    private Time hegaldiBidaiarenIraupena;
+	    private Date egun;
+	    private Time itzuleraOrdua;
+	    private Date etorriaEguna;
+	    private Time bueltakoIraupena;
 
 	@Before
 	public void setUp() {
 		ostatuSarreraEguna = Date.valueOf("2025-01-01");
-		ostatuIrteraEguna = Date.valueOf("2025-01-10");
-		hegaldiIrteraData = Date.valueOf("2025-01-01");
-		hegaldiIrteeraOrdutegia = Time.valueOf("10:00:00");
-		hegaldiBidaiarenIraupena = Time.valueOf("02:00:00");
-		egun = Date.valueOf("2025-01-15");
+        ostatuIrteraEguna = Date.valueOf("2025-01-10");
+        hegaldiIrteraData = Date.valueOf("2025-01-01");
+        hegaldiIrteeraOrdutegia = Time.valueOf("10:00:00");
+        hegaldiBidaiarenIraupena = Time.valueOf("02:00:00");
+        egun = Date.valueOf("2025-01-15");
+        itzuleraOrdua = Time.valueOf("12:00:00");
+        etorriaEguna = Date.valueOf("2025-01-02");
+        bueltakoIraupena = Time.valueOf("02:00:00");
 
-		ostatuZerbitzu = new Zerbitzu(1, "Ostatu Zerbitzua", 1, 100, ostatuSarreraEguna, ostatuIrteraEguna, "Bilbo",
-				"Hotel Bilbo", "L1");
-		hegaldiZerbitzu = new Zerbitzu(2, "Hegaldi Zerbitzua", 2, "H1", hegaldiIrteraData, hegaldiIrteeraOrdutegia,
-				hegaldiBidaiarenIraupena, 200, "BIO", "MAD", "A1");
-		besteBatzukZerbitzu = new Zerbitzu(3, "Beste Zerbitzua", 3, egun, "Deskribapena", 50);
+        ostatuZerbitzu = new Zerbitzu(1, "Ostatu Zerbitzua", 1, 100, ostatuSarreraEguna, ostatuIrteraEguna, "Bilbo", "Hotel Bilbo", "L1");
+        hegaldiZerbitzu = new Zerbitzu(2, "Hegaldi Zerbitzua", 2, "H1", hegaldiIrteraData, hegaldiIrteeraOrdutegia, hegaldiBidaiarenIraupena, 200, "BIO", "MAD", "A1");
+        besteBatzukZerbitzu = new Zerbitzu(3, "Beste Zerbitzua", 3, egun, "Deskribapena", 50);
+
+        joanEtorriZerbitzu = new Zerbitzu(4, "Joan Etorri Zerbitzua", 4, "HE123", hegaldiIrteraData, hegaldiIrteeraOrdutegia, 
+                                          hegaldiBidaiarenIraupena, 150.0f, "JFK", "LAX", "A123", "HE124", 
+                                          itzuleraOrdua, etorriaEguna, bueltakoIraupena, "LAX", "JFK", "A124");
+        zerbitzu = new Zerbitzu();
 	}
 
 	
 
+	
+	
 	@Test
 	public void testGetSetZerbitzuKodea() {
 		ostatuZerbitzu.setZerbitzuKodea(10);
@@ -267,4 +280,10 @@ public class ZerbitzuTest {
 		hegaldiZerbitzu.setBueltakoAirelineaKodea("B2");
 		assertEquals("B2",hegaldiZerbitzu.getBueltakoAirelineaKodea());
 	}
+	
+	@Test
+    public void testToString() {
+        String expected = "Zerbitzu [zerbitzuKodea=4, zerbitzuIzena=Joan Etorri Zerbitzua, bidaiKodea=4, hegaldiKodea=HE123, hegaldiIrteraData=2025-01-01, hegaldiIrteeraOrdutegia=10:00:00, hegaldiBidaiarenIraupena=02:00:00, hegaldiPrezioa=150.0, hegaldiJatorrizkoAireportua=JFK, hegaldiHelmugakoAireportua=LAX, airelinaKodea=A123, hegaldiKodeaEtorri=HE124, itzuleraOrdua=12:00:00, etorriaEguna=2025-01-02, bueltakoIraupena=02:00:00, joanJatorrizkoAireportua=LAX, joanHelmugakoAireportua=JFK, bueltakoAirelineaKodea=A124]";
+        assertEquals(expected, joanEtorriZerbitzu.toString());
+    }
 }
