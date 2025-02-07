@@ -20,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Font;
@@ -67,8 +69,21 @@ public class Hasiera extends JFrame {
 		tablaBidaiak.setCellSelectionEnabled(true);
 		tablaBidaiak.setColumnSelectionAllowed(true);
 
+		tablaBidaiak.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent event) {
+				if (!event.getValueIsAdjusting()) { // Para evitar múltiples eventos en una sola selección
+					int row = tablaBidaiak.getSelectedRow();
+					int column = tablaBidaiak.getSelectedColumn();
+					if (row != -1 && column != -1) { // Verifica que haya una celda seleccionada
+						//taulaBeteZerbitzuak();
+					}
+				}
+			}
+		});
+
 		DefaultTableModel bidaiModeloa = new DefaultTableModel(new Object[][] {}, // Tabla vacía inicialmente
-				new String[] {"Bidaiak", "Mota", "Egunak", "Hasiera data", "Amaiera data", "Herrialdea" });
+				new String[] { "Bidaiak", "Mota", "Egunak", "Hasiera data", "Amaiera data", "Herrialdea" });
 
 		// Asociar el modelo a la tabla
 		tablaBidaiak.setModel(bidaiModeloa);
@@ -79,8 +94,8 @@ public class Hasiera extends JFrame {
 		getContentPane().add(scrollPaneBidaiak);
 
 		// Obtener los datos DESPUÉS de crear la tabla
-		
-		 bidaiaList = sm.bidaiakEduki(); // Llamada a la base de datos
+
+		bidaiaList = sm.bidaiakEduki(); // Llamada a la base de datos
 
 		// Llenar la tabla con los datos obtenidos
 		taulaBeteBidaia();
@@ -99,7 +114,7 @@ public class Hasiera extends JFrame {
 		scrollPaneZerbitzuak.setBounds(125, 350, 431, 95);
 		getContentPane().add(scrollPaneZerbitzuak);
 
-		//ArrayList<Zerbitzu> zerbitzuak;
+		// ArrayList<Zerbitzu> zerbitzuak;
 
 		btnBidaiBerria = new JButton("Bidai berria");
 		btnBidaiBerria.addActionListener(new ActionListener() {
@@ -224,42 +239,42 @@ public class Hasiera extends JFrame {
 		});
 
 	}
-	
 
 	private void taulaBeteBidaia() {
-	    DefaultTableModel modelo = (DefaultTableModel) tablaBidaiak.getModel();
-	    modelo.setRowCount(0); // Limpiar la tabla antes de insertar nuevos datos
+		DefaultTableModel modelo = (DefaultTableModel) tablaBidaiak.getModel();
+		modelo.setRowCount(0); // Limpiar la tabla antes de insertar nuevos datos
 
-	    String herrialdeIzena, bidaiMota, egunak;
-	    kontagailu = 0; // Reiniciar contador antes de rellenar
+		String herrialdeIzena, bidaiMota, egunak;
+		kontagailu = 0; // Reiniciar contador antes de rellenar
 
-	    for (Bidaia b : bidaiaList) {
-	        herrialdeIzena = convertHerrialde();
-	        bidaiMota = convertBidaiMota();
-	        egunak = kalkulatuDiferentzia();
+		for (Bidaia b : bidaiaList) {
+			herrialdeIzena = convertHerrialde();
+			bidaiMota = convertBidaiMota();
+			egunak = kalkulatuDiferentzia();
 
-	        modelo.addRow(new Object[]{b.getIzena(), bidaiMota, egunak, b.getBidaiHasiera(), b.getBidaiAmaiera(), herrialdeIzena});
-	        
-	        kontagailu++; // Incrementamos el contador cuando agregamos una fila
-	    }
-	    System.out.println("Kontagailu eguneratua: " + kontagailu);
+			modelo.addRow(new Object[] { b.getIzena(), bidaiMota, egunak, b.getBidaiHasiera(), b.getBidaiAmaiera(),
+					herrialdeIzena });
+
+			kontagailu++; // Incrementamos el contador cuando agregamos una fila
+		}
+		System.out.println("Kontagailu eguneratua: " + kontagailu);
 	}
 /*
 	private void taulaBeteZerbitzuak() {
 		DefaultTableModel modelo = (DefaultTableModel) tablaBidaiak.getModel();
 		modelo.setRowCount(0); // Limpiar la tabla antes de insertar nuevos datos
-		//ArrayList<Bidaia> bidaiaList = sm.bidaiakEduki();
 
-		String herrialdeIzena = convertHerrialde();
-		String bidaiMota = convertBidaiMota();
-		String egunak = kalkulatuDiferentzia();
+		String izena = ;
+		String mota = ;
+		String data = ;
+		float prezioa = ; 
 
 		for (Bidaia b : bidaiaList) {
 			modelo.addRow(new Object[] { b.getIzena(), bidaiMota, egunak, b.getBidaiHasiera(), b.getBidaiAmaiera(),
 					herrialdeIzena });
 		}
-	}*/
-
+	}
+*/
 	private String convertHerrialde() {
 		ArrayList<Herrialde> herrialdeList = sm.herrialdeMotaEduki();
 
@@ -278,10 +293,9 @@ public class Hasiera extends JFrame {
 		}
 		return "Ez dago helmugarik";
 	}
-	
 
 	private String convertBidaiMota() {
-		
+
 		ArrayList<Bidai_Motak> bidaiMotaList = sm.bidaiMotaEduki();
 
 		for (int i = kontagailu; i < bidaiaList.size(); i++) {

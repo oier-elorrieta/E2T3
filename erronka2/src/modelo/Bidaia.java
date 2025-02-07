@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class Bidaia {
-	private ArrayList <Zerbitzu> zerbitzuak;
+	private ArrayList <Zerbitzu> zerbitzuak = new ArrayList<>();
 	private int bidaiKodea;
 	private String izena;
 	private String deskribapena;
@@ -27,21 +27,7 @@ public class Bidaia {
 		this.bidaiaMKod = bidaiaMKod;
 		this.agentziaKod = agentziaKod;
 	}
-	
-	public Bidaia(ArrayList<Zerbitzu> zerbitzuak, int bidaiKodea, String izena, String deskribapena, String ezBarne,
-			Date bidaiHasiera, Date bidaiAmaiera, String herrialdeKod, String bidaiaMKod, int agentziaKod) {
-		this.zerbitzuak = zerbitzuak;
-		this.bidaiKodea = bidaiKodea;
-		this.izena = izena;
-		this.deskribapena = deskribapena;
-		EzBarne = ezBarne;
-		this.bidaiHasiera = bidaiHasiera;
-		this.bidaiAmaiera = bidaiAmaiera;
-		this.herrialdeKod = herrialdeKod;
-		this.bidaiaMKod = bidaiaMKod;
-		this.agentziaKod = agentziaKod;
-	}
-	
+		
 	public Bidaia() {
 		
 	}
@@ -124,10 +110,12 @@ public class Bidaia {
 
 	@Override
 	public String toString() {
-		return "Bidaia [bidaiKodea=" + bidaiKodea + ", izena=" + izena
+		return "Bidaia [zerbitzuak=" + zerbitzuak + ", bidaiKodea=" + bidaiKodea + ", izena=" + izena
 				+ ", deskribapena=" + deskribapena + ", EzBarne=" + EzBarne + ", bidaiHasiera=" + bidaiHasiera
 				+ ", bidaiAmaiera=" + bidaiAmaiera + ", herrialdeKod=" + herrialdeKod + ", bidaiaMKod=" + bidaiaMKod
 				+ ", agentziaKod=" + agentziaKod + "]";
 	}
+
+	
 
 }

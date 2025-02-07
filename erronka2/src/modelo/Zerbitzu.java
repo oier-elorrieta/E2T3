@@ -278,6 +278,23 @@ public class Zerbitzu {
 	public void setBueltakoAirelineaKodea(String bueltakoAirelineaKodea) {
 		this.bueltakoAirelineaKodea = bueltakoAirelineaKodea;
 	}
+
+	@Override
+	public String toString() {
+		return "Zerbitzu [zerbitzuKodea=" + zerbitzuKodea + ", zerbitzuIzena=" + zerbitzuIzena + ", bidaiKodea="
+				+ bidaiKodea + ", ostatuPrezioa=" + ostatuPrezioa + ", ostatuSarreraEguna=" + ostatuSarreraEguna
+				+ ", ostatuIrteraEguna=" + ostatuIrteraEguna + ", hiria=" + hiria + ", ostatuIzena=" + ostatuIzena
+				+ ", logelaMKodea=" + logelaMKodea + ", egun=" + egun + ", besteBatzukDeskribapena="
+				+ besteBatzukDeskribapena + ", besteBatzukPrezioa=" + besteBatzukPrezioa + ", hegaldiKodea="
+				+ hegaldiKodea + ", hegaldiIrteraData=" + hegaldiIrteraData + ", hegaldiIrteeraOrdutegia="
+				+ hegaldiIrteeraOrdutegia + ", hegaldiBidaiarenIraupena=" + hegaldiBidaiarenIraupena
+				+ ", hegaldiPrezioa=" + hegaldiPrezioa + ", hegaldiJatorrizkoAireportua=" + hegaldiJatorrizkoAireportua
+				+ ", hegaldiHelmugakoAireportua=" + hegaldiHelmugakoAireportua + ", airelinaKodea=" + airelinaKodea
+				+ ", hegaldiKodeaEtorri=" + hegaldiKodeaEtorri + ", itzuleraOrdua=" + itzuleraOrdua + ", etorriaEguna="
+				+ etorriaEguna + ", bueltakoIraupena=" + bueltakoIraupena + ", joanJatorrizkoAireportua="
+				+ joanJatorrizkoAireportua + ", joanHelmugakoAireportua=" + joanHelmugakoAireportua
+				+ ", bueltakoAirelineaKodea=" + bueltakoAirelineaKodea + "]";
+	}
 	
 	
 	
