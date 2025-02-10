@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import modelo.pojo.Agentzia;
+import modelo.Agentzia;
 
 public class AgentziaTest {
 
@@ -16,6 +16,12 @@ public class AgentziaTest {
         agentzia = new Agentzia(1, "L3", "www.www.com", "urdina", "admin", "A1", "admin");
     }
 
+    @Test
+    public void testAgentzia() {
+    	Agentzia agentzia = new Agentzia();
+    	
+    	
+    }
    
     @Test
     public void testGetSetAgentziaKodea() {

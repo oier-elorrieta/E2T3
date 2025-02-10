@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import modelo.pojo.Bidai_Motak;
+import modelo.Bidai_Motak;
 
 public class Bidaia_MotakTest {
 	private Bidai_Motak bidai_motak;

@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import modelo.pojo.Logela_motak;
+import modelo.Logela_motak;
 
 public class Logela_MotakTest {
 	private Logela_motak logela_motak;

@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import modelo.pojo.Hiria;
+import modelo.Hiria;
 
 public class HiriaTest {
 
