@@ -1,4 +1,4 @@
-package modelo;
+package modelo.pojo;
 
 public class Logela_motak {
 	

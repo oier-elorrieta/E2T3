@@ -61,11 +61,11 @@ public class LehioarenFuntioak {
 		});
 	}
 	
-	public void irekiZerbitzuak() {
+	public void irekiZerbitzuak(int idBidaia) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Zerbitzuak frame = new Zerbitzuak();
+					Zerbitzuak frame = new Zerbitzuak(idBidaia);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

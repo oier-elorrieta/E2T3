@@ -7,7 +7,7 @@ import java.sql.Time;
 import org.junit.Before;
 import org.junit.Test;
 
-import modelo.Zerbitzu;
+import modelo.pojo.Zerbitzu;
 
 public class ZerbitzuTest {
 

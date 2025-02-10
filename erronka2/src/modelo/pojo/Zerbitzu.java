@@ -1,4 +1,4 @@
-package modelo;
+package modelo.pojo;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -16,7 +16,6 @@ public class Zerbitzu {
 	private Date ostatuSarreraEguna;
 	private Date ostatuIrteraEguna;
 	private String hiria;
-	private String ostatuIzena;
 	private String logelaMKodea;
 	
 	//Beste batzuk taula
@@ -47,7 +46,7 @@ public class Zerbitzu {
 	private String bueltakoAirelineaKodea;
 	
 	public Zerbitzu(int zerbitzuKodea, String zerbitzuIzena, int bidaiMotaKodea, float ostatuPrezioa,
-			Date ostatuSarreraEguna, Date ostatuIrteraEguna, String hiria, String ostatuIzena, String logelaMKodea) {
+			Date ostatuSarreraEguna, Date ostatuIrteraEguna, String hiria, String logelaMKodea) {
 		this.zerbitzuKodea = zerbitzuKodea;
 		this.zerbitzuIzena = zerbitzuIzena;
 		this.bidaiKodea = bidaiMotaKodea;
@@ -55,7 +54,6 @@ public class Zerbitzu {
 		this.ostatuSarreraEguna = ostatuSarreraEguna;
 		this.ostatuIrteraEguna = ostatuIrteraEguna;
 		this.hiria = hiria;
-		this.ostatuIzena = ostatuIzena;
 		this.logelaMKodea = logelaMKodea;
 	}
 	
@@ -158,12 +156,7 @@ public class Zerbitzu {
 	public void setHiria(String hiria) {
 		this.hiria = hiria;
 	}
-	public String getOstatuIzena() {
-		return ostatuIzena;
-	}
-	public void setOstatuIzena(String ostatuIzena) {
-		this.ostatuIzena = ostatuIzena;
-	}
+	
 	public String getLogelaMKodea() {
 		return logelaMKodea;
 	}
@@ -283,18 +276,19 @@ public class Zerbitzu {
 	public String toString() {
 		return "Zerbitzu [zerbitzuKodea=" + zerbitzuKodea + ", zerbitzuIzena=" + zerbitzuIzena + ", bidaiKodea="
 				+ bidaiKodea + ", ostatuPrezioa=" + ostatuPrezioa + ", ostatuSarreraEguna=" + ostatuSarreraEguna
-				+ ", ostatuIrteraEguna=" + ostatuIrteraEguna + ", hiria=" + hiria + ", ostatuIzena=" + ostatuIzena
-				+ ", logelaMKodea=" + logelaMKodea + ", egun=" + egun + ", besteBatzukDeskribapena="
-				+ besteBatzukDeskribapena + ", besteBatzukPrezioa=" + besteBatzukPrezioa + ", hegaldiKodea="
-				+ hegaldiKodea + ", hegaldiIrteraData=" + hegaldiIrteraData + ", hegaldiIrteeraOrdutegia="
-				+ hegaldiIrteeraOrdutegia + ", hegaldiBidaiarenIraupena=" + hegaldiBidaiarenIraupena
-				+ ", hegaldiPrezioa=" + hegaldiPrezioa + ", hegaldiJatorrizkoAireportua=" + hegaldiJatorrizkoAireportua
-				+ ", hegaldiHelmugakoAireportua=" + hegaldiHelmugakoAireportua + ", airelinaKodea=" + airelinaKodea
-				+ ", hegaldiKodeaEtorri=" + hegaldiKodeaEtorri + ", itzuleraOrdua=" + itzuleraOrdua + ", etorriaEguna="
-				+ etorriaEguna + ", bueltakoIraupena=" + bueltakoIraupena + ", joanJatorrizkoAireportua="
-				+ joanJatorrizkoAireportua + ", joanHelmugakoAireportua=" + joanHelmugakoAireportua
-				+ ", bueltakoAirelineaKodea=" + bueltakoAirelineaKodea + "]";
+				+ ", ostatuIrteraEguna=" + ostatuIrteraEguna + ", hiria=" + hiria + ", logelaMKodea=" + logelaMKodea
+				+ ", egun=" + egun + ", besteBatzukDeskribapena=" + besteBatzukDeskribapena + ", besteBatzukPrezioa="
+				+ besteBatzukPrezioa + ", hegaldiKodea=" + hegaldiKodea + ", hegaldiIrteraData=" + hegaldiIrteraData
+				+ ", hegaldiIrteeraOrdutegia=" + hegaldiIrteeraOrdutegia + ", hegaldiBidaiarenIraupena="
+				+ hegaldiBidaiarenIraupena + ", hegaldiPrezioa=" + hegaldiPrezioa + ", hegaldiJatorrizkoAireportua="
+				+ hegaldiJatorrizkoAireportua + ", hegaldiHelmugakoAireportua=" + hegaldiHelmugakoAireportua
+				+ ", airelinaKodea=" + airelinaKodea + ", hegaldiKodeaEtorri=" + hegaldiKodeaEtorri + ", itzuleraOrdua="
+				+ itzuleraOrdua + ", etorriaEguna=" + etorriaEguna + ", bueltakoIraupena=" + bueltakoIraupena
+				+ ", joanJatorrizkoAireportua=" + joanJatorrizkoAireportua + ", joanHelmugakoAireportua="
+				+ joanHelmugakoAireportua + ", bueltakoAirelineaKodea=" + bueltakoAirelineaKodea + "]";
 	}
+
+
 	
 	
 	

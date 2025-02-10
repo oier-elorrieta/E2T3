@@ -1,4 +1,4 @@
-package modelo;
+package modelo.pojo;
 
 public class Hiria {
 	private int hiriKode;

@@ -6,7 +6,10 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 
-import modelo.*;
+import modelo.pojo.Bidai_Motak;
+import modelo.pojo.Cache;
+import modelo.pojo.Herrialde;
+import modelo.sql.SqlMetodoak;
 
 import javax.swing.JLabel;
 import java.awt.Color;
@@ -26,6 +29,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class Bidaiak extends JFrame {
 
 	private JPanel contentPane;

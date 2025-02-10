@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import modelo.Bidaia;
-import modelo.Zerbitzu;
+import modelo.pojo.Bidaia;
+import modelo.pojo.Zerbitzu;
 
 public class BidaiaTest {
 

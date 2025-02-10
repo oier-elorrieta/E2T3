@@ -1,6 +1,4 @@
-package modelo;
-
-import java.util.ArrayList;
+package modelo.pojo;
 
 public class Agentzia {
 	private int agentziaKodea;

@@ -19,11 +19,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent; 
 import javax.swing.event.DocumentListener;
-
-import modelo.*;
+import modelo.pojo.Agentzia_Motak;
+import modelo.pojo.Lang_kopurua;
+import modelo.sql.SqlMetodoak;
 
 import javax.swing.JComboBox;
 
+@SuppressWarnings("serial")
 public class Register extends JFrame {
 
 	private JPanel contentPane;

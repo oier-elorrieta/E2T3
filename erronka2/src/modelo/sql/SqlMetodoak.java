@@ -1,15 +1,27 @@
-package modelo;
+package modelo.sql;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
+
+import modelo.pojo.Agentzia;
+import modelo.pojo.Agentzia_Motak;
+import modelo.pojo.Airelinea;
+import modelo.pojo.Aireportu;
+import modelo.pojo.Bidai_Motak;
+import modelo.pojo.Bidaia;
+import modelo.pojo.Cache;
+import modelo.pojo.Herrialde;
+import modelo.pojo.Lang_kopurua;
+import modelo.pojo.Logela_motak;
+import modelo.pojo.Zerbitzu;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import vista.Zerbitzuak;
 
 public class SqlMetodoak {
 
@@ -78,6 +90,280 @@ public class SqlMetodoak {
 		} finally {
 			konexioa.konexioaItxi(); // Cierra la conexión
 		}
+	}
+	
+	public void ezabatuZerbitzua(int zerbitzuKod) {
+		try {
+			konexioa.konexioaIreki(); // Abre la conexión
+
+			// Consulta DELETE con parámetro ? (seguro)
+			String sql = "DELETE FROM zerbitzuak WHERE kodea = ?";
+			PreparedStatement preparedStatement = konexioa.konektatuta.prepareStatement(sql);
+
+			// Asignamos el parámetro bidaiKodea a la consulta
+			preparedStatement.setInt(1, zerbitzuKod);
+
+			// Ejecutamos el DELETE y verificamos cuántas filas se eliminaron
+			int filasAfectadas = preparedStatement.executeUpdate();
+
+			if (filasAfectadas > 0) {
+				System.out.println("Ezabatuta.");
+			} else {
+				System.out.println("Ez da ezabatu.");
+			}
+
+			// Cierra el PreparedStatement después de su uso
+			preparedStatement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace(); // Muestra el error en consola
+		} finally {
+			konexioa.konexioaItxi(); // Cierra la conexión
+		}
+	}
+
+	public void zerbitzuJoanEgin(int bidaiKodea, String jatorrizkoAireportua, String helmugakoAireportua,
+			String sJoanekoData, String hegaldiKodea, String aerolinea, float prezio, Time orduteguia, Time iraupena) {
+
+		Zerbitzu zerbitzuak = new Zerbitzu();
+		
+		System.out.println(aerolinea);
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+		zerbitzuak.setZerbitzuIzena("Hegaldia");
+		zerbitzuak.setHegaldiJatorrizkoAireportua(jatorrizkoAireportua);
+		zerbitzuak.setHegaldiHelmugakoAireportua(helmugakoAireportua);
+		LocalDate irteeraData = LocalDate.parse(sJoanekoData, formatter);
+		zerbitzuak.setHegaldiIrteraData(Date.valueOf(irteeraData));
+		zerbitzuak.setHegaldiKodea(hegaldiKodea);
+		zerbitzuak.setAirelinaKodea(aerolinea);
+		zerbitzuak.setHegaldiPrezioa(prezio);
+		zerbitzuak.setHegaldiIrteeraOrdutegia(orduteguia);
+		zerbitzuak.setHegaldiBidaiarenIraupena(iraupena);
+		zerbitzuak.setBidaiKodea(bidaiKodea);
+
+		int zerbitzuKodea = -1; // Variable para guardar el ID generado
+
+		try {
+			konexioa.konexioaIreki();
+
+			sql = "INSERT INTO zerbitzuak (izena, bidaiaren_kodea) VALUES ('" + zerbitzuak.getZerbitzuIzena() + "', '"
+					+ zerbitzuak.getBidaiKodea() + "')";
+			PreparedStatement preparedStatement = konexioa.konektatuta.prepareStatement(sql,
+					Statement.RETURN_GENERATED_KEYS); // esto returnea la id que ha generado la base de datos, por que
+														// está en autoincrement.
+			System.out.println(sql);
+			preparedStatement.executeUpdate();
+
+			// esto es para ver si ha generado una id o no.
+			ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				zerbitzuKodea = generatedKeys.getInt(1);
+			} else {
+				throw new SQLException("Error: No se pudo obtener el ID generado.");
+			}
+
+			String sql2 = "INSERT INTO hegaldia VALUES ('"
+					+ zerbitzuKodea + "', '" + zerbitzuak.getHegaldiKodea() + "', '" + zerbitzuak.getHegaldiIrteraData()
+					+ "', '" + zerbitzuak.getHegaldiIrteeraOrdutegia() + "', '"
+					+ zerbitzuak.getHegaldiBidaiarenIraupena() + "', '" + zerbitzuak.getHegaldiPrezioa() + "', '"
+					+ zerbitzuak.getHegaldiJatorrizkoAireportua() + "', '" + zerbitzuak.getHegaldiHelmugakoAireportua()
+					+ "', '" + zerbitzuak.getAirelinaKodea() + "')";
+			PreparedStatement preparedStatement2 = konexioa.konektatuta.prepareStatement(sql2);
+			System.out.println(sql2);
+			preparedStatement2.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			konexioa.konexioaItxi(); // Asegúrate de cerrar la conexión después de usarla
+		}
+
+	}
+
+	public void zerbitzuJoanEtorriEgin(int bidaiKodea, String jatorrizkoAireportua, String helmugakoAireportua,
+			String sJoanekoData, String hegaldiKodea, String aerolinea, float prezio, Time orduteguia, Time iraupena,
+			String jatorrizkoAireportuaE, String helmugakoAireportuaE, String sJoanekoDataE, String hegaldiKodeaE,
+			String aerolineaE, float prezioE, Time orduteguiaE, Time iraupenaE) {
+
+		Zerbitzu zerbitzuak = new Zerbitzu();
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+		zerbitzuak.setZerbitzuIzena("Joan_Etorri");
+
+		zerbitzuak.setHegaldiJatorrizkoAireportua(jatorrizkoAireportua);
+		zerbitzuak.setHegaldiHelmugakoAireportua(helmugakoAireportua);
+		LocalDate irteeraData = LocalDate.parse(sJoanekoData, formatter);
+		zerbitzuak.setHegaldiIrteraData(Date.valueOf(irteeraData));
+		zerbitzuak.setHegaldiKodea(hegaldiKodea);
+		zerbitzuak.setAirelinaKodea(aerolinea);
+		zerbitzuak.setHegaldiPrezioa(prezio);
+		zerbitzuak.setHegaldiIrteeraOrdutegia(orduteguia);
+		zerbitzuak.setHegaldiBidaiarenIraupena(iraupena);
+
+		zerbitzuak.setJoanJatorrizkoAireportua(jatorrizkoAireportuaE);
+		zerbitzuak.setJoanHelmugakoAireportua(helmugakoAireportuaE);
+		LocalDate irteeraDataE = LocalDate.parse(sJoanekoDataE, formatter);
+		zerbitzuak.setEtorriaEguna(Date.valueOf(irteeraDataE));
+		zerbitzuak.setHegaldiKodeaEtorri(hegaldiKodeaE);
+		zerbitzuak.setBueltakoAirelineaKodea(aerolineaE);
+		zerbitzuak.setHegaldiPrezioa(prezioE);
+		zerbitzuak.setItzuleraOrdua(orduteguiaE);
+		zerbitzuak.setBueltakoIraupena(iraupenaE);
+		zerbitzuak.setBidaiKodea(bidaiKodea);
+
+		int zerbitzuKodea = -1; // Variable para guardar el ID generado
+
+		try {
+			konexioa.konexioaIreki();
+
+			sql = "INSERT INTO zerbitzuak (izena, bidaiaren_kodea) VALUES ('" + zerbitzuak.getZerbitzuIzena() + "', '"
+					+ zerbitzuak.getBidaiKodea() + "')";
+			PreparedStatement preparedStatement = konexioa.konektatuta.prepareStatement(sql,
+					Statement.RETURN_GENERATED_KEYS); // esto returnea la id que ha generado la base de datos, por que
+														// está en autoincrement.
+			System.out.println(sql);
+			preparedStatement.executeUpdate();
+
+			// esto es para ver si ha generado una id o no.
+			ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				zerbitzuKodea = generatedKeys.getInt(1);
+			} else {
+				throw new SQLException("Error: No se pudo obtener el ID generado.");
+			}
+
+			String sql2 = "INSERT INTO hegaldia VALUES ('"
+					+ zerbitzuKodea + "', '" + zerbitzuak.getHegaldiKodea() + "', '" + zerbitzuak.getHegaldiIrteraData()
+					+ "', '" + zerbitzuak.getHegaldiIrteeraOrdutegia() + "', '"
+					+ zerbitzuak.getHegaldiBidaiarenIraupena() + "', '" + zerbitzuak.getHegaldiPrezioa() + "', '"
+					+ zerbitzuak.getHegaldiJatorrizkoAireportua() + "', '" + zerbitzuak.getHegaldiHelmugakoAireportua()
+					+ "', '" + zerbitzuak.getAirelinaKodea() + "')";
+			PreparedStatement preparedStatement2 = konexioa.konektatuta.prepareStatement(sql2);
+			System.out.println(sql2);
+			preparedStatement2.executeUpdate();
+
+			String sql3 = "INSERT INTO joan_eta_etorri VALUES ('"
+					+ zerbitzuKodea + "', '" + zerbitzuak.getHegaldiKodeaEtorri() + "', '"
+					+ zerbitzuak.getItzuleraOrdua() + "', '" + zerbitzuak.getEtorriaEguna() + "', '"
+					+ zerbitzuak.getBueltakoIraupena() + "', '" + zerbitzuak.getJoanJatorrizkoAireportua() + "', '"
+					+ zerbitzuak.getJoanHelmugakoAireportua() + "', '" + zerbitzuak.getBueltakoAirelineaKodea() + "')";
+			PreparedStatement preparedStatement3 = konexioa.konektatuta.prepareStatement(sql3);
+			System.out.println(sql3);
+			preparedStatement3.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			konexioa.konexioaItxi(); // Asegúrate de cerrar la conexión después de usarla
+		}
+
+	}
+
+	public void zerbitzuOstatuEgin(int bidaiKodea, String logelaMota, String hiria, float prezioO, String sSarreraDate,
+			String sIrteeraDate) {
+
+		Zerbitzu zerbitzuak = new Zerbitzu();
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+		zerbitzuak.setZerbitzuIzena("Ostatua");
+		zerbitzuak.setLogelaMKodea(logelaMota);
+		zerbitzuak.setHiria(hiria);
+		zerbitzuak.setOstatuPrezioa(prezioO);
+		LocalDate sarreraDate = LocalDate.parse(sSarreraDate, formatter);
+		zerbitzuak.setOstatuSarreraEguna(Date.valueOf(sarreraDate));
+		LocalDate irteeraDate = LocalDate.parse(sIrteeraDate, formatter);
+		zerbitzuak.setOstatuIrteraEguna(Date.valueOf(irteeraDate));
+		zerbitzuak.setBidaiKodea(bidaiKodea);
+
+		int zerbitzuKodea = -1; // Variable para guardar el ID generado
+
+		try {
+			konexioa.konexioaIreki();
+
+			sql = "INSERT INTO zerbitzuak (izena, bidaiaren_kodea) VALUES ('" + zerbitzuak.getZerbitzuIzena() + "', '"
+					+ zerbitzuak.getBidaiKodea() + "')";
+			PreparedStatement preparedStatement = konexioa.konektatuta.prepareStatement(sql,
+					Statement.RETURN_GENERATED_KEYS); // esto returnea la id que ha generado la base de datos, por que
+														// está en autoincrement.
+			System.out.println(sql);
+			preparedStatement.executeUpdate();
+
+			// esto es para ver si ha generado una id o no.
+			ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				zerbitzuKodea = generatedKeys.getInt(1);
+			} else {
+				throw new SQLException("Error: No se pudo obtener el ID generado.");
+			}
+
+			String sql2 = "INSERT INTO ostatua VALUES ('"
+					+ zerbitzuKodea + "', '" + zerbitzuak.getOstatuPrezioa() + "', '"
+					+ zerbitzuak.getOstatuSarreraEguna() + "', '" + zerbitzuak.getOstatuIrteraEguna() + "', '"
+					+ zerbitzuak.getHiria() + "', '" + zerbitzuak.getLogelaMKodea() + "')";
+			PreparedStatement preparedStatement2 = konexioa.konektatuta.prepareStatement(sql2);
+			System.out.println(sql2);
+			preparedStatement2.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			konexioa.konexioaItxi(); // Asegúrate de cerrar la conexión después de usarla
+		}
+
+	}
+
+	public void zerbitzuJardueraEgin(int bidaiKodea, String jardueraIzena, String jardueraDeskribapena, float prezioJ,
+			String sJardueraDate) {
+
+		Zerbitzu zerbitzuak = new Zerbitzu();
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+		zerbitzuak.setZerbitzuIzena(jardueraIzena);
+		zerbitzuak.setBesteBatzukDeskribapena(jardueraDeskribapena);
+		zerbitzuak.setBesteBatzukPrezioa(prezioJ);
+		LocalDate jardueraDate = LocalDate.parse(sJardueraDate, formatter);
+		zerbitzuak.setEgun(Date.valueOf(jardueraDate));
+		zerbitzuak.setBidaiKodea(bidaiKodea);
+
+		int zerbitzuKodea = -1; // Variable para guardar el ID generado
+
+		try {
+			konexioa.konexioaIreki();
+
+			sql = "INSERT INTO zerbitzuak (izena, bidaiaren_kodea) VALUES ('" + zerbitzuak.getZerbitzuIzena() + "', '"
+					+ zerbitzuak.getBidaiKodea() + "')";
+			PreparedStatement preparedStatement = konexioa.konektatuta.prepareStatement(sql,
+					Statement.RETURN_GENERATED_KEYS); // esto returnea la id que ha generado la base de datos, por que
+														// está en autoincrement.
+			System.out.println(sql);
+			preparedStatement.executeUpdate();
+
+			// esto es para ver si ha generado una id o no.
+			ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				zerbitzuKodea = generatedKeys.getInt(1);
+			} else {
+				throw new SQLException("Error: No se pudo obtener el ID generado.");
+			}
+
+			String sql2 = "INSERT INTO beste_batzuk VALUES ('"
+					+ zerbitzuKodea + "', '" + zerbitzuak.getEgun() + "', '" + zerbitzuak.getBesteBatzukDeskribapena()
+					+ "', '" + zerbitzuak.getBesteBatzukPrezioa() + "')";
+			PreparedStatement preparedStatement2 = konexioa.konektatuta.prepareStatement(sql2);
+			System.out.println(sql2);
+			preparedStatement2.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			konexioa.konexioaItxi(); // Asegúrate de cerrar la conexión después de usarla
+		}
+
 	}
 
 	public void erregistroEgin(String agentziaIzena, String kolorea, String langile, String agentziaMota, String logoa,
@@ -212,7 +498,6 @@ public class SqlMetodoak {
 			// Primera consulta: Obtener los viajes
 			String sql1 = "SELECT * FROM bidaia WHERE agentzia_kodea = '" + cache.getAgentzia().getAgentziaKodea()
 					+ "'";
-			System.out.println(sql1);
 
 			PreparedStatement preparedStatement1 = konexioa.konektatuta.prepareStatement(sql1);
 
@@ -241,8 +526,6 @@ public class SqlMetodoak {
 						+ " LEFT JOIN ostatua ON zerbitzuak.Kodea = ostatua.Zerbitzu_kodea"
 						+ " LEFT JOIN beste_batzuk ON zerbitzuak.Kodea = beste_batzuk.Zerbitzu_kodea"
 						+ " WHERE Bidaiaren_kodea = '" + bidai.getBidaiKodea() + "'";
-
-				System.out.println(sql2);
 
 				PreparedStatement preparedStatement2 = konexioa.konektatuta.prepareStatement(sql2);
 
@@ -312,29 +595,30 @@ public class SqlMetodoak {
 						Date ostatuSarreraEguna = resultSet2.getDate(23);
 						Date ostatuIrteraEguna = resultSet2.getDate(24);
 						String hiria = resultSet2.getString(25);
-						String ostatuIzena = resultSet2.getString(26);
-						String logelaMKodea = resultSet2.getString(27);
+						String logelaMKodea = resultSet2.getString(26);
 
-						Zerbitzu zerbitzuak = new Zerbitzu(zerbitzuKodea, zerbitzuIzena, bidaiKodeaO, ostatuPrezioa, ostatuSarreraEguna, ostatuIrteraEguna, hiria, ostatuIzena, logelaMKodea);
+						Zerbitzu zerbitzuak = new Zerbitzu(zerbitzuKodea, zerbitzuIzena, bidaiKodeaO, ostatuPrezioa,
+								ostatuSarreraEguna, ostatuIrteraEguna, hiria, logelaMKodea);
 
 						bidai.gehituZerbitzuak(zerbitzuak);
 
 					}
 
-					else if (resultSet2.getInt(28) != 0) {
-						System.out.println("Servicio encontrado para el beste " + resultSet2.getInt(28));
-						
-						int zerbitzuKodea = resultSet2.getInt(28);
+					else if (resultSet2.getInt(27) != 0) {
+						System.out.println("Servicio encontrado para el beste " + resultSet2.getInt(27));
+
+						int zerbitzuKodea = resultSet2.getInt(27);
 						String zerbitzuIzena = resultSet2.getString(2);
 						int bidaiKodeaB = resultSet2.getInt(3);
-						Date egun  = resultSet2.getDate(29);
-						String besteBatzukDeskribapena  = resultSet2.getString(30);
-						float besteBatzukPrezioa = resultSet2.getFloat(31);
-						
-						Zerbitzu zerbitzuak = new Zerbitzu(zerbitzuKodea, zerbitzuIzena, bidaiKodeaB, egun, besteBatzukDeskribapena, besteBatzukPrezioa);
+						Date egun = resultSet2.getDate(28);
+						String besteBatzukDeskribapena = resultSet2.getString(29);
+						float besteBatzukPrezioa = resultSet2.getFloat(30);
+
+						Zerbitzu zerbitzuak = new Zerbitzu(zerbitzuKodea, zerbitzuIzena, bidaiKodeaB, egun,
+								besteBatzukDeskribapena, besteBatzukPrezioa);
 
 						bidai.gehituZerbitzuak(zerbitzuak);
-						
+
 					}
 
 					// Aquí puedes agregar los objetos Zerbitzu a la lista dentro de Bidaia

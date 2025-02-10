@@ -1,4 +1,4 @@
-package modelo;
+package modelo.pojo;
 
 import java.sql.Date;
 import java.util.ArrayList;

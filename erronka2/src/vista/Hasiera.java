@@ -2,8 +2,12 @@ package vista;
 
 import java.awt.Color;
 import java.awt.Image;
-
-import modelo.*;
+import modelo.pojo.Bidai_Motak;
+import modelo.pojo.Bidaia;
+import modelo.pojo.Cache;
+import modelo.pojo.Herrialde;
+import modelo.pojo.Zerbitzu;
+import modelo.sql.SqlMetodoak;
 
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
@@ -26,45 +30,26 @@ import javax.swing.table.DefaultTableModel;
 
 import java.awt.Font;
 
+@SuppressWarnings("serial")
 public class Hasiera extends JFrame {
 
-	private JLabel lblLogoa;
+	private JLabel lblLogoa, lblZerbitzuak, lblBidaiak;
 	private JButton btnAtzera, btnBidaiBerria, btnZerbitzuBerria;
 	private JTable tablaBidaiak, tableZerbitzuak;
 	private JScrollPane scrollPaneBidaiak, scrollPaneZerbitzuak;
 	private Cache cache = new Cache();
 	private SqlMetodoak sm = new SqlMetodoak();
-	private JButton btnEzabatuZerbitzuak;
-	private int kontagailu = 0;
-	private Bidaia bidai = new Bidaia();
+	private JButton btnEzabatuZerbitzuak, btnEzabatuBidaiak, btnBezero;
+	private int kontagailuBidai = 0;
+	private int kontagailuzZerb = 0;
 	private ArrayList<Bidaia> bidaiaList;
-	private ArrayList<Zerbitzu> zerbitzuList;
 
 	public Hasiera() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 768, 560);
 		getContentPane().setLayout(null);
 
-		String hexKolor = cache.getAgentzia().getMarkarenKolorea();
-
-		try {
-
-			if (hexKolor != null && !hexKolor.isEmpty()) {
-
-				Color kolor = Color.decode(hexKolor); // Convertir el código hexadecimal a un color
-
-				getContentPane().setBackground(kolor);
-			} else {
-				System.out.println("El color es inválida o no está disponible.");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		btnAtzera = new JButton("Log Out");
-		btnAtzera.setBounds(653, 9, 89, 23);
-		getContentPane().add(btnAtzera);
+		koloreaIpini();
 
 		// Crear la tabla y su modelo ANTES de llenarla con datos
 		tablaBidaiak = new JTable();
@@ -78,6 +63,7 @@ public class Hasiera extends JFrame {
 					int row = tablaBidaiak.getSelectedRow();
 					int column = tablaBidaiak.getSelectedColumn();
 					if (row != -1 && column != -1) { // Verifica que haya una celda seleccionada
+						btnZerbitzuBerria.setEnabled(true);
 						int bidaiKodea = bidaiaList.get(row).getBidaiKodea();
 						taulaBeteZerbitzuak(bidaiKodea);
 					}
@@ -99,7 +85,7 @@ public class Hasiera extends JFrame {
 		// Obtener los datos DESPUÉS de crear la tabla
 
 		bidaiaList = sm.bidaiakEduki(); // Llamada a la base de datos
-		
+
 		// Llenar la tabla con los datos obtenidos
 		taulaBeteBidaia();
 
@@ -117,6 +103,103 @@ public class Hasiera extends JFrame {
 		scrollPaneZerbitzuak.setBounds(125, 350, 431, 95);
 		getContentPane().add(scrollPaneZerbitzuak);
 
+		lblBidaiak = new JLabel("Bidaiak");
+		lblBidaiak.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBidaiak.setFont(new Font("Arial", Font.PLAIN, 17));
+		lblBidaiak.setForeground(new Color(0, 0, 0));
+		lblBidaiak.setBounds(286, 194, 89, 15);
+		getContentPane().add(lblBidaiak);
+
+		lblZerbitzuak = new JLabel("Zerbitzuak");
+		lblZerbitzuak.setHorizontalAlignment(SwingConstants.CENTER);
+		lblZerbitzuak.setForeground(Color.BLACK);
+		lblZerbitzuak.setFont(new Font("Arial", Font.PLAIN, 17));
+		lblZerbitzuak.setBounds(288, 327, 89, 15);
+		getContentPane().add(lblZerbitzuak);
+
+		btnBezero = new JButton("Bezero-eskaintza sortzea");
+		btnBezero.setBounds(297, 479, 171, 23);
+		getContentPane().add(btnBezero);
+
+		btnEzabatuBidaiak = new JButton("New button");
+		btnEzabatuBidaiak.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int errenkada = tablaBidaiak.getSelectedRow();
+
+				if (errenkada != -1) {
+					// Eliminar la fila del modelo de datos
+					bidaiModeloa.removeRow(errenkada);
+					int bidaiKodea = bidaiaList.get(errenkada).getBidaiKodea();
+					sm.ezabatuBidaia(bidaiKodea);
+					bidaiaList.remove(errenkada);
+		            bidaiModeloa.fireTableDataChanged(); // Notificar a la tabla que los datos han cambiado
+		            tablaBidaiak.repaint(); // Forzar el repintado de la tabla
+		            tableZerbitzuak.repaint();
+		            kontagailuBidai--; // Decrementar el contador
+				} else {
+					JOptionPane.showMessageDialog(null, "Aukeratu errenkada bat ezabatzeko.");
+				}
+			}
+		});
+		btnEzabatuBidaiak.setBounds(618, 210, 26, 23);
+		getContentPane().add(btnEzabatuBidaiak);
+
+		btnEzabatuZerbitzuak = new JButton("New button");
+		btnEzabatuZerbitzuak.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        int errenkada = tablaBidaiak.getSelectedRow();
+
+		        if (errenkada != -1) {
+		            // Obtener el servicio asociado a la fila seleccionada
+		        	
+
+		            ArrayList<Zerbitzu> zerbitzuak = bidaiaList.get(errenkada).getZerbitzuak();
+		            if(zerbitzuak.get(errenkada).getZerbitzuIzena() == "Joan_Etorri") {
+			            int errenkadaKod = (errenkada - 1);
+			            for (int i = errenkadaKod; i < zerbitzuak.size(); i++) {
+			            	zerbitzuak.remove(i);
+						}
+			            int zerbitzuKod = zerbitzuak.get(errenkadaKod).getZerbitzuKodea();
+			            
+			            // Eliminar de la base de datos
+			            sm.ezabatuZerbitzua(zerbitzuKod);
+			            
+			            zerbitzuModeloa.removeRow(errenkada);
+			            
+			            // Eliminar de la lista de servicios
+			            
+			            
+		            }
+		            else {
+		            	 int errenkadaKod = (errenkada - 1);
+				            
+				            int zerbitzuKod = zerbitzuak.get(errenkadaKod).getZerbitzuKodea();
+				            
+				            // Eliminar de la base de datos
+				            sm.ezabatuZerbitzua(zerbitzuKod);
+				            
+				            zerbitzuModeloa.removeRow(errenkada);
+				            
+				            // Eliminar de la lista de servicios
+				            zerbitzuak.remove(errenkadaKod);
+		            }		            
+		            // Eliminar la fila de la tabla
+		            
+		           
+		            zerbitzuModeloa.fireTableDataChanged(); // Notificar a la tabla que los datos han cambiado
+	                tableZerbitzuak.repaint(); // Forzar el repintado de la tabla
+	                kontagailuzZerb--; // Decrementar el contador
+		            System.out.println(kontagailuzZerb);
+		            
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Aukeratu errenkada bat ezabatzeko.");
+		        }
+		  
+		    }    
+		});
+		btnEzabatuZerbitzuak.setBounds(565, 337, 26, 23);
+		getContentPane().add(btnEzabatuZerbitzuak);
+
 		btnBidaiBerria = new JButton("Bidai berria");
 		btnBidaiBerria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -129,70 +212,35 @@ public class Hasiera extends JFrame {
 		getContentPane().add(btnBidaiBerria);
 
 		btnZerbitzuBerria = new JButton("Zerbitzu berria");
+		btnZerbitzuBerria.setEnabled(false);
 		btnZerbitzuBerria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int row = tablaBidaiak.getSelectedRow();
+				int idBidaia = bidaiaList.get(row).getBidaiKodea();
 				LehioarenFuntioak fv = new LehioarenFuntioak();
-				fv.irekiZerbitzuak();
+				fv.irekiZerbitzuak(idBidaia);
 				dispose();
 			}
 		});
 		btnZerbitzuBerria.setBounds(566, 388, 115, 23);
 		getContentPane().add(btnZerbitzuBerria);
 
-		JLabel lblBidaiak = new JLabel("Bidaiak");
-		lblBidaiak.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBidaiak.setFont(new Font("Arial", Font.PLAIN, 17));
-		lblBidaiak.setForeground(new Color(0, 0, 0));
-		lblBidaiak.setBounds(286, 194, 89, 15);
-		getContentPane().add(lblBidaiak);
-
-		JLabel lblZerbitzuak = new JLabel("Zerbitzuak");
-		lblZerbitzuak.setHorizontalAlignment(SwingConstants.CENTER);
-		lblZerbitzuak.setForeground(Color.BLACK);
-		lblZerbitzuak.setFont(new Font("Arial", Font.PLAIN, 17));
-		lblZerbitzuak.setBounds(288, 327, 89, 15);
-		getContentPane().add(lblZerbitzuak);
-
-		JButton btnBezero = new JButton("Bezero-eskaintza sortzea");
-		btnBezero.setBounds(297, 479, 171, 23);
-		getContentPane().add(btnBezero);
-
-		JButton btnEzabatuBidaiak = new JButton("New button");
-		btnEzabatuBidaiak.addActionListener(new ActionListener() {
+		btnAtzera = new JButton("Log Out");
+		btnAtzera.setBounds(653, 9, 89, 23);
+		btnAtzera.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				int errenkada = tablaBidaiak.getSelectedRow();
-
-				if (errenkada != -1) {
-					// Eliminar la fila del modelo de datos
-					bidaiModeloa.removeRow(errenkada);
-					int bidaiKodea = bidaiaList.get(errenkada).getBidaiKodea();
-					sm.ezabatuBidaia(bidaiKodea);
-					bidaiaList.remove(errenkada);
-					kontagailu--;
-				} else {
-					JOptionPane.showMessageDialog(null, "Aukeratu errenkada bat ezabatzeko.");
-				}
+				LehioarenFuntioak fv = new LehioarenFuntioak();
+				fv.irekiLogin();
+				dispose();
 			}
 		});
-		btnEzabatuBidaiak.setBounds(618, 210, 26, 23);
-		getContentPane().add(btnEzabatuBidaiak);
+		getContentPane().add(btnAtzera);
 
-		btnEzabatuZerbitzuak = new JButton("New button");
-		btnEzabatuZerbitzuak.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int errenkada = tablaBidaiak.getSelectedRow();
+		logoIpini();
+	}
 
-				if (errenkada != -1) {
-					// Eliminar la fila del modelo de datos
-					zerbitzuModeloa.removeRow(errenkada);
-				} else {
-					JOptionPane.showMessageDialog(null, "Aukeratu errenkada bat ezabatzeko.");
-				}
-			}
-		});
-		btnEzabatuZerbitzuak.setBounds(565, 337, 26, 23);
-		getContentPane().add(btnEzabatuZerbitzuak);
-		
+	private void logoIpini() {
 		try {
 			// Obtener la URL del logo de la caché (acceso estático)
 			String logoUrl = cache.getAgentzia().getLogoa(); // Accedemos al logo desde Cache
@@ -229,15 +277,25 @@ public class Hasiera extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
 
-		btnAtzera.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				LehioarenFuntioak fv = new LehioarenFuntioak();
-				fv.irekiLogin();
-				dispose();
+	private void koloreaIpini() {
+		String hexKolor = cache.getAgentzia().getMarkarenKolorea();
+
+		try {
+
+			if (hexKolor != null && !hexKolor.isEmpty()) {
+
+				Color kolor = Color.decode(hexKolor); // Convertir el código hexadecimal a un color
+
+				getContentPane().setBackground(kolor);
+			} else {
+				System.out.println("El color es inválida o no está disponible.");
 			}
-		});
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void taulaBeteBidaia() {
@@ -245,7 +303,7 @@ public class Hasiera extends JFrame {
 		modelo.setRowCount(0); // Limpiar la tabla antes de insertar nuevos datos
 
 		String herrialdeIzena, bidaiMota, egunak;
-		kontagailu = 0; // Reiniciar contador antes de rellenar
+		kontagailuBidai = 0; // Reiniciar contador antes de rellenar
 
 		for (Bidaia b : bidaiaList) {
 			herrialdeIzena = convertHerrialde();
@@ -255,42 +313,46 @@ public class Hasiera extends JFrame {
 			modelo.addRow(new Object[] { b.getIzena(), bidaiMota, egunak, b.getBidaiHasiera(), b.getBidaiAmaiera(),
 					herrialdeIzena });
 
-			kontagailu++; // Incrementamos el contador cuando agregamos una fila
+			kontagailuBidai++; // Incrementamos el contador cuando agregamos una fila
 		}
-		System.out.println("Kontagailu eguneratua: " + kontagailu);
+		System.out.println("Kontagailu eguneratua: " + kontagailuBidai);
 	}
-	
+
 	private void taulaBeteZerbitzuak(int bidaiKodea) {
 		DefaultTableModel modeloZerbitzu = (DefaultTableModel) tableZerbitzuak.getModel();
 		modeloZerbitzu.setRowCount(0); // Limpiar la tabla antes de insertar nuevos datos
 
-	    for (Bidaia bidaia : bidaiaList) {
-	    	if(bidaiKodea == bidaia.getBidaiKodea()) {
-	        // Si Bidaia tiene un método para obtener sus servicios, imprimirlos también
-	        for (Zerbitzu zerbitzu : bidaia.getZerbitzuak()) {
-	            if(zerbitzu.getZerbitzuIzena().equals("Hegaldia")) {
-	            	modeloZerbitzu.addRow(new Object[] { zerbitzu.getZerbitzuIzena(), "Hegaldia", zerbitzu.getHegaldiIrteraData(), zerbitzu.getHegaldiPrezioa()});
-	            }
-	            else if (zerbitzu.getZerbitzuIzena().equals("Joan_Etorri")) {
-	            	modeloZerbitzu.addRow(new Object[] { zerbitzu.getZerbitzuIzena(), "Joan_Etorri", zerbitzu.getEtorriaEguna(), zerbitzu.getHegaldiPrezioa()});
-	            }
-	            else if (zerbitzu.getZerbitzuIzena().equals("Ostatua")) {
-	            	modeloZerbitzu.addRow(new Object[] { zerbitzu.getZerbitzuIzena(), "Ostatua", zerbitzu.getOstatuSarreraEguna(), zerbitzu.getOstatuPrezioa()});
-	            }
-	            else {
-	    			modeloZerbitzu.addRow(new Object[] { zerbitzu.getZerbitzuIzena(), "Jarduera", zerbitzu.getEgun(), zerbitzu.getBesteBatzukPrezioa()});
-	            }
-	            
-	        }
-	    	}
-	    }
+		for (Bidaia bidaia : bidaiaList) {
+			if (bidaiKodea == bidaia.getBidaiKodea()) {
+				// Si Bidaia tiene un método para obtener sus servicios, imprimirlos también
+				for (Zerbitzu zerbitzu : bidaia.getZerbitzuak()) {
+					if (zerbitzu.getZerbitzuIzena().equals("Hegaldia")) {
+						modeloZerbitzu.addRow(new Object[] { zerbitzu.getZerbitzuIzena(), "Hegaldia",
+								zerbitzu.getHegaldiIrteraData(), zerbitzu.getHegaldiPrezioa() });
+					} else if (zerbitzu.getZerbitzuIzena().equals("Joan_Etorri")) {
+						modeloZerbitzu.addRow(new Object[] { zerbitzu.getZerbitzuIzena(), "Hegaldia",
+								zerbitzu.getHegaldiIrteraData(), zerbitzu.getHegaldiPrezioa() });
+						modeloZerbitzu.addRow(new Object[] { zerbitzu.getZerbitzuIzena(), "Joan_Etorri",
+								zerbitzu.getEtorriaEguna(), zerbitzu.getHegaldiPrezioa() });
+					} else if (zerbitzu.getZerbitzuIzena().equals("Ostatua")) {
+						modeloZerbitzu.addRow(new Object[] { zerbitzu.getZerbitzuIzena(), "Ostatua",
+								zerbitzu.getOstatuSarreraEguna(), zerbitzu.getOstatuPrezioa() });
+					} else {
+						modeloZerbitzu.addRow(new Object[] { zerbitzu.getZerbitzuIzena(), "Jarduera",
+								zerbitzu.getEgun(), zerbitzu.getBesteBatzukPrezioa() });
+					}
+					kontagailuzZerb++;
+				}
+			}
+		}
+		System.out.println("Kontagailu eguneratua: " + kontagailuzZerb);
 	}
 
 	private String convertHerrialde() {
 		ArrayList<Herrialde> herrialdeList = sm.herrialdeMotaEduki();
 
 		// Recorremos cada Bidaia en la lista bidaiaList
-		for (int i = kontagailu; i < bidaiaList.size(); i++) {
+		for (int i = kontagailuBidai; i < bidaiaList.size(); i++) {
 			// Obtenemos el código de la Bidaia
 			String codigoBidaia = bidaiaList.get(i).getHerrialdeKod();
 
@@ -309,7 +371,7 @@ public class Hasiera extends JFrame {
 
 		ArrayList<Bidai_Motak> bidaiMotaList = sm.bidaiMotaEduki();
 
-		for (int i = kontagailu; i < bidaiaList.size(); i++) {
+		for (int i = kontagailuBidai; i < bidaiaList.size(); i++) {
 			String bidaiMotaKod = bidaiaList.get(i).getBidaiaMKod();
 
 			for (int j = 0; j < bidaiMotaList.size(); j++) {
@@ -326,7 +388,7 @@ public class Hasiera extends JFrame {
 
 	private String kalkulatuDiferentzia() {
 
-		for (int i = kontagailu; i < bidaiaList.size(); i++) {
+		for (int i = kontagailuBidai; i < bidaiaList.size(); i++) {
 			Bidaia b = bidaiaList.get(i);
 			Date bidaiHasiera = b.getBidaiHasiera();
 			Date bidaiAmaiera = b.getBidaiAmaiera();
@@ -341,4 +403,3 @@ public class Hasiera extends JFrame {
 		return "Data baliogabea";
 	}
 }
-

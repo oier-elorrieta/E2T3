@@ -1,4 +1,4 @@
-package modelo;
+package modelo.pojo;
 
 //para guardar temporalmente la agentzia
 

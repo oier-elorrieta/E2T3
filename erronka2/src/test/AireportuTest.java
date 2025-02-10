@@ -2,7 +2,7 @@ package test;
 
 import org.junit.Test;
 
-import modelo.Aireportu;
+import modelo.pojo.Aireportu;
 
 import static org.junit.Assert.*;
 

@@ -5,8 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
-import modelo.Cache;
-import modelo.SqlMetodoak;
+import modelo.pojo.Cache;
+import modelo.sql.SqlMetodoak;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
+@SuppressWarnings("serial")
 public class Login extends JFrame {
 
 	private JPanel contentPane;
