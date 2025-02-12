@@ -46,25 +46,28 @@ public class Main {
         frame.setBounds(100, 100, 450, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
-        frame.getContentPane().setBackground(new Color(245, 245, 245)); // Light background
+        frame.getContentPane().setBackground(Color.WHITE); // Light background
 
         // Crear un boton con estilo
         btnOngiEtorri = new JButton("Ongi Etorri");
         btnOngiEtorri.setFont(new Font("Arial", Font.BOLD, 24)); // Cambiar la letra y ponerla ne negrita
-        btnOngiEtorri.setForeground(Color.WHITE); // el texto en blanco
-        btnOngiEtorri.setBackground(Color.GRAY); // Gradient button background (teal)
+        btnOngiEtorri.setForeground(Color.BLACK); // el texto en blanco
+        btnOngiEtorri.setBackground(Color.WHITE); // Gradient button background (teal)
+        
         btnOngiEtorri.setFocusPainted(false); // quitar la concentración del boton cuando se le hace click
         btnOngiEtorri.setBorderPainted(false); // quitar el borde del botón
         btnOngiEtorri.setBounds(108, 64, 222, 130); 
         btnOngiEtorri.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                LehioarenFuntioak fv = new LehioarenFuntioak();
+            	//instancio la clase leihoarenFuntzioak para poder acceder al jframe de login
+                LeihoarenFuntioak fv = new LeihoarenFuntioak();
+                //llamamos al metodo irekiLogin
                 fv.irekiLogin();
+                //escondemos el frame para que no se vea la pantalla ongietorri
                 frame.setVisible(false);
             }
         });
-
-        // Add the button to the frame
+        // añadimos el boton de ongietorri en el frame
         frame.getContentPane().add(btnOngiEtorri);
     }
 }

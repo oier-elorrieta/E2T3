@@ -2,10 +2,10 @@ package vista;
 
 import java.awt.EventQueue;
 
-public class LehioarenFuntioak {
+public class LeihoarenFuntioak {
 	
 	
-	public LehioarenFuntioak() {	
+	public LeihoarenFuntioak() {	
 	}
 
 	//esto me vale para cambiar de ventanas usando el frame con esto Login extends JFrame
@@ -13,6 +13,7 @@ public class LehioarenFuntioak {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					//creamos una instancia nueva para mostrar el frame
 					Login frame = new Login();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -21,6 +22,7 @@ public class LehioarenFuntioak {
 			}
 		});
 	}
+	//Son todos iguales con que entiendas el primero entiendes todos.
 	
 	public void irekiRegister() {
 		EventQueue.invokeLater(new Runnable() {
