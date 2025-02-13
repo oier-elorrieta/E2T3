@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,34 +9,39 @@ import modelo.pojo.Herrialde;
 
 public class HerrialdeTest {
 
-	private Herrialde herrialde;
+    private Herrialde herrialde;
 
-	@Before
-	public void setUp() {
-		herrialde = new Herrialde("ES", "España");
-	}
+    // Testen aurretik setUp metodoa exekutatuko da
+    @Before
+    public void setUp() {
+        // Herrialde objektu bat sortu
+        herrialde = new Herrialde("ES", "España");
+    }
 
-	
-	
+    // HerrialdeKodea eskuratzea eta ezartzea testatzen du
+    @Test
+    public void testGetSetHerrialdeKodea() {
+        // HerrialdeKodea ezarri "FR"
+        herrialde.setHerrialdeKodea("FR");
+        // Konparatu ezarritako balioa espero den balioarekin
+        assertEquals("FR", herrialde.getHerrialdeKodea());
+    }
 
-	@Test
-	public void testGetSetHerrialdeKodea() {
-		herrialde.setHerrialdeKodea("FR");
-		assertEquals("FR", herrialde.getHerrialdeKodea());
-	}
+    // Helmuga eskuratzea eta ezartzea testatzen du
+    @Test
+    public void testGetSetHelmuga() {
+        // Helmuga ezarri "Francia"
+        herrialde.setHelmuga("Francia");
+        // Konparatu ezarritako balioa espero den balioarekin
+        assertEquals("Francia", herrialde.getHelmuga());
+    }
 
-	
-
-	@Test
-	public void testGetSetHelmuga() {
-		herrialde.setHelmuga("Francia");
-		assertEquals("Francia", herrialde.getHelmuga());
-	}
-
-	@Test
-	public void testToString() {
-		String expected = "Herrialde [herrialdeKodea=ES, helmuga=España]";
-		assertEquals(expected, herrialde.toString());
-	}
-
+    // toString metodoa testatzen du
+    @Test
+    public void testToString() {
+        // Espero den stringa sortu
+        String expected = "Herrialde [herrialdeKodea=ES, helmuga=España]";
+        // Konparatu toString metodoaren irteera espero den stringarekin
+        assertEquals(expected, herrialde.toString());
+    }
 }

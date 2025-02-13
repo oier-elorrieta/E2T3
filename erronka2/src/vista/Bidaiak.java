@@ -36,11 +36,15 @@ public class Bidaiak extends JFrame {
 	private JLabel lblLogoa, lblIzena, lblBidaiarenMota, lblHasiera, lblAmaiera, lblEgunak, lblHerrialdea,
 			lblDeskribapena, lblEzBarne;
 	private Cache cache = new Cache();
+	private SqlMetodoak sm = new SqlMetodoak();
 	private JDateChooser dataAukeratuAmaiera, dataAukeratuHasiera;
 	private JTextField txtizena, txtFieldEgunak;
 	private JComboBox<String> comboBoxHerrialdea, comboBoxMotak;
+	private ArrayList<Bidai_Motak> bidaiaList;
+	private ArrayList<Herrialde> herrialdeList;
+	private ArrayList<String> bidaiMotaDeskribapena = new ArrayList<>(), bidaiMotaKodea = new ArrayList<>(),
+			herrialdeDeskribapena = new ArrayList<>(), herrialdeKodea = new ArrayList<>();
 	private JTextArea textAreaDeskribapena, textAreaEzBarne;
-	private SqlMetodoak sm = new SqlMetodoak();
 	private JButton btnGorde, btnEzeztatu;
 	private SimpleDateFormat dataFormatua = new SimpleDateFormat("yyyy/MM/dd"); // Formato DD/MM/YYYY
 
@@ -50,49 +54,66 @@ public class Bidaiak extends JFrame {
 		setBounds(100, 100, 573, 616);
 		getContentPane().setLayout(null);
 
+		// creamos el txtfield para el nombre del viaje
+
 		txtizena = new JTextField();
 		txtizena.setBounds(137, 111, 150, 30);
 		getContentPane().add(txtizena);
 		txtizena.setColumns(10);
 
-		ArrayList<Bidai_Motak> bidaiaList = sm.bidaiMotaEduki();
+		// llenamos el arrayList de bidaia con las cosas de las bases de datos
 
-		ArrayList<String> bidaiMotaDeskribapena = new ArrayList<>();
-		ArrayList<String> bidaiMotaKodea = new ArrayList<>();
+		bidaiaList = sm.bidaiMotaEduki();
 
+		// recorremos el arrayList todo el rato y metemos las cosas que queremos en los
+		// arrayList en este caso deskribapena y kodea
 		for (Bidai_Motak bidaia : bidaiaList) {
 			bidaiMotaDeskribapena.add(bidaia.getDeskribapena()); // Usar el getter para obtener deskribapena
 			bidaiMotaKodea.add(bidaia.getBidaiKodea());
 		}
 
+		// creación del comboBox para mostrar los deskribapenas de bidaiMota
+
 		comboBoxMotak = new JComboBox<>(bidaiMotaDeskribapena.toArray(new String[0]));
 		comboBoxMotak.setBounds(137, 151, 150, 22);
 		getContentPane().add(comboBoxMotak);
 
-		ArrayList<Herrialde> herrialdeList = sm.herrialdeMotaEduki();
+		// llenamos el arrayList con los tipos de herrialde que hay en la BD
 
-		ArrayList<String> herrialdeDeskribapena = new ArrayList<>();
-		ArrayList<String> herrialdeKodea = new ArrayList<>();
+		herrialdeList = sm.herrialdeMotaEduki();
+
+		// recorremos el arrayList todo el rato y metemos las cosas que queremos en los
+		// arrayList en este caso deskribapena y kodea
 
 		for (Herrialde herrialde : herrialdeList) {
 			herrialdeDeskribapena.add(herrialde.getHelmuga()); // Usar el getter para obtener deskribapena
 			herrialdeKodea.add(herrialde.getHerrialdeKodea());
 		}
 
+		// creación del comboBox para mostrar los deskribapenas de herrialdeMota
+
 		comboBoxHerrialdea = new JComboBox<>(herrialdeDeskribapena.toArray(new String[0]));
 		comboBoxHerrialdea.setBounds(137, 298, 150, 22);
 		getContentPane().add(comboBoxHerrialdea);
+
+		// creación el JDateChooser para elegir las fechas
 
 		dataAukeratuHasiera = new JDateChooser();
 		dataAukeratuHasiera.setBounds(137, 184, 150, 25);
 		getContentPane().add(dataAukeratuHasiera);
 
+		// creación el JDateChooser para elegir las fechas
+
 		dataAukeratuAmaiera = new JDateChooser();
 		dataAukeratuAmaiera.setBounds(137, 220, 150, 25);
 		getContentPane().add(dataAukeratuAmaiera);
 
+		// llamada a los metodos para calcular los días
+
 		dataAukeratuHasiera.addPropertyChangeListener("date", evt -> kalkulatuDiferentzia());
 		dataAukeratuAmaiera.addPropertyChangeListener("date", evt -> kalkulatuDiferentzia());
+
+		// creacion el txtField que dirá los días del viaje
 
 		txtFieldEgunak = new JTextField();
 		txtFieldEgunak.setEditable(false);
@@ -100,20 +121,26 @@ public class Bidaiak extends JFrame {
 		txtFieldEgunak.setBounds(137, 256, 150, 30);
 		getContentPane().add(txtFieldEgunak);
 
+		// creación del txtArea para el describapena
+
 		textAreaDeskribapena = new JTextArea();
 		textAreaDeskribapena.setLineWrap(true);
 		textAreaDeskribapena.setBounds(137, 331, 200, 75);
 		getContentPane().add(textAreaDeskribapena);
+
+		// creación del textArea de EzBarne
 
 		textAreaEzBarne = new JTextArea();
 		textAreaEzBarne.setLineWrap(true);
 		textAreaEzBarne.setBounds(137, 424, 200, 75);
 		getContentPane().add(textAreaEzBarne);
 
+		// creación del botón de cancelación
+
 		btnEzeztatu = new JButton("Ezeztatu");
 		btnEzeztatu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LehioarenFuntioak fv = new LehioarenFuntioak();
+				LeihoarenFuntioak fv = new LeihoarenFuntioak();
 				fv.irekiHasiera();
 				dispose();
 			}
@@ -121,13 +148,17 @@ public class Bidaiak extends JFrame {
 		btnEzeztatu.setBounds(361, 543, 89, 23);
 		getContentPane().add(btnEzeztatu);
 
+		// creación del botón de guardado del viaje
+
 		btnGorde = new JButton("Gorde");
 		btnGorde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				// cojemos el indice del comboBox para sacar el código y subirlo a la base de
+				// datos
 				int herrialdeIndex = comboBoxHerrialdea.getSelectedIndex();
 				int bidaiMotaIndex = comboBoxMotak.getSelectedIndex();
-
+				// llenamos con todos los datos metidos del viaje para subirlo a la base de
+				// datos
 				String izena = txtizena.getText();
 				String deskribapena = textAreaDeskribapena.getText();
 				String ezBarne = textAreaEzBarne.getText();
@@ -138,11 +169,13 @@ public class Bidaiak extends JFrame {
 				String herriKodea = herrialdeKodea.get(herrialdeIndex);
 				String bidaiMotaKod = bidaiMotaKodea.get(bidaiMotaIndex);
 				int agentziaKodea = cache.getAgentzia().getAgentziaKodea();
-
+				// llamada al metodo de subir las cosas a la base de datos
 				sm.bidaiaEgin(izena, deskribapena, ezBarne, dataHasiera, dataAmaiera, herriKodea, bidaiMotaKod,
 						agentziaKodea);
 
-				LehioarenFuntioak fv = new LehioarenFuntioak();
+				// volvemos a Hasiera
+
+				LeihoarenFuntioak fv = new LeihoarenFuntioak();
 				fv.irekiHasiera();
 				dispose();
 
@@ -150,6 +183,8 @@ public class Bidaiak extends JFrame {
 		});
 		btnGorde.setBounds(118, 543, 89, 23);
 		getContentPane().add(btnGorde);
+
+		// creación de todos los labels
 
 		lblIzena = new JLabel("Bidaiaren izena");
 		lblIzena.setBounds(42, 119, 85, 14);
@@ -184,75 +219,66 @@ public class Bidaiak extends JFrame {
 		getContentPane().add(lblEzBarne);
 
 		getContentPane().setVisible(true);
-
-		try {
-			// Obtener la URL del logo de la caché (acceso estático)
-			String logoUrl = cache.getAgentzia().getLogoa(); // Accedemos al logo desde Cache
-
-			if (logoUrl != null && !logoUrl.isEmpty()) {
-				// Convertir la URL a URI y luego a URL
-				URI uri = new URI(logoUrl);
-				URL url = uri.toURL(); // Convertimos URI a URL
-
-				// Crear un ImageIcon con la URL
-				ImageIcon imageIcon1 = new ImageIcon(url);
-
-				// Crear el JLabel
-				lblLogoa = new JLabel();
-
-				// Establecer el tamaño del JLabel según el layout o manualmente
-				lblLogoa.setBounds(346, 40, 170, 160); // Establecemos el tamaño fijo (puedes ajustarlo según lo
-														// necesites)
-
-				// Escalar la imagen al tamaño del JLabel (con el mismo enfoque que en el botón)
-				Image image1 = imageIcon1.getImage().getScaledInstance(lblLogoa.getWidth(), lblLogoa.getHeight(),
-						Image.SCALE_SMOOTH);
-				imageIcon1.setImage(image1);
-
-				// Establecer el icono redimensionado en el JLabel
-				lblLogoa.setIcon(imageIcon1);
-
-				getContentPane().add(lblLogoa);
-
-			} else {
-				System.out.println("Logoaren URL txarto dago.");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		String hexKolor = cache.getAgentzia().getMarkarenKolorea();
-
-		try {
-
-			if (hexKolor != null && !hexKolor.isEmpty()) {
-
-				Color kolor = Color.decode(hexKolor); // Convertir el código hexadecimal a un color
-
-				getContentPane().setBackground(kolor);
-			} else {
-				System.out.println("Kolorea txarto dago.");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		// llamada a los metodos del color de fondo y el logo
+		kargatuLogoaKolorea();
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 	}
 
+	@SuppressWarnings("deprecation")
+	
+	//metodo para poner el color de fondo y el logo
+	
+	private void kargatuLogoaKolorea() {
+		try {
+			//sacamos la url del logo de la agentzia que se ha registrado
+			
+			String logoUrl = cache.getAgentzia().getLogoa();
+			if (logoUrl != null && !logoUrl.isEmpty()) {
+
+				//convertimos la url a imagen
+				
+				ImageIcon imageIcon = new ImageIcon(new URL(new URI(logoUrl).toURL().toString()));
+				lblLogoa = new JLabel(
+						new ImageIcon(imageIcon.getImage().getScaledInstance(170, 160, Image.SCALE_SMOOTH)));
+				lblLogoa.setBounds(346, 40, 170, 160);
+				getContentPane().add(lblLogoa);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+		try {
+			
+			//pillamos el codigo hexadecimal que está en la base de datos de esa misma agencia y la formateamos en String
+			
+			String hexKolor = cache.getAgentzia().getMarkarenKolorea();
+			if (hexKolor != null && !hexKolor.isEmpty()) {
+				//lo convertimos con el decode para que sepa que color es y ponerlo en el background
+				getContentPane().setBackground(Color.decode(hexKolor));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	// esto es para calcular los días de diferencia de la fecha inicio y fecha fin.
 	private void kalkulatuDiferentzia() {
 
+		// pillo los datos de las fechas
 		Date hasieraData = dataAukeratuHasiera.getDate();
 		Date amaieraData = dataAukeratuAmaiera.getDate();
-
+		// miramos si es null, si no lo es realiza el calculo
 		if (hasieraData != null && amaieraData != null) {
+			// restamos las fechas con el diff
 			long diff = amaieraData.getTime() - hasieraData.getTime();
+			// convertimos la fecha esta en dias
 			long egunDiferentzia = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+			// metemos todo lo que nos de en el textField, si da error me va a decir que
+			// está mal
 			txtFieldEgunak.setText(egunDiferentzia >= 0 ? String.valueOf(egunDiferentzia) : "Data baliogabea");
 		}
 	}

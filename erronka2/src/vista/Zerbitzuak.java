@@ -11,6 +11,7 @@ import modelo.pojo.Logela_motak;
 import modelo.sql.SqlMetodoak;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Desktop;
@@ -43,13 +44,12 @@ public class Zerbitzuak extends JFrame {
 	private JLabel lblLogoa, lblTituloa, lblIzena, lblMota, lblJoanekoData, lblHelmugakoAireportua, lblIbilbide,
 			lblJardueraData, lblJatorrizkoaireportua, lblBidaiarenKodea, lblAerolinea, lblPrezioa, lblIrteeraOrdutegia,
 			lblIraupena, lblEtorriData, lblBidaiarenKodeaEtorria, lblHiria, lblPrezioaOstatu, lblAerolineaEtorria,
-			lblPrezioaEtorria, lblEtorriOrdutegia, lblIraupenaEtorria, lblLogelaMota, lblJardueraPrezioa,
-			lblOstatuSarrera, lblOstatuIrteera, lblJardueraDeskribapena;
+			lblEtorriOrdutegia, lblIraupenaEtorria, lblLogelaMota, lblJardueraPrezioa, lblOstatuSarrera,
+			lblOstatuIrteera, lblJardueraDeskribapena;
 	private Cache cache = new Cache();
 	private JDateChooser dataAukeratuJoaneko, dataJarduera, dataAukeratuEtorria, dataOstatuSarrera, dataOstatuIrteera;
 	private JTextField txtizena, txtBidaiarenKodea, txtPrezioa, txtOrdutegia, txtIraupena, txtOstatuHiria,
-			txtOstatuPrezio, txtBidaiarenKodeaEtorria, txtPrezioEtorria, txtEtorriOrdutegia, txtIraupenaEtorria,
-			txtJardueraPrezioa;
+			txtOstatuPrezio, txtBidaiarenKodeaEtorria, txtEtorriOrdutegia, txtIraupenaEtorria, txtJardueraPrezioa;
 	private JComboBox<String> comboBoxHelmuga, comboBoxMotak, comboBoxJatorria, comboBoxIbilbidea, comboBoxAerolinea,
 			comboBoxAerolineaEtorria, comboBoxLogela;
 	ArrayList<Logela_motak> logelaMotaList = sm.logelaMotaEduki();;
@@ -68,25 +68,37 @@ public class Zerbitzuak extends JFrame {
 		setBounds(100, 100, 573, 695);
 		getContentPane().setLayout(null);
 
+		// metemos a mano en el arrayList las opciones para elegir el tipo de servicio
+		// en el combobox
+
 		zerbitzuMota.add("Hegaldia");
 		zerbitzuMota.add("Ostatua");
 		zerbitzuMota.add("Jarduera");
+
+		// creación del comboBox de Motak
 
 		comboBoxMotak = new JComboBox<>(zerbitzuMota.toArray(new String[0]));
 		comboBoxMotak.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				comboBoxMotak.setEnabled(false); // Deshabilita para evitar múltiples eventos seguidos
-				actualizarInterfaz(comboBoxMotak.getSelectedIndex(), idBidaia);
+				// llamada al metodo de actualizar el la pantalla y mostrar el servicio
+				// seleccionado
+				interfazaEguneratu(comboBoxMotak.getSelectedIndex(), idBidaia);
 				comboBoxMotak.setEnabled(true); // Reactiva después de actualizar
 			}
 		});
 		comboBoxMotak.setBounds(158, 201, 150, 22);
 		getContentPane().add(comboBoxMotak);
-
+		// mostramos por defecto hegaldia
 		erakutsiHegaldia(idBidaia);
 	}
 
+	// este es el metodo para enseñar lo que tienen todos en común y no tener que
+	// ponerlo en cada metodo
+
 	private void erakutsiZerbitzuaBase(int idBidaia) {
+
+		// creación de los labels
 
 		lblTituloa = new JLabel("Zerbitzuak");
 		lblTituloa.setFont(new Font("ROG Fonts", Font.PLAIN, 27));
@@ -97,28 +109,41 @@ public class Zerbitzuak extends JFrame {
 		lblMota.setBounds(45, 206, 94, 14);
 		getContentPane().add(lblMota);
 
+		// creación del botón de cancelar
+
 		btnEzeztatu = new JButton("Ezeztatu");
 		btnEzeztatu.addActionListener(e -> {
-			new LehioarenFuntioak().irekiHasiera();
+			new LeihoarenFuntioak().irekiHasiera();
 			dispose();
 		});
 		btnEzeztatu.setBounds(358, 622, 89, 23);
 		getContentPane().add(btnEzeztatu);
 
+		// creación del boton de guardado
+
 		btnGorde = new JButton("Gorde");
 		btnGorde.addActionListener(e -> {
+			// dependiendo de lo que está seleccionado lo guarda de una manera u otra
 			if (comboBoxMotak.getSelectedIndex() == 0) {
 				if (comboBoxIbilbidea.getSelectedIndex() == 0) {
+
+					// guardamos el indice de los combobox para luego poder sacar el codigo de cada
+					// cosa y poder subirlo
+
 					int jatorriaIndex = comboBoxJatorria.getSelectedIndex();
 					int helmugaIndex = comboBoxHelmuga.getSelectedIndex();
 					int aerolineaIndex = comboBoxAerolinea.getSelectedIndex();
 
+					// metemos todo en las variables para luego pasarlas por parametro al metodo que
+					// hace la consulta
+
 					String jatorrizkoAireportua = aireportuKodea.get(jatorriaIndex);
 					String helmugakoAireportua = aireportuKodea.get(helmugaIndex);
+					String aerolinea = airelineaKodea.get(aerolineaIndex);
 					Date joanekoData = dataAukeratuJoaneko.getDate();
 					String sJoanekoData = dataFormatua.format(joanekoData);
 					String hegaldiKodea = txtBidaiarenKodea.getText();
-					String aerolinea = airelineaKodea.get(aerolineaIndex);
+
 					float prezio = Float.parseFloat(txtPrezioa.getText());
 					Time orduteguia = Time.valueOf(txtOrdutegia.getText());
 					Time iraupena = Time.valueOf(txtIraupena.getText());
@@ -127,9 +152,15 @@ public class Zerbitzuak extends JFrame {
 							aerolinea, prezio, orduteguia, iraupena);
 
 				} else {
+					// guardamos el indice de los combobox para luego poder sacar el codigo de cada
+					// cosa y poder subirlo
+
 					int jatorriaIndex = comboBoxJatorria.getSelectedIndex();
 					int helmugaIndex = comboBoxHelmuga.getSelectedIndex();
 					int aerolineaIndex = comboBoxAerolinea.getSelectedIndex();
+
+					// metemos todo en las variables para luego pasarlas por parametro al metodo que
+					// hace la consulta
 
 					String jatorrizkoAireportua = aireportuKodea.get(jatorriaIndex);
 					String helmugakoAireportua = aireportuKodea.get(helmugaIndex);
@@ -147,18 +178,23 @@ public class Zerbitzuak extends JFrame {
 					String sJoanekoDataE = dataFormatua.format(joanekoDataE);
 					String hegaldiKodeaE = txtBidaiarenKodeaEtorria.getText();
 					String aerolineaE = airelineaKodea.get(aerolineaIndex);
-					float prezioE = Float.parseFloat(txtPrezioEtorria.getText());
 					Time orduteguiaE = Time.valueOf(txtEtorriOrdutegia.getText());
 					Time iraupenaE = Time.valueOf(txtIraupenaEtorria.getText());
 
 					sm.zerbitzuJoanEtorriEgin(idBidaia, jatorrizkoAireportua, helmugakoAireportua, sJoanekoData,
 							hegaldiKodea, aerolinea, prezio, orduteguia, iraupena, jatorrizkoAireportuaE,
-							helmugakoAireportuaE, sJoanekoDataE, hegaldiKodeaE, aerolineaE, prezioE, orduteguiaE,
-							iraupenaE);
+							helmugakoAireportuaE, sJoanekoDataE, hegaldiKodeaE, aerolineaE, orduteguiaE, iraupenaE);
 
 				}
 			} else if (comboBoxMotak.getSelectedIndex() == 1) {
+
+				// guardamos el indice de los combobox para luego poder sacar el codigo de cada
+				// cosa y poder subirlo
+
 				int logelaMotaIndex = comboBoxLogela.getSelectedIndex();
+
+				// metemos todo en las variables para luego pasarlas por parametro al metodo que
+				// hace la consulta
 
 				String logelaMota = logelaMotakKod.get(logelaMotaIndex);
 				String hiria = txtOstatuHiria.getText();
@@ -171,6 +207,10 @@ public class Zerbitzuak extends JFrame {
 				sm.zerbitzuOstatuEgin(idBidaia, logelaMota, hiria, prezioO, sSarreraDate, sIrteeraDate);
 
 			} else {
+
+				// metemos todo en las variables para luego pasarlas por parametro al metodo que
+				// hace la consulta
+
 				String jardueraIzena = txtizena.getText();
 				String jardueraDeskribapena = txtJardueraDeskribapena.getText();
 				float prezioJ = Float.parseFloat(txtJardueraPrezioa.getText());
@@ -180,26 +220,36 @@ public class Zerbitzuak extends JFrame {
 				sm.zerbitzuJardueraEgin(idBidaia, jardueraIzena, jardueraDeskribapena, prezioJ, sJardueraDate);
 
 			}
-			new LehioarenFuntioak().irekiHasiera();
+			new LeihoarenFuntioak().irekiHasiera();
 			dispose();
 		});
 		btnGorde.setBounds(115, 622, 89, 23);
 		getContentPane().add(btnGorde);
 
-		cargarLogotipoYColor();
+		// llamada al metodo de cargar el logo y el color
+
+		kargatuLogoaKolorea();
 	}
 
+	// metodo para enseñar las cosas de hegaldia
+
 	private void erakutsiHegaldia(int idBidaia) {
+
+		// llamada al metodo que enseña lo que tienen en comun
+
 		erakutsiZerbitzuaBase(idBidaia);
+
+		// si el metodo sartu es true es que ya se han metido los valores en el
+		// arrayList esto es para prevenir duplicados
 
 		if (sartu == false) {
 			for (Aireportu aireportu : iata) {
-				aireportuKodea.add(aireportu.getAireportuKodea()); // Usar el getter para obtener deskribapena
+				aireportuKodea.add(aireportu.getAireportuKodea());
 				hiria.add(aireportu.getHiria());
 			}
 
 			for (Airelinea airelineak : airelineaList) {
-				airelinea.add(airelineak.getAirelineIzena()); // Usar el getter para obtener deskribapena
+				airelinea.add(airelineak.getAirelineIzena());
 				airelineaKodea.add(airelineak.getAirelineaKodea());
 			}
 
@@ -209,16 +259,20 @@ public class Zerbitzuak extends JFrame {
 			sartu = true;
 		}
 
+		// creación del comboBox de ibilbideak si es joan o joan_etorria
+
 		comboBoxIbilbidea = new JComboBox<>(ibilbidea.toArray(new String[0]));
 		comboBoxIbilbidea.setBounds(158, 234, 150, 22);
 		comboBoxIbilbidea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				comboBoxIbilbidea.setEnabled(false); // Deshabilita para evitar múltiples eventos seguidos
-				actualizarInterfazIbilbidea(comboBoxIbilbidea.getSelectedIndex(), idBidaia);
+				interfazaEguneratuIbilbidea(comboBoxIbilbidea.getSelectedIndex(), idBidaia);
 				comboBoxIbilbidea.setEnabled(true); // Reactiva después de actualizar
 			}
 		});
 		getContentPane().add(comboBoxIbilbidea);
+
+		// creación del los labels
 
 		lblIbilbide = new JLabel("Ibilbidea");
 		lblIbilbide.setBounds(87, 239, 52, 14);
@@ -227,6 +281,8 @@ public class Zerbitzuak extends JFrame {
 		lblJatorrizkoaireportua = new JLabel("Jatorrizko aireportua");
 		lblJatorrizkoaireportua.setBounds(30, 272, 115, 14);
 		getContentPane().add(lblJatorrizkoaireportua);
+
+		// creación de los combobox de los aeropuertos y sus labels
 
 		comboBoxJatorria = new JComboBox<>(hiria.toArray(new String[0]));
 		comboBoxJatorria.setBounds(158, 267, 150, 22);
@@ -240,35 +296,53 @@ public class Zerbitzuak extends JFrame {
 		comboBoxHelmuga.setBounds(158, 300, 150, 22);
 		getContentPane().add(comboBoxHelmuga);
 
+		// creación del botón para buscar un viaje en google
+
 		btnBiliatu = new JButton("Bilatu Bidaia");
 		btnBiliatu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				// llamada al metodo de busqueda en google del vuelo
+
 				bilatuBidaia();
 			}
 		});
 		btnBiliatu.setBounds(329, 283, 89, 23);
 		getContentPane().add(btnBiliatu);
 
+		// enseñamos por defecto joan
+
 		erakutsiJoan(idBidaia);
 
 		getContentPane().setVisible(true);
 	}
 
+	// metodo para enseñar todo lo de ostatua
+
 	private void erakutsiOstatua(int idBidaia) {
+		// llamada al metodo que enseña lo que tienen en comun
 		erakutsiZerbitzuaBase(idBidaia);
+
+		// ajustamos donde queremos poner los botones
 
 		btnGorde.setBounds(115, 420, 89, 23);
 		btnEzeztatu.setBounds(358, 420, 89, 23);
 
+		// añadir cosas a los ArrayList
+
 		for (Logela_motak logelaMota : logelaMotaList) {
 			logelaMotakKod.add(logelaMota.getLogelaKodea()); // Usar el getter para obtener deskribapena
 			logelaMotak.add(logelaMota.getLogelaDeskribapena()); // Usar el getter para obtener deskribapena
-			
+
 		}
+
+		// creación del comboBox de logela motak
 
 		comboBoxLogela = new JComboBox<>(logelaMotak.toArray(new String[0]));
 		comboBoxLogela.setBounds(158, 234, 150, 22);
 		getContentPane().add(comboBoxLogela);
+
+		// creación de los labels y txtField
 
 		lblHiria = new JLabel("Hiria");
 		lblHiria.setBounds(113, 275, 35, 14);
@@ -286,9 +360,18 @@ public class Zerbitzuak extends JFrame {
 		txtOstatuPrezio.setBounds(158, 300, 150, 30);
 		getContentPane().add(txtOstatuPrezio);
 
+		// creación del boton de busqueda de ostatua
+
 		btnBiliatuOstatu = new JButton("Bilatu ostatua");
+		btnBiliatuOstatu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bilatuOstatua();
+			}
+		});
 		btnBiliatuOstatu.setBounds(329, 283, 118, 23);
 		getContentPane().add(btnBiliatuOstatu);
+
+		// creación de los JDateChooser para elegir las fechas y sus labels
 
 		dataOstatuSarrera = new JDateChooser();
 		dataOstatuSarrera.setBounds(115, 353, 150, 25);
@@ -312,8 +395,13 @@ public class Zerbitzuak extends JFrame {
 
 	}
 
+	// metodo para enseñar Jarduera
+
 	private void erakutsiJarduera(int idBidaia) {
+		// llamada al metodo que enseña lo que tienen en comun
 		erakutsiZerbitzuaBase(idBidaia);
+
+		// creación de los txtFields y labels
 
 		txtizena = new JTextField();
 		txtizena.setBounds(158, 160, 150, 30);
@@ -340,6 +428,8 @@ public class Zerbitzuak extends JFrame {
 		txtJardueraPrezioa.setBounds(158, 325, 150, 30);
 		getContentPane().add(txtJardueraPrezioa);
 
+		// creación del JDatechooser y su label para elegir la fecha del evento
+
 		lblJardueraData = new JLabel("Jarduera data");
 		lblJardueraData.setBounds(70, 381, 78, 14);
 		getContentPane().add(lblJardueraData);
@@ -354,7 +444,11 @@ public class Zerbitzuak extends JFrame {
 
 	}
 
+	// metodo para enseñar el viaje de ida
+
 	private void erakutsiJoan(int idBidaia) {
+
+		// creación del JDatechooser y su label para elegir la fecha del viaje de ida
 
 		dataAukeratuJoaneko = new JDateChooser();
 		dataAukeratuJoaneko.setBounds(158, 333, 150, 25);
@@ -363,6 +457,8 @@ public class Zerbitzuak extends JFrame {
 		lblJoanekoData = new JLabel("Joaneko data");
 		lblJoanekoData.setBounds(65, 340, 78, 14);
 		getContentPane().add(lblJoanekoData);
+
+		// creación de los labels y txtFields y comboBox
 
 		lblBidaiarenKodea = new JLabel("Bidaiaren_kodea");
 		lblBidaiarenKodea.setBounds(51, 378, 100, 14);
@@ -410,8 +506,20 @@ public class Zerbitzuak extends JFrame {
 
 	}
 
+	// metodo para enseñar ida y vuelta
+
 	private void erakutsiJoanEtorria(int idBidaia) {
+
+		// llamada al viaje de ida para enseñar las dos cosas
+
 		erakutsiJoan(idBidaia);
+
+		// cambio e sitio del precio
+
+		txtPrezioa.setBounds(455, 448, 150, 30);
+		lblPrezioa.setBounds(399, 457, 49, 14);
+
+		// creación del JDatechooser y su label para elegir la fecha del viaje de vuelta
 
 		dataAukeratuEtorria = new JDateChooser();
 		dataAukeratuEtorria.setBounds(455, 332, 150, 25);
@@ -420,6 +528,8 @@ public class Zerbitzuak extends JFrame {
 		lblEtorriData = new JLabel("Etorri data");
 		lblEtorriData.setBounds(362, 339, 78, 14);
 		getContentPane().add(lblEtorriData);
+
+		// creación de los labels y txtFields
 
 		lblBidaiarenKodeaEtorria = new JLabel("Bidaiaren_kodea Etorria");
 		lblBidaiarenKodeaEtorria.setBounds(348, 377, 100, 14);
@@ -433,15 +543,6 @@ public class Zerbitzuak extends JFrame {
 		lblAerolineaEtorria = new JLabel("Aerolinea Etorria");
 		lblAerolineaEtorria.setBounds(389, 418, 59, 14);
 		getContentPane().add(lblAerolineaEtorria);
-
-		lblPrezioaEtorria = new JLabel("Prezioa Etorria");
-		lblPrezioaEtorria.setBounds(399, 459, 49, 14);
-		getContentPane().add(lblPrezioaEtorria);
-
-		txtPrezioEtorria = new JTextField();
-		txtPrezioEtorria.setColumns(10);
-		txtPrezioEtorria.setBounds(455, 450, 150, 30);
-		getContentPane().add(txtPrezioEtorria);
 
 		lblEtorriOrdutegia = new JLabel("Etorri ordutegia");
 		lblEtorriOrdutegia.setBounds(349, 500, 99, 14);
@@ -461,27 +562,37 @@ public class Zerbitzuak extends JFrame {
 		txtIraupenaEtorria.setBounds(455, 532, 150, 30);
 		getContentPane().add(txtIraupenaEtorria);
 
+		// creación del comboBox para las aerolineas
+
 		comboBoxAerolineaEtorria = new JComboBox<>(airelinea.toArray(new String[0]));
-		;
 		comboBoxAerolineaEtorria.setBounds(455, 415, 150, 22);
 		getContentPane().add(comboBoxAerolineaEtorria);
 	}
 
-	private void actualizarInterfaz(int index, int idBidaia) {
+	// metodo que actualiza la interfaz dependiendo de lo que se eliga en el
+	// combobox de motas
+
+	private void interfazaEguneratu(int index, int idBidaia) {
 		getContentPane().removeAll(); // Elimina componentes anteriores
 		getContentPane().add(comboBoxMotak); // Vuelve a agregar el ComboBox si es necesario
 		switch (index) {
 		case 0:
+			//cambiamos el tamaño de la ventana
 			setBounds(100, 100, 573, 695);
+			//llamada al metodo para cambiar la pantalla y mostrar lo que esté dentro
 			erakutsiHegaldia(idBidaia);
 			;
 			break;
 		case 1:
+			//cambiamos el tamaño de la ventana
 			setBounds(100, 100, 573, 500);
+			//llamada al metodo para cambiar la pantalla y mostrar lo que esté dentro
 			erakutsiOstatua(idBidaia);
 			break;
 		case 2:
+			//cambiamos el tamaño de la ventana
 			setBounds(100, 100, 573, 500);
+			//llamada al metodo para cambiar la pantalla y mostrar lo que esté dentro
 			erakutsiJarduera(idBidaia);
 			break;
 		}
@@ -489,20 +600,27 @@ public class Zerbitzuak extends JFrame {
 		getContentPane().repaint();
 	}
 
-	private void actualizarInterfazIbilbidea(int index, int idBidaia) {
+	private void interfazaEguneratuIbilbidea(int index, int idBidaia) {
 		getContentPane().removeAll(); // Elimina componentes anteriores
+		//llamada al metodo para añadir las cosas que se quitan
 		addGuztia();
 
 		switch (index) {
 		case 0: // "Joan"
+			//cambiamos el tamaño de la ventana
 			setBounds(100, 100, 573, 695);
+			//cambiamos de sitio el logo
 			lblLogoa.setBounds(346, 40, 170, 160);
+			//llamada al metodo para cambiar la pantalla y mostrar lo que esté dentro
 			erakutsiJoan(idBidaia);
 			;
 			break;
 		case 1: // "Joan eta etorri"
+			//cambiamos el tamaño de la ventana
 			setBounds(100, 100, 650, 695);
+			//cambiamos de sitio el logo
 			lblLogoa.setBounds(346, 40, 350, 160);
+			//llamada al metodo para cambiar la pantalla y mostrar lo que esté dentro
 			erakutsiJoanEtorria(idBidaia);
 			;
 			break;
@@ -512,10 +630,17 @@ public class Zerbitzuak extends JFrame {
 	}
 
 	@SuppressWarnings("deprecation")
-	private void cargarLogotipoYColor() {
+
+	// metodo para poner el color de fondo y el logo
+
+	private void kargatuLogoaKolorea() {
 		try {
+			// sacamos la url del logo de la agentzia que se ha registrado
+
 			String logoUrl = cache.getAgentzia().getLogoa();
 			if (logoUrl != null && !logoUrl.isEmpty()) {
+
+				// convertimos la url a imagen
 
 				ImageIcon imageIcon = new ImageIcon(new URL(new URI(logoUrl).toURL().toString()));
 				lblLogoa = new JLabel(
@@ -528,14 +653,22 @@ public class Zerbitzuak extends JFrame {
 		}
 
 		try {
+
+			// pillamos el codigo hexadecimal que está en la base de datos de esa misma
+			// agencia y la formateamos en String
+
 			String hexKolor = cache.getAgentzia().getMarkarenKolorea();
 			if (hexKolor != null && !hexKolor.isEmpty()) {
+				// lo convertimos con el decode para que sepa que color es y ponerlo en el
+				// background
 				getContentPane().setBackground(Color.decode(hexKolor));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	//metodo para añadir las cosas que se quitan
 
 	private void addGuztia() {
 		getContentPane().add(comboBoxMotak); // Añadir el ComboBox si es necesario
@@ -550,15 +683,23 @@ public class Zerbitzuak extends JFrame {
 		getContentPane().add(btnGorde);
 		getContentPane().add(btnBiliatu);
 		getContentPane().add(comboBoxIbilbidea); // Asegúrate de que el comboBoxIbilbidea vuelva a estar presente
-		cargarLogotipoYColor();
+		kargatuLogoaKolorea();
 	}
+	
+	//metodo para buscar en google el viaje seleccionado (en este caso es el vuelo y se busca en skyscanner)
 
 	private void bilatuBidaia() {
 		try {
+			
+			//pillamos el index de los combobox para pasarlo a el kodigo del mismo
+			
 			int jatorrizkoIndex = comboBoxJatorria.getSelectedIndex();
 			int helmugakoIndex = comboBoxHelmuga.getSelectedIndex();
 			String jatorrizkoAireportua = aireportuKodea.get(jatorrizkoIndex);
 			String helmugaAireportua = aireportuKodea.get(helmugakoIndex);
+			
+			//pillamos la fecha que está seleccionada
+			
 			Date joanekoData = dataAukeratuJoaneko.getDate();
 
 			// Formatear la fecha en formato YYYYMMDD (sin espacios ni caracteres no
@@ -566,10 +707,12 @@ public class Zerbitzuak extends JFrame {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 			String formattedDate = dateFormat.format(joanekoData);
 
-			// Construir la URL con codificación segura
+			// Construir la URL
 			String skyscannerUrl = "https://www.skyscanner.es/transporte/vuelos/"
+					//esto pasa lo que está en el string a UTF_8 para que lo entienda la página web
 					+ URLEncoder.encode(jatorrizkoAireportua, StandardCharsets.UTF_8) + "/"
 					+ URLEncoder.encode(helmugaAireportua, StandardCharsets.UTF_8) + "/" + formattedDate
+					//esto es para configurar la pagina con las cosas que necesita	
 					+ "/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false";
 
 			// Redirigir al navegador
@@ -577,6 +720,44 @@ public class Zerbitzuak extends JFrame {
 			Desktop.getDesktop().browse(uri);
 		} catch (URISyntaxException | IOException e) {
 			e.printStackTrace();
-		}
+		}	
 	}
+	
+	//metodo para buscar el hotel en booking
+	
+	private void bilatuOstatua() {
+	    try {
+	        String hiria = txtOstatuHiria.getText();
+	        
+	        // Obtener las fechas seleccionadas
+	        Date hasieraData = dataOstatuSarrera.getDate();
+	        Date amaieraData = dataOstatuIrteera.getDate();
+
+	        // Verificar que las fechas no sean nulas
+	        if (hasieraData == null || amaieraData == null) {
+	            JOptionPane.showMessageDialog(null, "Por favor, seleccione ambas fechas.", "Error", JOptionPane.ERROR_MESSAGE);
+	            return;
+	        }
+
+	        // Formatear las fechas en formato YYYY-MM-DD
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	        String formattedDate1 = dateFormat.format(hasieraData);
+	        String formattedDate2 = dateFormat.format(amaieraData);
+
+	        // Construir la URL de búsqueda en Booking
+	        String bookingUrl = "https://www.booking.com/searchresults.html?"
+	                + "ss=" + URLEncoder.encode(hiria, StandardCharsets.UTF_8)
+	                + "&checkin=" + formattedDate1
+	                + "&checkout=" + formattedDate2
+	                + "&group_adults=1&no_rooms=1&group_children=0";
+
+	        // Abrir el navegador con la URL generada
+	        URI uri = new URI(bookingUrl);
+	        Desktop.getDesktop().browse(uri);
+	    } catch (URISyntaxException | IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+
 }

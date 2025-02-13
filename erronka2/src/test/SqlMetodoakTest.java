@@ -30,26 +30,30 @@ public class SqlMetodoakTest {
 	private Connection connection;
 	private SqlMetodoak sqlMetodoak;
 
+	// Testen aurretik setUp metodoa exekutatuko da
 	@Before
 	public void setUp() throws Exception {
+		// SqlMetodoak objektu bat sortu
 		sqlMetodoak = new SqlMetodoak();
 	}
 
+	// loginKonparatu metodoa testatu
 	@Test
 	public void testLoginKomparatu() {
 		String erabiltzailea = "admin";
 		String pasahitza = "admin";
 
-		// llamada al metododo para testear
-		sqlMetodoak.loginKomparatu(erabiltzailea, pasahitza);
+		// Testeatzeko metodoari deia egin
+		sqlMetodoak.loginKonparatu(erabiltzailea, pasahitza);
 
-		// Verificamos si la cache contiene la agentzia esperada
+		// Cacheak espero den agentzia daukan egiaztatu
 		Agentzia agentzia = sqlMetodoak.getCache().getAgentzia();
 		assertNotNull(agentzia);
 		assertEquals(erabiltzailea, agentzia.getIzena());
 		assertEquals(pasahitza, agentzia.getPasahitza());
 	}
 
+	// ezabatuBidaia metodoa testatu
 	@Test
 	public void testEzabatuBidaia() throws SQLException {
 		Statement statement = connection.createStatement();
@@ -69,13 +73,14 @@ public class SqlMetodoakTest {
 		try {
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM bidaia WHERE kodea = 9");
-			assertFalse(resultSet.next()); // Verifica que no existan filas con kodea = 9
+			assertFalse(resultSet.next()); // kodea = 9 duten errenkadarik ez dagoela egiaztatu
 		} catch (SQLException e) {
 			e.printStackTrace();
-			fail("Error durante la verificación del test");
+			fail("Errorea gertatu da testaren egiaztapenean");
 		}
 	}
 
+	// ezabatuZerbitzua metodoa testatu
 	@Test
 	public void testEzabatuZerbitzua() throws SQLException {
 		Statement statement = connection.createStatement();
@@ -97,13 +102,14 @@ public class SqlMetodoakTest {
 		try {
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM zerbitzuak WHERE kodea = 9");
-			assertFalse(resultSet.next()); // Verifica que no existan filas con codigo = 9
+			assertFalse(resultSet.next()); // kodea = 9 duten errenkadarik ez dagoela egiaztatu
 		} catch (SQLException e) {
 			e.printStackTrace();
-			fail("Error durante la verificación del test");
+			fail("Errorea gertatu da testaren egiaztapenean");
 		}
 	}
 
+	// zerbitzuJoanEgin metodoa testatu
 	@Test
 	public void testZerbitzuJoanEgin() throws SQLException {
 		sqlMetodoak.zerbitzuJoanEgin(9, "JFK", "LAX", "2025/02/15", "FL123", "Delta", 500.0f, Time.valueOf("10:00:00"),
@@ -112,44 +118,45 @@ public class SqlMetodoakTest {
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM zerbitzuak WHERE kodea = 9");
-			assertTrue(resultSet.next()); // Verifica que la fila con kodea = 9 existe
+			assertTrue(resultSet.next()); // kodea = 9 duen errenkada existitzen dela egiaztatu
 			assertEquals("Hegaldia", resultSet.getString("izena"));
-			assertEquals("JFK", resultSet.getString("jatorrizkoAireportua")); // Añade más aserciones según sea
-																				// necesario
+			assertEquals("JFK", resultSet.getString("jatorrizkoAireportua")); // Gehitu beharrezko egiaztapen gehiago
 		} catch (SQLException e) {
 			e.printStackTrace();
-			fail("Error durante la verificación del test");
+			fail("Errorea gertatu da testaren egiaztapenean");
 		}
 	}
 
+	// zerbitzuJoanEtorriEgin metodoa testatu
 	@Test
 	public void testZerbitzuJoanEtorriEgin() throws SQLException {
 
 		sqlMetodoak.zerbitzuJoanEtorriEgin(9, "JFK", "LAX", "2025/02/15", "FL123", "Delta", 500.0f,
 				Time.valueOf("10:00:00"), Time.valueOf("05:00:00"), "LAX", "JFK", "2025/02/20", "FL321", "Delta",
-				450.0f, Time.valueOf("15:00:00"), Time.valueOf("05:00:00"));
+				Time.valueOf("15:00:00"), Time.valueOf("05:00:00"));
 
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM zerbitzuak WHERE kodea = 9");
-			assertTrue(resultSet.next()); // Verifica que la fila con kodea = 1 existe
+			assertTrue(resultSet.next()); // kodea = 9 duen errenkada existitzen dela egiaztatu
 			assertEquals("Joan_Etorri", resultSet.getString("izena"));
 
 			resultSet = statement.executeQuery("SELECT * FROM hegaldia WHERE zerbitzu_kodea = 9");
-			assertTrue(resultSet.next()); // Verifica que la fila en hegaldia con zerbitzu_kodea = 1 existe
-			assertEquals("JFK", resultSet.getString("jatorrizkoAireportua")); // Añade más aserciones según sea
-																				// necesario
+			assertTrue(resultSet.next()); // zerbitzu_kodea = 9 duen errenkada hegaldia taulan existitzen dela egiaztatu
+			assertEquals("JFK", resultSet.getString("jatorrizkoAireportua")); // Gehitu beharrezko egiaztapen gehiago
 
 			resultSet = statement.executeQuery("SELECT * FROM joan_eta_etorri WHERE zerbitzu_kodea = 9");
-			assertTrue(resultSet.next()); // Verifica que la fila en joan_eta_etorri con zerbitzu_kodea = 1 existe
-			assertEquals("LAX", resultSet.getString("joanJatorrizkoAireportua")); // Añade más aserciones según sea
-																					// necesario
+			assertTrue(resultSet.next()); // zerbitzu_kodea = 9 duen errenkada joan_eta_etorri taulan existitzen dela
+											// egiaztatu
+			assertEquals("LAX", resultSet.getString("joanJatorrizkoAireportua")); // Gehitu beharrezko egiaztapen
+																					// gehiago
 		} catch (SQLException e) {
 			e.printStackTrace();
-			fail("Error durante la verificación del test");
+			fail("Errorea gertatu da testaren egiaztapenean");
 		}
 	}
 
+//zerbitzuOstatuEgin metodoa testatu
 	@Test
 	public void testZerbitzuOstatuEgin() throws SQLException {
 		sqlMetodoak.zerbitzuOstatuEgin(9, "L1", "Madrid", 200.0f, "2025/02/10", "2025/02/20");
@@ -157,18 +164,19 @@ public class SqlMetodoakTest {
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM zerbitzuak WHERE kodea = 9");
-			assertTrue(resultSet.next()); // Verifica que la fila con kodea = 1 existe
+			assertTrue(resultSet.next()); // kodea = 9 duen errenkada existitzen dela egiaztatu
 			assertEquals("Ostatua", resultSet.getString("izena"));
 
 			resultSet = statement.executeQuery("SELECT * FROM ostatua WHERE zerbitzu_kodea = 9");
-			assertTrue(resultSet.next()); // Verifica que la fila en ostatua con zerbitzu_kodea = 1 existe
-			assertEquals("Madrid", resultSet.getString("hiria")); // Añade más aserciones según sea necesario
+			assertTrue(resultSet.next()); // zerbitzu_kodea = 9 duen errenkada ostatua taulan existitzen dela egiaztatu
+			assertEquals("Madrid", resultSet.getString("hiria")); // Gehitu beharrezko egiaztapen gehiago
 		} catch (SQLException e) {
 			e.printStackTrace();
-			fail("Error durante la verificación del test");
+			fail("Errorea gertatu da testaren egiaztapenean");
 		}
 	}
 
+// zerbitzuJardueraEgin metodoa testatu
 	@Test
 	public void testZerbitzuJardueraEgin() {
 		sqlMetodoak.zerbitzuJardueraEgin(1, "Visita Guiada", "Visita guiada por la ciudad", 50.0f, "2025/02/15");
@@ -176,19 +184,21 @@ public class SqlMetodoakTest {
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM zerbitzuak WHERE kodea = 1");
-			assertTrue(resultSet.next()); // Verifica que la fila con kodea = 1 existe
+			assertTrue(resultSet.next()); // kodea = 1 duen errenkada existitzen dela egiaztatu
 			assertEquals("Visita Guiada", resultSet.getString("izena"));
 
 			resultSet = statement.executeQuery("SELECT * FROM beste_batzuk WHERE zerbitzu_kodea = 1");
-			assertTrue(resultSet.next()); // Verifica que la fila en beste_batzuk con zerbitzu_kodea = 1 existe
-			assertEquals("Visita guiada por la ciudad", resultSet.getString("deskribapena")); // Añade más aserciones
-																								// según sea necesario
+			assertTrue(resultSet.next()); // zerbitzu_kodea = 1 duen errenkada beste_batzuk taulan existitzen dela
+											// egiaztatu
+			assertEquals("Visita guiada por la ciudad", resultSet.getString("deskribapena")); // Gehitu beharrezko
+																								// egiaztapen gehiago
 		} catch (SQLException e) {
 			e.printStackTrace();
-			fail("Error durante la verificación del test");
+			fail("Errorea gertatu da testaren egiaztapenean");
 		}
 	}
 
+// erregistroEgin metodoa testatu
 	@Test
 	public void testErregistroEgin() {
 		sqlMetodoak.erregistroEgin("Agentzia Prueba", "Rojo", "L1", "AM1", "logo.png", "testpassword");
@@ -196,16 +206,17 @@ public class SqlMetodoakTest {
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM agentzia WHERE izena = 'Agentzia Prueba'");
-			assertTrue(resultSet.next()); // Verifica que la fila con el nombre 'Agentzia Prueba' existe
+			assertTrue(resultSet.next()); // 'Agentzia Prueba' izena duen errenkada existitzen dela egiaztatu
 			assertEquals("Agentzia Prueba", resultSet.getString("izena"));
 			assertEquals("Rojo", resultSet.getString("markaren_kolorea"));
-			// Añade más aserciones según sea necesario
+			// Gehitu beharrezko egiaztapen gehiago
 		} catch (SQLException e) {
 			e.printStackTrace();
-			fail("Error durante la verificación del test");
+			fail("Errorea gertatu da testaren egiaztapenean");
 		}
 	}
 
+// bidaiaEgin metodoa testatu
 	@Test
 	public void testBidaiaEgin() {
 		sqlMetodoak.bidaiaEgin("Viaje de Prueba", "Descripción del viaje", "No incluye transporte", "2025/02/10",
@@ -215,23 +226,24 @@ public class SqlMetodoakTest {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement
 					.executeQuery("SELECT * FROM bidaia WHERE bidaiaren_izena = 'Viaje de Prueba'");
-			assertTrue(resultSet.next()); // Verifica que la fila con el nombre 'Viaje de Prueba' existe
+			assertTrue(resultSet.next()); // 'Viaje de Prueba' izena duen errenkada existitzen dela egiaztatu
 			assertEquals("Viaje de Prueba", resultSet.getString("bidaiaren_izena"));
 			assertEquals("Descripción del viaje", resultSet.getString("deskribapena"));
-			// Añade más aserciones según sea necesario
+			// Gehitu beharrezko egiaztapen gehiago
 		} catch (SQLException e) {
 			e.printStackTrace();
-			fail("Error durante la verificación del test");
+			fail("Errorea gertatu da testaren egiaztapenean");
 		}
 	}
 
+// aireportuaEduki metodoa testatu
 	@Test
 	public void testAireportuaEduki() throws SQLException {
 
 		ArrayList<Aireportu> aireportuak = sqlMetodoak.aireportuaEduki();
 
 		assertNotNull(aireportuak);
-		assertEquals(2, aireportuak.size()); // Asegúrate de que el tamaño sea el esperado
+		assertEquals(2, aireportuak.size()); // Ziurtatu tamaina espero dena dela
 		Aireportu aireportu1 = aireportuak.get(0);
 		assertEquals("BIO", aireportu1.getAireportuKodea());
 		assertEquals("Bilbao", aireportu1.getHiria());
@@ -241,12 +253,13 @@ public class SqlMetodoakTest {
 		assertEquals("Barcelona", aireportu2.getHiria());
 	}
 
+// airelineaEduki metodoa testatu
 	@Test
 	public void testAirelineaEduki() {
 		ArrayList<Airelinea> airelineak = sqlMetodoak.airelineaEduki();
 
 		assertNotNull(airelineak);
-		assertEquals(2, airelineak.size()); // Asegúrate de que el tamaño sea el esperado
+		assertEquals(2, airelineak.size()); // Ziurtatu tamaina espero dena dela
 		Airelinea airelinea1 = airelineak.get(0);
 		assertEquals("DL", airelinea1.getAirelineaKodea());
 		assertEquals("Delta", airelinea1.getAirelineIzena());
@@ -258,12 +271,13 @@ public class SqlMetodoakTest {
 		assertEquals("ES", airelinea2.getHerrialdeKodea());
 	}
 
+//bidaiakEduki metodoa testatu
 	@Test
 	public void testBidaiakEduki() {
 		ArrayList<Bidaia> bidaiak = sqlMetodoak.bidaiakEduki();
 
 		assertNotNull(bidaiak);
-		assertEquals(1, bidaiak.size()); // Asegúrate de que el tamaño sea el esperado
+		assertEquals(1, bidaiak.size()); // Ziurtatu tamaina espero dena dela
 
 		Bidaia bidaia = bidaiak.get(0);
 		assertEquals(1, bidaia.getBidaiKodea());
@@ -271,7 +285,7 @@ public class SqlMetodoakTest {
 
 		ArrayList<Zerbitzu> zerbitzuak = bidaia.getZerbitzuak();
 		assertNotNull(zerbitzuak);
-		assertEquals(2, zerbitzuak.size()); // Verifica que haya dos servicios asociados
+		assertEquals(2, zerbitzuak.size()); // Ziurtatu zerbitzu kopurua espero dena dela
 
 		Zerbitzu zerbitzu1 = zerbitzuak.get(0);
 		assertEquals(1, zerbitzu1.getZerbitzuKodea());
@@ -282,12 +296,13 @@ public class SqlMetodoakTest {
 		assertEquals("Ostatua", zerbitzu2.getZerbitzuIzena());
 	}
 
+// langKopEduki metodoa testatu
 	@Test
 	public void testLangKopEduki() {
 		ArrayList<Lang_kopurua> langKopuruak = sqlMetodoak.langKopEduki();
 
 		assertNotNull(langKopuruak);
-		assertEquals(2, langKopuruak.size()); // Asegúrate de que el tamaño sea el esperado
+		assertEquals(2, langKopuruak.size()); // Ziurtatu tamaina espero dena dela
 
 		Lang_kopurua langKop1 = langKopuruak.get(0);
 		assertEquals("L1", langKop1.getLangKopKodea());
@@ -296,15 +311,15 @@ public class SqlMetodoakTest {
 		Lang_kopurua langKop2 = langKopuruak.get(1);
 		assertEquals("L2", langKop2.getLangKopKodea());
 		assertEquals("11-50 empleados", langKop2.getDeskribapena());
-
 	}
 
+// logelaMotaEduki metodoa testatu
 	@Test
 	public void testLogelaMotaEduki() {
 		ArrayList<Logela_motak> logelaMotak = sqlMetodoak.logelaMotaEduki();
 
 		assertNotNull(logelaMotak);
-		assertEquals(2, logelaMotak.size()); // Asegúrate de que el tamaño sea el esperado
+		assertEquals(2, logelaMotak.size()); // Ziurtatu tamaina espero dena dela
 
 		Logela_motak logelaMota1 = logelaMotak.get(0);
 		assertEquals("L1", logelaMota1.getLogelaKodea());
@@ -315,12 +330,13 @@ public class SqlMetodoakTest {
 		assertEquals("Doble", logelaMota2.getLogelaDeskribapena());
 	}
 
+// agentziaMotaEduki metodoa testatu
 	@Test
 	public void testAgentziaMotaEduki() {
 		ArrayList<Agentzia_Motak> agentziaMotak = sqlMetodoak.agentziaMotaEduki();
 
 		assertNotNull(agentziaMotak);
-		assertEquals(2, agentziaMotak.size()); // Asegúrate de que el tamaño sea el esperado
+		assertEquals(2, agentziaMotak.size()); // Ziurtatu tamaina espero dena dela
 
 		Agentzia_Motak agentziaMota1 = agentziaMotak.get(0);
 		assertEquals("AM1", agentziaMota1.getAgentziaMKodea());
@@ -329,15 +345,15 @@ public class SqlMetodoakTest {
 		Agentzia_Motak agentziaMota2 = agentziaMotak.get(1);
 		assertEquals("AM2", agentziaMota2.getAgentziaMKodea());
 		assertEquals("Agencia de Transporte", agentziaMota2.getDeskribapena());
-
 	}
 
+// bidaiMotaEduki metodoa testatu
 	@Test
 	public void testBidaiMotaEduki() {
 		ArrayList<Bidai_Motak> bidaiMotak = sqlMetodoak.bidaiMotaEduki();
 
 		assertNotNull(bidaiMotak);
-		assertEquals(2, bidaiMotak.size()); // Asegúrate de que el tamaño sea el esperado
+		assertEquals(2, bidaiMotak.size()); // Ziurtatu tamaina espero dena dela
 
 		Bidai_Motak bidaiMota1 = bidaiMotak.get(0);
 		assertEquals("BT1", bidaiMota1.getBidaiKodea());
@@ -348,12 +364,13 @@ public class SqlMetodoakTest {
 		assertEquals("Viaje de Negocios", bidaiMota2.getDeskribapena());
 	}
 
+// herrialdeMotaEduki metodoa testatu
 	@Test
 	public void testHerrialdeMotaEduki() {
 		ArrayList<Herrialde> herrialdeMotak = sqlMetodoak.herrialdeMotaEduki();
 
 		assertNotNull(herrialdeMotak);
-		assertEquals(2, herrialdeMotak.size()); // Asegúrate de que el tamaño sea el esperado
+		assertEquals(2, herrialdeMotak.size()); // Ziurtatu tamaina espero dena dela
 
 		Herrialde herrialde1 = herrialdeMotak.get(0);
 		assertEquals("ES", herrialde1.getHerrialdeKodea());
@@ -363,5 +380,4 @@ public class SqlMetodoakTest {
 		assertEquals("US", herrialde2.getHerrialdeKodea());
 		assertEquals("Estados Unidos", herrialde2.getHelmuga());
 	}
-
 }

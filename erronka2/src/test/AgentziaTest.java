@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,76 +11,88 @@ public class AgentziaTest {
 
     private Agentzia agentzia;
 
+    // Testen aurretik setUp metodoa exekutatuko da
     @Before
     public void setUp() {
+        // Agentzia objektu bat sortu
         agentzia = new Agentzia(1, "L3", "www.www.com", "urdina", "admin", "A1", "admin");
     }
 
+    // Agentzia konstruktorerako test hutsa
     @Test
     public void testAgentzia() {
-    	Agentzia agentzia = new Agentzia();
-    	
-    	
+        Agentzia agentzia = new Agentzia();
     }
-   
+
+    // AgentziaKodea eskuratzea eta ezartzea testatzen du
     @Test
     public void testGetSetAgentziaKodea() {
-    	 agentzia.setAgentziaKodea(2);
-         assertEquals(2, agentzia.getAgentziaKodea());
+        // AgentziaKodea ezarri "2"
+        agentzia.setAgentziaKodea(2);
+        // Konparatu ezarritako balioa espero den balioarekin
+        assertEquals(2, agentzia.getAgentziaKodea());
     }
 
-
+    // LangileKopKod eskuratzea eta ezartzea testatzen du
     @Test
     public void testGetSetLangileKopKod() {
-    	 agentzia.setLangileKopKod("L10");
-         assertEquals("L10", agentzia.getLangileKopKod());
+        // LangileKopKod ezarri "L10"
+        agentzia.setLangileKopKod("L10");
+        // Konparatu ezarritako balioa espero den balioarekin
+        assertEquals("L10", agentzia.getLangileKopKod());
     }
 
-   
-
+    // Logoa eskuratzea eta ezartzea testatzen du
     @Test
     public void testGetSetLogoa() {
-    	agentzia.setLogoa("logo.png");
+        // Logoa ezarri "logo.png"
+        agentzia.setLogoa("logo.png");
+        // Konparatu ezarritako balioa espero den balioarekin
         assertEquals("logo.png", agentzia.getLogoa());
     }
 
-   
-
+    // MarkarenKolorea eskuratzea eta ezartzea testatzen du
     @Test
     public void testGetSetMarkarenKolorea() {
-    	agentzia.setMarkarenKolorea("gorria");
+        // Markaren kolorea ezarri "gorria"
+        agentzia.setMarkarenKolorea("gorria");
+        // Konparatu ezarritako balioa espero den balioarekin
         assertEquals("gorria", agentzia.getMarkarenKolorea());
     }
 
-   
-
+    // Izena eskuratzea eta ezartzea testatzen du
     @Test
     public void testGetIzena() {
-    	  agentzia.setIzena("alexjav");
-          assertEquals("alexjav", agentzia.getIzena());
+        // Izena ezarri "alexjav"
+        agentzia.setIzena("alexjav");
+        // Konparatu ezarritako balioa espero den balioarekin
+        assertEquals("alexjav", agentzia.getIzena());
     }
 
- 
-
+    // AgentziaMKod eskuratzea eta ezartzea testatzen du
     @Test
     public void testGetSetAgentziaMKod() {
-    	 agentzia.setAgentziaMKod("A2");
-         assertEquals("A2", agentzia.getAgentziaMKod());
+        // AgentziaMKod ezarri "A2"
+        agentzia.setAgentziaMKod("A2");
+        // Konparatu ezarritako balioa espero den balioarekin
+        assertEquals("A2", agentzia.getAgentziaMKod());
     }
 
-    
-
+    // Pasahitza eskuratzea eta ezartzea testatzen du
     @Test
     public void testGetSetPasahitza() {
-    	agentzia.setPasahitza("alexjav");
+        // Pasahitza ezarri "alexjav"
+        agentzia.setPasahitza("alexjav");
+        // Konparatu ezarritako balioa espero den balioarekin
         assertEquals("alexjav", agentzia.getPasahitza());
     }
 
-    
-
+    // toString metodoa testatzen du
     @Test
     public void testToString() {
+        // Espero den stringa sortu
         String expected = "Agentzia [agentziaKodea=1, langileKopKod=L3, logoa=www.www.com, markarenKolorea=urdina, izena=admin, agentziaMKod=A1, pasahitza=admin]";
+        // Konparatu toString metodoaren irteera espero den stringarekin
         assertEquals(expected, agentzia.toString());
     }
 }

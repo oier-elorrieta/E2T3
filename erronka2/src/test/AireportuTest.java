@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,34 +8,40 @@ import org.junit.Test;
 import modelo.pojo.Aireportu;
 
 public class AireportuTest {
-	
-	 private Aireportu aeroportu;
 
-	    @Before
-	    public void setUp() {
-	        aeroportu = new Aireportu("BIO","Bilbao");
-	    }
+    private Aireportu aeroportu;
 
-	    @Test
-	    public void testGetSetAireportuKodea() {
-	    	aeroportu.setAireportuKodea("MAD");
-	        assertEquals("MAD", aeroportu.getAireportuKodea());
-	    }
+    // Testen aurretik setUp metodoa exekutatuko da
+    @Before
+    public void setUp() {
+        // Aireportu objektu bat sortu
+        aeroportu = new Aireportu("BIO", "Bilbao");
+    }
 
-	    
+    // AireportuKodea eskuratzea eta ezartzea testatzen du
+    @Test
+    public void testGetSetAireportuKodea() {
+        // AireportuKodea ezarri "MAD"
+        aeroportu.setAireportuKodea("MAD");
+        // Konparatu ezarritako balioa espero den balioarekin
+        assertEquals("MAD", aeroportu.getAireportuKodea());
+    }
 
-	    @Test
-	    public void testGetSetHiria() {
-	    	aeroportu.setHiria("Madrid");
-	        assertEquals("Madrid", aeroportu.getHiria());
-	    }
+    // Hiria eskuratzea eta ezartzea testatzen du
+    @Test
+    public void testGetSetHiria() {
+        // Hiria ezarri "Madrid"
+        aeroportu.setHiria("Madrid");
+        // Konparatu ezarritako balioa espero den balioarekin
+        assertEquals("Madrid", aeroportu.getHiria());
+    }
 
-	  
-
-	    @Test
-	    public void testToString() {
-	        String expected = "Aeroportu [aireportuKodea=BIO, hiria=Bilbao]";
-	        assertEquals(expected, aeroportu.toString());
-	    }
-    
+    // toString metodoa testatzen du
+    @Test
+    public void testToString() {
+        // Espero den stringa sortu
+        String expected = "Aeroportu [aireportuKodea=BIO, hiria=Bilbao]";
+        // Konparatu toString metodoaren irteera espero den stringarekin
+        assertEquals(expected, aeroportu.toString());
+    }
 }

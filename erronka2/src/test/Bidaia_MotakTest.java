@@ -8,34 +8,38 @@ import org.junit.Test;
 import modelo.pojo.Bidai_Motak;
 
 public class Bidaia_MotakTest {
-	private Bidai_Motak bidai_motak;
-	@Before
-	public void setUp() throws Exception {
-		bidai_motak= new Bidai_Motak("B1","algo");
-	}
+    
+    private Bidai_Motak bidai_motak;
 
-	
+    // Testen aurretik setUp metodoa exekutatuko da
+    @Before
+    public void setUp() throws Exception {
+        // Bidai_Motak objektu bat sortu
+        bidai_motak = new Bidai_Motak("B1", "algo");
+    }
 
-	@Test
-	public void testGetSetBidaiKodea() {
-		bidai_motak.setBidaiKodea("B2");
-		assertEquals("B2",bidai_motak.getBidaiKodea());
-	}
+    // BidaiKodea eskuratzea eta ezartzea testatzen du
+    @Test
+    public void testGetSetBidaiKodea() {
+        // BidaiKodea ezarri "B2"
+        bidai_motak.setBidaiKodea("B2");
+        // Konparatu ezarritako balioa espero den balioarekin
+        assertEquals("B2", bidai_motak.getBidaiKodea());
+    }
 
-	
+    // Deskribapena eskuratzea eta ezartzea testatzen du
+    @Test
+    public void testGetDeskribapena() {
+        // Deskribapena ezarri "otra cosa"
+        bidai_motak.setDeskribapena("otra cosa");
+        // Konparatu ezarritako balioa espero den balioarekin
+        assertEquals("otra cosa", bidai_motak.getDeskribapena());
+    }
 
-	@Test
-	public void testGetDeskribapena() {
-		bidai_motak.setDeskribapena("otra cosa");
-		assertEquals("otra cosa",bidai_motak.getDeskribapena());
-	
-	}
-
-	
-
-	@Test
-	public void testToString() {
-		assertEquals("Herrialde [BidaiKodea=B1, Deskribapena=algo]", bidai_motak.toString());
-	}
-
+    // toString metodoa testatzen du
+    @Test
+    public void testToString() {
+        // Konparatu toString metodoaren irteera espero den stringarekin
+        assertEquals("Herrialde [BidaiKodea=B1, Deskribapena=algo]", bidai_motak.toString());
+    }
 }

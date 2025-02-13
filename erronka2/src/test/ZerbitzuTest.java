@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -110,11 +110,7 @@ public class ZerbitzuTest {
 
 	
 
-	/*@Test
-	public void testGetSetOstatuIzena() {
-		ostatuZerbitzu.setOstatuIzena("Hotel Javi");
-		assertEquals("Hotel Javi", ostatuZerbitzu.getOstatuIzena());
-	}*/
+	
 
 	
 
@@ -283,8 +279,33 @@ public class ZerbitzuTest {
 	}
 	
 	@Test
-    public void testToString() {
-        String expected = "Zerbitzu [zerbitzuKodea=4, zerbitzuIzena=Joan Etorri Zerbitzua, bidaiKodea=4, hegaldiKodea=HE123, hegaldiIrteraData=2025-01-01, hegaldiIrteeraOrdutegia=10:00:00, hegaldiBidaiarenIraupena=02:00:00, hegaldiPrezioa=150.0, hegaldiJatorrizkoAireportua=JFK, hegaldiHelmugakoAireportua=LAX, airelinaKodea=A123, hegaldiKodeaEtorri=HE124, itzuleraOrdua=12:00:00, etorriaEguna=2025-01-02, bueltakoIraupena=02:00:00, joanJatorrizkoAireportua=LAX, joanHelmugakoAireportua=JFK, bueltakoAirelineaKodea=A124]";
-        assertEquals(expected, joanEtorriZerbitzu.toString());
+    public void testToStringTxt() {
+        String expected ="\n" +
+                "Zerbitzuaren izena = Ostatu Zerbitzua\n" +
+                "Ostatu Prezioa = 100.0\n" +
+                "Ostatu sarrera eguna = 2025-02-13\n" +
+                "Ostatu irteera eguna = 2025-02-20\n" +
+                "Hiria = Bilbo\n" +
+                "Logela mota = L1\n" +
+                "Ostatu eguna = null\n" +
+                "Joan-Etorri Deskribapena = null\n" +
+                "Joan-Etorri prezioa = 0.0\n" +
+                "Hegaldi kodea = null\n" +
+                "Hegaldi irteera data = null\n" +
+                "Hegaldi irteera ordua = null\n" +
+                "Hegaldi Bidaiaren iraupena = null\n" +
+                "Hegaldi prezioa = 0.0\n" +
+                "Hegaldi jatorrizko aireportua = null\n" +
+                "Hegaldi helmugako aireportua = null\n" +
+                "Airelinea Kodea = null\n" +
+                "Etorri hegaldiaren kodea = null\n" +
+                "Itzulera ordua = null\n" +
+                "Etorri eguna = null\n" +
+                "Bueltako iraupena = null\n" +
+                "Joan jatorrizko aireportua = null\n" +
+                "Joan helmugako aireportua = null\n" +
+                "Bueltako airelinea = null\n";
+                
+        assertEquals(expected, ostatuZerbitzu.toStringTxt() );
     }
 }
