@@ -7,7 +7,13 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="E:/Librerias/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="E:/Librerias/mysql-connector-j-9.1.0.jar"/>
+=======
+	<classpathentry kind="lib" path="E:/DAM_ALEX_SAEZ/programazioa/jcalendar-1.4/lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="E:/DAM_ALEX_SAEZ/programazioa/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+>>>>>>> 6eca64ed69cc69949ea0145cb941546a8f99fa23
 	<classpathentry kind="output" path="bin"/>
 </classpath>

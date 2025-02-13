@@ -35,8 +35,12 @@ public class SqlMetodoak {
 	// instanio caché para no tener que instanciarlo cada vez que lo uso
 	private Cache cache = new Cache();
 
+	public Cache getCache() {
+		return cache;
+	}
 	// metodo para comparar el Log In en la base de datos
 
+	
 	public void loginKonparatu(String user, String pass) {
 
 		try {
