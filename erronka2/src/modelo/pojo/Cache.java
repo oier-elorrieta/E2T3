@@ -1,4 +1,4 @@
-package modelo;
+package modelo.pojo;
 
 //para guardar temporalmente la agentzia
 
@@ -10,11 +10,11 @@ public class Cache {
 
 	}
 
-	public static Agentzia getAgentzia() {
+	public Agentzia getAgentzia() {
 		return agentzia;
 	}
 
-	public static void setAgentzia(Agentzia agentzia) {
+	public void setAgentzia(Agentzia agentzia) {
 		Cache.agentzia = agentzia;
 	}
 

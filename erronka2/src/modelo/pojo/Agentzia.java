@@ -1,9 +1,6 @@
-package modelo;
-
-import java.util.ArrayList;
+package modelo.pojo;
 
 public class Agentzia {
-	private ArrayList<Bidaia> bidaia;
 	private int agentziaKodea;
 	private String langileKopKod;
 	private String logoa;
@@ -11,7 +8,7 @@ public class Agentzia {
 	private String izena;
 	private String agentziaMKod;
 	private String pasahitza;
-
+	
 	public Agentzia(int agentziaKodea, String langileKopKod, String logoa, String markarenKolorea, String izena,
 			String agentziaMKod, String pasahitza) {
 		super();

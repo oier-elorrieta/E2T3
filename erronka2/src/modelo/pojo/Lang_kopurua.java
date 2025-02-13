@@ -1,4 +1,4 @@
-package modelo;
+package modelo.pojo;
 
 public class Lang_kopurua {
 	private String langKopKodea;
