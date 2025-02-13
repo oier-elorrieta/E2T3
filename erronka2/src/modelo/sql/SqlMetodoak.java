@@ -30,6 +30,10 @@ public class SqlMetodoak {
 	private String sql = "";
 	private Cache cache = new Cache();
 
+	public Cache getCache() {
+		return cache;
+	}
+
 	public void loginKomparatu(String user, String pass) {
 
 		try {
@@ -91,7 +95,7 @@ public class SqlMetodoak {
 			konexioa.konexioaItxi(); // Cierra la conexión
 		}
 	}
-	
+
 	public void ezabatuZerbitzua(int zerbitzuKod) {
 		try {
 			konexioa.konexioaIreki(); // Abre la conexión
@@ -126,7 +130,7 @@ public class SqlMetodoak {
 			String sJoanekoData, String hegaldiKodea, String aerolinea, float prezio, Time orduteguia, Time iraupena) {
 
 		Zerbitzu zerbitzuak = new Zerbitzu();
-		
+
 		System.out.println(aerolinea);
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -164,12 +168,11 @@ public class SqlMetodoak {
 				throw new SQLException("Error: No se pudo obtener el ID generado.");
 			}
 
-			String sql2 = "INSERT INTO hegaldia VALUES ('"
-					+ zerbitzuKodea + "', '" + zerbitzuak.getHegaldiKodea() + "', '" + zerbitzuak.getHegaldiIrteraData()
-					+ "', '" + zerbitzuak.getHegaldiIrteeraOrdutegia() + "', '"
-					+ zerbitzuak.getHegaldiBidaiarenIraupena() + "', '" + zerbitzuak.getHegaldiPrezioa() + "', '"
-					+ zerbitzuak.getHegaldiJatorrizkoAireportua() + "', '" + zerbitzuak.getHegaldiHelmugakoAireportua()
-					+ "', '" + zerbitzuak.getAirelinaKodea() + "')";
+			String sql2 = "INSERT INTO hegaldia VALUES ('" + zerbitzuKodea + "', '" + zerbitzuak.getHegaldiKodea()
+					+ "', '" + zerbitzuak.getHegaldiIrteraData() + "', '" + zerbitzuak.getHegaldiIrteeraOrdutegia()
+					+ "', '" + zerbitzuak.getHegaldiBidaiarenIraupena() + "', '" + zerbitzuak.getHegaldiPrezioa()
+					+ "', '" + zerbitzuak.getHegaldiJatorrizkoAireportua() + "', '"
+					+ zerbitzuak.getHegaldiHelmugakoAireportua() + "', '" + zerbitzuak.getAirelinaKodea() + "')";
 			PreparedStatement preparedStatement2 = konexioa.konektatuta.prepareStatement(sql2);
 			System.out.println(sql2);
 			preparedStatement2.executeUpdate();
@@ -235,21 +238,20 @@ public class SqlMetodoak {
 				throw new SQLException("Error: No se pudo obtener el ID generado.");
 			}
 
-			String sql2 = "INSERT INTO hegaldia VALUES ('"
-					+ zerbitzuKodea + "', '" + zerbitzuak.getHegaldiKodea() + "', '" + zerbitzuak.getHegaldiIrteraData()
-					+ "', '" + zerbitzuak.getHegaldiIrteeraOrdutegia() + "', '"
-					+ zerbitzuak.getHegaldiBidaiarenIraupena() + "', '" + zerbitzuak.getHegaldiPrezioa() + "', '"
-					+ zerbitzuak.getHegaldiJatorrizkoAireportua() + "', '" + zerbitzuak.getHegaldiHelmugakoAireportua()
-					+ "', '" + zerbitzuak.getAirelinaKodea() + "')";
+			String sql2 = "INSERT INTO hegaldia VALUES ('" + zerbitzuKodea + "', '" + zerbitzuak.getHegaldiKodea()
+					+ "', '" + zerbitzuak.getHegaldiIrteraData() + "', '" + zerbitzuak.getHegaldiIrteeraOrdutegia()
+					+ "', '" + zerbitzuak.getHegaldiBidaiarenIraupena() + "', '" + zerbitzuak.getHegaldiPrezioa()
+					+ "', '" + zerbitzuak.getHegaldiJatorrizkoAireportua() + "', '"
+					+ zerbitzuak.getHegaldiHelmugakoAireportua() + "', '" + zerbitzuak.getAirelinaKodea() + "')";
 			PreparedStatement preparedStatement2 = konexioa.konektatuta.prepareStatement(sql2);
 			System.out.println(sql2);
 			preparedStatement2.executeUpdate();
 
-			String sql3 = "INSERT INTO joan_eta_etorri VALUES ('"
-					+ zerbitzuKodea + "', '" + zerbitzuak.getHegaldiKodeaEtorri() + "', '"
-					+ zerbitzuak.getItzuleraOrdua() + "', '" + zerbitzuak.getEtorriaEguna() + "', '"
-					+ zerbitzuak.getBueltakoIraupena() + "', '" + zerbitzuak.getJoanJatorrizkoAireportua() + "', '"
-					+ zerbitzuak.getJoanHelmugakoAireportua() + "', '" + zerbitzuak.getBueltakoAirelineaKodea() + "')";
+			String sql3 = "INSERT INTO joan_eta_etorri VALUES ('" + zerbitzuKodea + "', '"
+					+ zerbitzuak.getHegaldiKodeaEtorri() + "', '" + zerbitzuak.getItzuleraOrdua() + "', '"
+					+ zerbitzuak.getEtorriaEguna() + "', '" + zerbitzuak.getBueltakoIraupena() + "', '"
+					+ zerbitzuak.getJoanJatorrizkoAireportua() + "', '" + zerbitzuak.getJoanHelmugakoAireportua()
+					+ "', '" + zerbitzuak.getBueltakoAirelineaKodea() + "')";
 			PreparedStatement preparedStatement3 = konexioa.konektatuta.prepareStatement(sql3);
 			System.out.println(sql3);
 			preparedStatement3.executeUpdate();
@@ -300,9 +302,8 @@ public class SqlMetodoak {
 				throw new SQLException("Error: No se pudo obtener el ID generado.");
 			}
 
-			String sql2 = "INSERT INTO ostatua VALUES ('"
-					+ zerbitzuKodea + "', '" + zerbitzuak.getOstatuPrezioa() + "', '"
-					+ zerbitzuak.getOstatuSarreraEguna() + "', '" + zerbitzuak.getOstatuIrteraEguna() + "', '"
+			String sql2 = "INSERT INTO ostatua VALUES ('" + zerbitzuKodea + "', '" + zerbitzuak.getOstatuPrezioa()
+					+ "', '" + zerbitzuak.getOstatuSarreraEguna() + "', '" + zerbitzuak.getOstatuIrteraEguna() + "', '"
 					+ zerbitzuak.getHiria() + "', '" + zerbitzuak.getLogelaMKodea() + "')";
 			PreparedStatement preparedStatement2 = konexioa.konektatuta.prepareStatement(sql2);
 			System.out.println(sql2);
@@ -351,9 +352,8 @@ public class SqlMetodoak {
 				throw new SQLException("Error: No se pudo obtener el ID generado.");
 			}
 
-			String sql2 = "INSERT INTO beste_batzuk VALUES ('"
-					+ zerbitzuKodea + "', '" + zerbitzuak.getEgun() + "', '" + zerbitzuak.getBesteBatzukDeskribapena()
-					+ "', '" + zerbitzuak.getBesteBatzukPrezioa() + "')";
+			String sql2 = "INSERT INTO beste_batzuk VALUES ('" + zerbitzuKodea + "', '" + zerbitzuak.getEgun() + "', '"
+					+ zerbitzuak.getBesteBatzukDeskribapena() + "', '" + zerbitzuak.getBesteBatzukPrezioa() + "')";
 			PreparedStatement preparedStatement2 = konexioa.konektatuta.prepareStatement(sql2);
 			System.out.println(sql2);
 			preparedStatement2.executeUpdate();

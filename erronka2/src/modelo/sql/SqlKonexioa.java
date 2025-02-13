@@ -37,8 +37,6 @@ public class SqlKonexioa {
 		}
 	}
 
-	public void objetuakHasi() {
 
-	}
 
 }

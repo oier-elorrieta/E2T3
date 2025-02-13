@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import modelo.Lang_kopurua;
+import modelo.pojo.Lang_kopurua;
 
 public class Lang_kopuruaTest {
 

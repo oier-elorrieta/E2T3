@@ -4,10 +4,11 @@ import static org.junit.Assert.*;
 
 import java.sql.Date;
 import java.sql.Time;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import modelo.Zerbitzu;
+import modelo.pojo.Zerbitzu;
 
 public class ZerbitzuTest {
 
@@ -38,7 +39,7 @@ public class ZerbitzuTest {
         etorriaEguna = Date.valueOf("2025-01-02");
         bueltakoIraupena = Time.valueOf("02:00:00");
 
-        ostatuZerbitzu = new Zerbitzu(1, "Ostatu Zerbitzua", 1, 100, ostatuSarreraEguna, ostatuIrteraEguna, "Bilbo", "Hotel Bilbo", "L1");
+        ostatuZerbitzu = new Zerbitzu(1, "Ostatu Zerbitzua", 1, 100, ostatuSarreraEguna, ostatuIrteraEguna, "Bilbo", "L1");
         hegaldiZerbitzu = new Zerbitzu(2, "Hegaldi Zerbitzua", 2, "H1", hegaldiIrteraData, hegaldiIrteeraOrdutegia, hegaldiBidaiarenIraupena, 200, "BIO", "MAD", "A1");
         besteBatzukZerbitzu = new Zerbitzu(3, "Beste Zerbitzua", 3, egun, "Deskribapena", 50);
 
@@ -109,11 +110,11 @@ public class ZerbitzuTest {
 
 	
 
-	@Test
+	/*@Test
 	public void testGetSetOstatuIzena() {
 		ostatuZerbitzu.setOstatuIzena("Hotel Javi");
 		assertEquals("Hotel Javi", ostatuZerbitzu.getOstatuIzena());
-	}
+	}*/
 
 	
 

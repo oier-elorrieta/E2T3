@@ -1,12 +1,11 @@
 package test;
 
-import org.junit.Test;
-
-import modelo.Aireportu;
-
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.Test;
+
+import modelo.pojo.Aireportu;
 
 public class AireportuTest {
 	

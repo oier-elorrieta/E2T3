@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import modelo.Agentzia;
-import modelo.Cache;
+import modelo.pojo.Agentzia;
+import modelo.pojo.Cache;
 
 public class CacheTest {
 

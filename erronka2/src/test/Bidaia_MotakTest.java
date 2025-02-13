@@ -1,11 +1,11 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import modelo.Bidai_Motak;
+import modelo.pojo.Bidai_Motak;
 
 public class Bidaia_MotakTest {
 	private Bidai_Motak bidai_motak;
