@@ -79,11 +79,10 @@ public class SqlMetodoak {
 
 				// llamada a cache para que se setee la agencia temporalmente, esto hace que se
 				// use lo de la agencia cuando está logeada
-
+				
 				cache.setAgentzia(agentzia);
 				
-	            resultSet.close();
-	            preparedStatement.close();
+
 				
 			}
 
@@ -820,7 +819,6 @@ public class SqlMetodoak {
 				while (resultSet2.next()) {
 					//dependiendo en la posición que esté la id en la base de datos entra en un sitio u otro
 					if (resultSet2.getInt(4) != 0 && resultSet2.getInt(4) != resultSet2.getInt(13)) {
-						System.out.println("Bidaiarako aurkitutako zerbitzua " + resultSet2.getInt(4));
 
 						//meter todo lo del resultset en variables
 						
@@ -847,7 +845,6 @@ public class SqlMetodoak {
 						bidai.gehituZerbitzuak(zerbitzuak);
 
 					} else if (resultSet2.getInt(13) != 0 && resultSet2.getInt(13) == resultSet2.getInt(4)) {
-						System.out.println("Joan-etorrirako aurkitutako zerbitzua " + resultSet2.getInt(13));
 
 						//meter todo lo del resultset en variables
 						
@@ -884,7 +881,6 @@ public class SqlMetodoak {
 					}
 
 					else if (resultSet2.getInt(21) != 0) {
-						System.out.println("Zerbitzu hau aurkitu da ostaturako " + resultSet2.getInt(21));
 
 						//meter todo lo del resultset en variables
 						
@@ -909,7 +905,6 @@ public class SqlMetodoak {
 					}
 
 					else if (resultSet2.getInt(27) != 0) {
-						System.out.println("Zerbitzua aurkitu da bestearentzat " + resultSet2.getInt(27));
 
 						//meter todo lo del resultset en variables
 						
